@@ -93,7 +93,7 @@ public class UsuarioController {
                     description = "UNAUTHORIZED",
                     content = @Content)
     })
-    @PostMapping("auth/login/user")
+    @PostMapping("/auth/login/user")
     public ResponseEntity<JwtUserResponse> loginUser(@RequestBody PostLogin postLogin){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
