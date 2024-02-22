@@ -16,7 +16,7 @@ class ComercioRepositoryImpl extends ComercioRepository {
       Uri.parse('http://localhost:9000/usuario/listar/comercios'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
+        'accept': 'application/json',
         'Authorization': 'Bearer $token'
       },
     );

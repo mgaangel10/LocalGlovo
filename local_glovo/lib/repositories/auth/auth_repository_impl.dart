@@ -20,7 +20,14 @@ class AuthRepositoryImpl extends AuthRepository {
       body: loginDto.toJson(),
     );
     if (response.statusCode == 201) {
-      return LoginResponse.fromJson(response.body);
+      LoginResponse loginResponse = LoginResponse.fromJson(response.body);
+      String? token = loginResponse
+          .token; // Asegúrate de reemplazar 'token' con el nombre correcto del campo
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', token!);
+
+      return loginResponse;
     } else {
       throw Exception('Fail to login');
     }
