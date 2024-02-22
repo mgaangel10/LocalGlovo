@@ -1,76 +1,88 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_glovo/blocs/login/bloc/login_bloc.dart';
+import 'package:local_glovo/blocs/register/bloc/register_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
+import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 
-class InicioSesion extends StatefulWidget {
-  const InicioSesion({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<InicioSesion> createState() => _InicioSesionState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _InicioSesionState extends State<InicioSesion> {
-  final _formLogin = GlobalKey<FormState>();
-  final userTextController = TextEditingController();
-  final passTextController = TextEditingController();
-
+class _RegisterPageState extends State<RegisterPage> {
+  final _formRegister = GlobalKey<FormState>();
+  final emailTextController = TextEditingController();
+  final nameTextController = TextEditingController();
+  final lastnameTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+  final birthDateTextController = TextEditingController();
   late AuthRepository authRepository;
-
-  late LoginBloc _loginBloc;
+  late RegisterBloc _registerBloc;
 
   @override
   void initState() {
     authRepository = AuthRepositoryImpl();
-    _loginBloc = LoginBloc(authRepository);
+    _registerBloc = RegisterBloc(authRepository);
     super.initState();
   }
 
   @override
   void dispose() {
-    userTextController.dispose();
-    passTextController.dispose();
-    _loginBloc.close();
+    emailTextController.dispose();
+    nameTextController.dispose();
+    lastnameTextController.dispose();
+    passwordTextController.dispose();
+    birthDateTextController.dispose();
+    _registerBloc.close();
     super.dispose();
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider.value(
-        value: _loginBloc,
-        child: BlocConsumer<LoginBloc, LoginState>(
+        value: _registerBloc,
+        child: BlocConsumer<RegisterBloc, RegisterState>(
           buildWhen: (context, state) {
-            return state is LoginInitial ||
-                state is DoLoginSucces ||
-                state is DoLoginError ||
-                state is DoLoginLoading;
+            return state is RegisterInitial ||
+                state is DoRegisterSuccess ||
+                state is DoRegisterError ||
+                state is DoRegisterLoading;
           },
           builder: (context, state) {
-            if (state is DoLoginSucces) {
-              return const Text("login succes");
-            } else if (state is DoLoginError) {
-              return const Text("login error");
-            } else if (state is DoLoginLoading) {
+            if (state is DoRegisterSuccess) {
+              return const Text("Registro exitoso");
+            } else if (state is DoRegisterError) {
+              return const Text("Error de registro");
+            } else if (state is DoRegisterLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            return Center(child: _buildLoginForm());
+            return Center(child: _buildRegisterForm());
           },
-          listener: (BuildContext conext, LoginState state) {},
+          listener: (BuildContext context, RegisterState state) {
+            if (state is DoRegisterSuccess) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => InicioSesion()),
+              );
+            }
+          },
         ),
       ),
     );
   }
 
-  _buildLoginForm() {
+  _buildRegisterForm() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Form(
-        key: _formLogin,
+        key: _formRegister,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +91,7 @@ class _InicioSesionState extends State<InicioSesion> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 50.0),
                 child: Icon(
-                  Icons.home,
+                  Icons.person_add,
                   size: 100,
                   color: Colors.blue,
                 ),
@@ -94,20 +106,64 @@ class _InicioSesionState extends State<InicioSesion> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Correo electronico',
+                    'Nombre',
                     style: TextStyle(fontSize: 16),
                   ),
                   TextFormField(
-                    controller: userTextController,
+                    controller: nameTextController,
                     decoration: InputDecoration(
-                      hintText: 'example@gmail.com',
-                      suffixIcon: userTextController.text.isNotEmpty
+                      hintText: 'Introduce tu nombre',
+                      suffixIcon: nameTextController.text.isNotEmpty
                           ? Icon(Icons.check_circle, color: Colors.green)
                           : null,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Por favor introduce el correo electronico';
+                        return 'Por favor introduce tu nombre';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Apellido',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextFormField(
+                    controller: lastnameTextController,
+                    decoration: InputDecoration(
+                      hintText: 'Introduce tu apellido',
+                      suffixIcon: lastnameTextController.text.isNotEmpty
+                          ? Icon(Icons.check_circle, color: Colors.green)
+                          : null,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor introduce tu apellido';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Correo electrónico',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextFormField(
+                    controller: emailTextController,
+                    decoration: InputDecoration(
+                      hintText: 'example@gmail.com',
+                      suffixIcon: emailTextController.text.isNotEmpty
+                          ? Icon(Icons.check_circle, color: Colors.green)
+                          : null,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor introduce el correo electrónico';
                       }
                       return null;
                     },
@@ -120,16 +176,38 @@ class _InicioSesionState extends State<InicioSesion> {
                     style: TextStyle(fontSize: 16),
                   ),
                   TextFormField(
-                    controller: passTextController,
+                    controller: passwordTextController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      suffixIcon: passTextController.text.isNotEmpty
+                      suffixIcon: passwordTextController.text.isNotEmpty
                           ? Icon(Icons.check_circle, color: Colors.green)
                           : null,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor introduce la contraseña';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Fecha de nacimiento',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  TextFormField(
+                    controller: birthDateTextController,
+                    decoration: InputDecoration(
+                      hintText: 'DD/MM/YYYY',
+                      suffixIcon: birthDateTextController.text.isNotEmpty
+                          ? Icon(Icons.check_circle, color: Colors.green)
+                          : null,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor introduce tu fecha de nacimiento';
                       }
                       return null;
                     },
@@ -166,14 +244,17 @@ class _InicioSesionState extends State<InicioSesion> {
                           ),
                         ),
                         child: Text(
-                          'Inicio sesion'.toUpperCase(),
+                          'Registro'.toUpperCase(),
                           style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
-                          if (_formLogin.currentState!.validate()) {
-                            _loginBloc.add(DoLoginEvent(
-                              userTextController.text,
-                              passTextController.text,
+                          if (_formRegister.currentState!.validate()) {
+                            _registerBloc.add(DoRegisterEvent(
+                              emailTextController.text,
+                              nameTextController.text,
+                              lastnameTextController.text,
+                              passwordTextController.text,
+                              birthDateTextController.text,
                             ));
                           }
                         },
@@ -183,7 +264,7 @@ class _InicioSesionState extends State<InicioSesion> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                    padding: const EdgeInsets.only(right: 8.0),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -204,10 +285,16 @@ class _InicioSesionState extends State<InicioSesion> {
                           ),
                         ),
                         child: Text(
-                          'Registro'.toUpperCase(),
+                          'Ya tienes cuenta?'.toUpperCase(),
                           style: TextStyle(color: Colors.black),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => InicioSesion()),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -243,7 +330,7 @@ class _InicioSesionState extends State<InicioSesion> {
                     width: 18.0,
                   ),
                   label: Text(
-                    'Login with Google'.toUpperCase(),
+                    'Registro con Google'.toUpperCase(),
                     style: TextStyle(color: Colors.black),
                   ),
                   onPressed: () {},
