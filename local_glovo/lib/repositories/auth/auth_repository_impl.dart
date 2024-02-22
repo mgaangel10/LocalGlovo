@@ -4,6 +4,7 @@ import 'package:local_glovo/models/dto/register_dto.dart';
 import 'package:local_glovo/models/response/login_response.dart';
 import 'package:local_glovo/models/response/register_response.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final Client _httpClient = Client();
@@ -14,6 +15,7 @@ class AuthRepositoryImpl extends AuthRepository {
       Uri.parse('http://localhost:9000/auth/login/user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
       },
       body: loginDto.toJson(),
     );
