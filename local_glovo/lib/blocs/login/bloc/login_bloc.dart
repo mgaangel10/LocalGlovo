@@ -25,6 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final LoginDto loginDto =
           LoginDto(email: event.email, password: event.password);
       final response = await authRepository.login(loginDto);
+      preferences.setString('token', response.token!);
       emit(DoLoginSucces(response));
       return;
     } on Exception catch (e) {
