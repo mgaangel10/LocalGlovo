@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.comercios.models;
 
+import com.example.LocalGlovo.productos.model.Producto;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -43,6 +44,9 @@ public class Comercio {
     @Enumerated(EnumType.STRING)
     private Set<CategoriaComercios> categorias;
 
+    @Column(name = "producto_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Producto> productos;
 
 
 

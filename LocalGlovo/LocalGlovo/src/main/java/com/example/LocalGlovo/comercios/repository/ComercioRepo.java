@@ -22,4 +22,6 @@ public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
             from Comercio c
             """)
     Page<GetListComercios> getListComercios(Pageable pageable);
+
+    Comercio findByName(String name);
 }
