@@ -19,7 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final lastnameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
   final birthDateTextController = TextEditingController();
-
   late AuthRepository authRepository;
   late RegisterBloc _registerBloc;
 
@@ -70,9 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is DoRegisterSuccess) {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        InicioSesion()), // Reemplaza PaginaInicioSesion con el nombre correcto de tu clase de página de inicio de sesión
+                MaterialPageRoute(builder: (context) => InicioSesion()),
               );
             }
           },
@@ -248,8 +245,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         child: Text(
                           'Registro'.toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.black), // Color del texto negro
+                          style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
                           if (_formRegister.currentState!.validate()) {
@@ -266,6 +262,43 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 5,
+                            blurRadius: 8,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text(
+                          'Ya tienes cuenta?'.toUpperCase(),
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => InicioSesion()),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             const SizedBox(
@@ -274,8 +307,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Center(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                      20), // Radio del borde del contenedor
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.3),
@@ -289,7 +321,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(20),
                     shape: RoundedRectangleBorder(
-                      // Aplicar el mismo radio al botón
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
@@ -302,9 +333,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     'Registro con Google'.toUpperCase(),
                     style: TextStyle(color: Colors.black),
                   ),
-                  onPressed: () {
-                    // Aquí puedes agregar la funcionalidad de registro con Google
-                  },
+                  onPressed: () {},
                 ),
               ),
             ),

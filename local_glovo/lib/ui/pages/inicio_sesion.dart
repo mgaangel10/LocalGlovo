@@ -167,8 +167,7 @@ class _InicioSesionState extends State<InicioSesion> {
                         ),
                         child: Text(
                           'Inicio sesion'.toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.black), // Color del texto negro
+                          style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
                           if (_formLogin.currentState!.validate()) {
@@ -187,8 +186,7 @@ class _InicioSesionState extends State<InicioSesion> {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                            20), // Radio del borde del contenedor
+                        borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.3),
@@ -202,7 +200,6 @@ class _InicioSesionState extends State<InicioSesion> {
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(20),
                           shape: RoundedRectangleBorder(
-                            // Aplicar el mismo radio al botón
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
@@ -210,9 +207,7 @@ class _InicioSesionState extends State<InicioSesion> {
                           'Registro'.toUpperCase(),
                           style: TextStyle(color: Colors.black),
                         ),
-                        onPressed: () {
-                          // Aquí puedes agregar la funcionalidad de registro
-                        },
+                        onPressed: () {},
                       ),
                     ),
                   ),
@@ -225,8 +220,7 @@ class _InicioSesionState extends State<InicioSesion> {
             Center(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                      20), // Radio del borde del contenedor
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.3),
@@ -240,7 +234,6 @@ class _InicioSesionState extends State<InicioSesion> {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(20),
                     shape: RoundedRectangleBorder(
-                      // Aplicar el mismo radio al botón
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
@@ -253,9 +246,7 @@ class _InicioSesionState extends State<InicioSesion> {
                     'Login with Google'.toUpperCase(),
                     style: TextStyle(color: Colors.black),
                   ),
-                  onPressed: () {
-                    // Aquí puedes agregar la funcionalidad de inicio de sesión con Google
-                  },
+                  onPressed: () {},
                 ),
               ),
             ),
