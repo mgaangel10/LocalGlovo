@@ -52,20 +52,20 @@ public class ProductoService {
     }
 
     public Comercio añadirProductosAComercio(String nombreComercio, List<UUID> idsProductos) {
-        // Buscar el comercio
+
         Comercio comercio = comercioRepo.findByName(nombreComercio);
 
-        // Buscar los productos por su ID
-        List<Producto> productos = prodcutoRepo.findAllById(idsProductos);
 
-        // Añadir los productos al comercio
+        List<Producto> productos = prodcutoRepo.findAllById(idsProductos);
         Set<Producto> productosComercio = comercio.getProductos();
         productosComercio.addAll(productos);
         comercio.setProductos(productosComercio);
 
-        // Guardar el comercio en la base de datos
+
        return comercioRepo.save(comercio);
     }
+
+
 
 
 }

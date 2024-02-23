@@ -35,8 +35,8 @@ public class ProductoController {
         return ResponseEntity.ok(getListComerciosPage);
     }
 
-    @PostMapping("administrador/añadir/productos/comercio")
-    public ResponseEntity<?> añadirProductos(@RequestParam String nombreComercio, @RequestBody List<UUID> idsProductos) {
+    @PostMapping("/administrador/añadir/productos/{nombreComercio}")
+    public ResponseEntity<?> añadirProductos(@PathVariable String nombreComercio, @RequestBody List<UUID> idsProductos) {
         try {
             Comercio comercio = productoService.añadirProductosAComercio(nombreComercio, idsProductos);
             return new ResponseEntity<>(comercio, HttpStatus.OK);

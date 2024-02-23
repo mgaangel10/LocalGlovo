@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumSet;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +45,16 @@ public class ComercioService {
             throw new RuntimeException("No hay comercios");
         }else{
             return comercioRepo.getListComercios(pageable);
+        }
+    }
+
+    public Comercio finfbyid(UUID uuid){
+        Optional<Comercio> comercio = comercioRepo.findById(uuid);
+
+        if (comercio.isEmpty()){
+            throw new RuntimeException("ningun comercio por el id: "+uuid);
+        }else{
+            return comercio.get();
         }
     }
 }
