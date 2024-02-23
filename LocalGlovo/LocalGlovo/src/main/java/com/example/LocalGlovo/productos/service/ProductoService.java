@@ -33,7 +33,7 @@ public class ProductoService {
 
         Set<Ingredientes> ingredientes = postProductoDto.ingredientes();
         if (ingredientes == null) {
-            ingredientes = new HashSet<>(); // Opcional: inicializa el conjunto si es nulo
+            ingredientes = new HashSet<>();
         }
         producto.setIngredientes(ingredientes);
 
