@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
+import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
+import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -51,7 +53,24 @@ class _HomePageState extends State<HomePage> {
             itemCount: state.comercioList.length,
             itemBuilder: (context, index) {
               final c = state.comercioList[index];
-              return ComercioWidget(contentElement: c);
+              return GestureDetector(
+                onTap: () {
+                  final comercioRepositorio = ComercioRepositoryImpl();
+                  final detallesCoemercio =
+                      ComercioDetailsBloc(comercioRepository);
+                  detallesCoemercio.add(ComercioDetailsItem(comercioId: c.id!));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BlocProvider.value(
+                                value: detallesCoemercio,
+                                child: ComercioDetailsPage(comercioID: c.id!),
+                              )));
+                },
+                child: ComercioWidget(
+                  contentElement: c,
+                ),
+              );
             },
           );
         } else if (state is ComercioError) {

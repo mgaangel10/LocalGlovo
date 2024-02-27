@@ -19,3 +19,8 @@ final class ComercioError extends ComercioState {
   final String errorMensaje;
   const ComercioError(this.errorMensaje);
 }
+
+final class ComercioDetallesClick extends ComercioState {
+  final String coemercioId;
+  const ComercioDetallesClick(this.coemercioId);
+}
