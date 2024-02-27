@@ -5,6 +5,8 @@ sealed class ComercioDetailsState {}
 
 final class ComercioDetailsInitial extends ComercioDetailsState {}
 
+final class ComercioDetailsLoading extends ComercioDetailsState {}
+
 final class ComercioDetailsSucces extends ComercioDetailsInitial {
   final ComercioDetailsResponse comercio;
   ComercioDetailsSucces(this.comercio);

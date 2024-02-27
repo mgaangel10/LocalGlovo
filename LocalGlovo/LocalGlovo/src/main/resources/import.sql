@@ -4,7 +4,7 @@
 INSERT INTO usuario (id, name,last_name, username, email, password,phone_number,ACCOUNT_NON_EXPIRED,ACCOUNT_NON_LOCKED,CREDENTIALS_NON_EXPIRED,enabled) VALUES ('5d818565-99f9-4d80-920e-8259c6ecb8e6', 'Pedro','pepe', 'ToRechulon', 'pedro@gmail.com', '{bcrypt}$2a$10$05HASeZdtwl8NS/nWbNMJOU07tiGZ9Z/mVE2Z.FKhsyjkCK7yuLqa',383838,true,true,true,true);
 INSERT INTO usuario_roles ( roles,usuario_id) VALUES (0,'5d818565-99f9-4d80-920e-8259c6ecb8e6');
 INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen)VALUES ('f89f898a-70aa-48d5-8088-3f3c892d7bae', 'Las Lozas', '1233232', '232121', 4.8, 'La puebla del rio','https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen)VALUES ('123e4567-e89b-12d3-a456-426614174000', 'Felipon', '1233232', '232121', 4.8, 'La puebla del rio','https://carniceriafelipon.com/wp-content/uploads/2021/03/logo-felipon-vitola-300x165.png');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen)VALUES ('123e4567-e89b-12d3-a456-426614174000', 'Felipon', '1233232', '232121', 4.8, 'La puebla del rio','');
 INSERT INTO comercio_categorias(comercio_id,categorias)VALUES('f89f898a-70aa-48d5-8088-3f3c892d7bae','FARMACIA');
 INSERT INTO comercio_categorias(comercio_id,categorias)VALUES('123e4567-e89b-12d3-a456-426614174000','CARNECERIA');
 
@@ -37,16 +37,49 @@ INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, image
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('dee8e900-9dad-11d1-80b4-00c04fd430c9', 'RESTAURANTE');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('efe9e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda SportMax', '1233232', '232121', 4.2, 'La puebla del rio', 'https://www.archisearch.gr/wp-content/uploads/old-site/550234-497865010257186-1736547832-n.jpg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('efe9e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda SportMax', '1233232', '232121', 4.2, 'La puebla del rio', '');
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('efe9e900-9dad-11d1-80b4-00c04fd430c9', 'BAR');
 
 
 INSERT INTO ingredientes(id,name) VALUES('241149d3-01e0-4ab6-ab80-d5839d08d2dd','queso');
-INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'b714eea5-9b28-4e8c-b189-83d8fc14a834','imagen','Hamburguesa');
+INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'b714eea5-9b28-4e8c-b189-83d8fc14a834','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','Hamburguesa');
+INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'550e8400-e29b-41d4-a716-446655440000','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','Manzana');
+INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','CocaCola');
+INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'7b8e6e8d-a202-4927-9bb9-9124a3049c4e','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','Fanta');
 INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('241149d3-01e0-4ab6-ab80-d5839d08d2dd','b714eea5-9b28-4e8c-b189-83d8fc14a834');
 
 
 INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('ffeae900-9dad-11d1-80b4-00c04fd430c9', 'Cafetería ', '1233232', '232121', 4.6, 'La puebla del rio', 'https://th.bing.com/th/id/OIP.EK3cUr1Ocrap5-a7LdHP_AHaE7?rs=1&pid=ImgDetMain');
-INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('ffeae900-9dad-11d1-80b4-00c04fd430c9','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9','b714eea5-9b28-4e8c-b189-83d8fc14a834');
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('ffeae900-9dad-11d1-80b4-00c04fd430c9', 'BAR');
+
+INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('f89f898a-70aa-48d5-8088-3f3c892d7bae','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('f89f898a-70aa-48d5-8088-3f3c892d7bae','550e8400-e29b-41d4-a716-446655440000');
+INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9','7b8e6e8d-a202-4927-9bb9-9124a3049c4e');
+INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9','3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61');
+
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('123e4567-e89b-12d3-a456-426614174000','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('123e4567-e89b-12d3-a456-426614174000','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('123e4567-e89b-12d3-a456-426614174000','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('123e4567-e89b-12d3-a456-426614174000','3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61');
+
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('7bb2e900-9dad-11d1-80b4-00c04fd430c9','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('7bb2e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('7bb2e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('7bb2e900-9dad-11d1-80b4-00c04fd430c9','3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61');
+
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('8cc3e900-9dad-11d1-80b4-00c04fd430c9','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('8cc3e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('8cc3e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('8cc3e900-9dad-11d1-80b4-00c04fd430c9','3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61');
+
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('bee6e900-9dad-11d1-80b4-00c04fd430c9','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('bee6e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('bee6e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('bee6e900-9dad-11d1-80b4-00c04fd430c9','3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61');
+
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('cee7e900-9dad-11d1-80b4-00c04fd430c9','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('cee7e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('cee7e900-9dad-11d1-80b4-00c04fd430c9','550e8400-e29b-41d4-a716-446655440000');
+--INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('cee7e900-9dad-11d1-80b4-00c04fd430c9','3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61');
 

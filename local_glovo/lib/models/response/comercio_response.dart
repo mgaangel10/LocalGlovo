@@ -1,27 +1,27 @@
 class ComercioResponse {
   List<Content>? content;
   Pageable? pageable;
+  bool? last;
   int? totalPages;
   int? totalElements;
-  bool? last;
   int? size;
   int? number;
   Sort? sort;
-  int? numberOfElements;
   bool? first;
+  int? numberOfElements;
   bool? empty;
 
   ComercioResponse(
       {this.content,
       this.pageable,
+      this.last,
       this.totalPages,
       this.totalElements,
-      this.last,
       this.size,
       this.number,
       this.sort,
-      this.numberOfElements,
       this.first,
+      this.numberOfElements,
       this.empty});
 
   ComercioResponse.fromJson(Map<String, dynamic> json) {
@@ -34,14 +34,14 @@ class ComercioResponse {
     pageable = json['pageable'] != null
         ? new Pageable.fromJson(json['pageable'])
         : null;
+    last = json['last'];
     totalPages = json['totalPages'];
     totalElements = json['totalElements'];
-    last = json['last'];
     size = json['size'];
     number = json['number'];
     sort = json['sort'] != null ? new Sort.fromJson(json['sort']) : null;
-    numberOfElements = json['numberOfElements'];
     first = json['first'];
+    numberOfElements = json['numberOfElements'];
     empty = json['empty'];
   }
 
@@ -53,30 +53,32 @@ class ComercioResponse {
     if (this.pageable != null) {
       data['pageable'] = this.pageable!.toJson();
     }
+    data['last'] = this.last;
     data['totalPages'] = this.totalPages;
     data['totalElements'] = this.totalElements;
-    data['last'] = this.last;
     data['size'] = this.size;
     data['number'] = this.number;
     if (this.sort != null) {
       data['sort'] = this.sort!.toJson();
     }
-    data['numberOfElements'] = this.numberOfElements;
     data['first'] = this.first;
+    data['numberOfElements'] = this.numberOfElements;
     data['empty'] = this.empty;
     return data;
   }
 }
 
 class Content {
+  String? id;
   String? name;
   double? rating;
   String? nameDirection;
   String? imagen;
 
-  Content({this.name, this.rating, this.nameDirection, this.imagen});
+  Content({this.id, this.name, this.rating, this.nameDirection, this.imagen});
 
   Content.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     rating = json['rating'];
     nameDirection = json['nameDirection'];
@@ -85,6 +87,7 @@ class Content {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
     data['rating'] = this.rating;
     data['nameDirection'] = this.nameDirection;

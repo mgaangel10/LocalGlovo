@@ -1,6 +1,9 @@
 package com.example.LocalGlovo.comercios.Dto;
 
-public record GetListComercios(String name,
+import java.util.UUID;
+
+public record GetListComercios(UUID id,
+                               String name,
                                double rating,
                                String nameDirection,
                                String imagen) {

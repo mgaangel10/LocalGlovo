@@ -35,20 +35,27 @@ class ComercioRepositoryImpl extends ComercioRepository {
   Future<ComercioDetailsResponse> comercioDetalles(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
+
     final response = await _httpClient.get(
-      Uri.parse('http://localhost:9000/usuario/listar/comercios'),
+      Uri.parse('http://localhost:9000/usuario/buscar/id/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'accept': 'application/json',
         'Authorization': 'Bearer $token'
       },
     );
+
     if (response.statusCode == 200) {
+      print('Response body: ${response.body}');
       final responseBody =
-          ComercioDetailsResponse.fromJson(json.decode(response.body!));
+          ComercioDetailsResponse.fromJson(json.decode(response.body));
+
       final content = responseBody;
+
       return content;
     } else {
+      print('Request failed with status: ${response.statusCode}.');
+      print('Response body: ${response.body}');
       throw UnimplementedError('Failed to load detalles comercios');
     }
   }

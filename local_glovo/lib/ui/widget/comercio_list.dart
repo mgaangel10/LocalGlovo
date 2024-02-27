@@ -9,14 +9,16 @@ class ComercioWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ComercioDetailsPage(comercioID: contentElement.))
-        )
+          MaterialPageRoute(
+              builder: (context) => ComercioDetailsPage(
+                    comercioID: contentElement.id!,
+                  )),
+        );
       },
       child: Container(
-        
         width: 130,
         height: 211,
         child: Card(

@@ -14,6 +14,7 @@ public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
 
     @Query("""
             select new com.example.LocalGlovo.comercios.Dto.GetListComercios(
+            c.id,
             c.name,
             c.rating,
             c.nameDirection,

@@ -8,3 +8,8 @@ final class ComercioFetchEvents extends ComercioEvent {}
 class ComercioList extends ComercioEvent {
   ComercioList();
 }
+
+class ComercioDetalles extends ComercioEvent {
+  final String comercioId;
+  ComercioDetalles(this.comercioId);
+}
