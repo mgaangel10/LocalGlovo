@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
+import 'package:local_glovo/blocs/ingredientes/bloc/view_ingredientes_bloc.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/ui/pages/inicio_sesion.dart';
@@ -29,7 +30,11 @@ class MyApp extends StatelessWidget {
         Provider<ComercioDetailsBloc>(
           create: (BuildContext context) =>
               ComercioDetailsBloc(context.read<ComercioRepositoryImpl>()),
-        )
+        ),
+        Provider<ViewIngredientesBloc>(
+          create: (BuildContext context) =>
+              ViewIngredientesBloc(context.read<ComercioRepositoryImpl>()),
+        ),
       ],
       child: MaterialApp(
         title: 'My App',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
+import 'package:local_glovo/ui/pages/ingredientes_page.dart';
 
 class ComercioDetailsPage extends StatefulWidget {
   final String comercioID;
@@ -84,36 +85,49 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                       ),
                       color: Colors.white,
                       elevation: 10,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ListTile(
-                            contentPadding: EdgeInsets.all(10.0),
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Container(
-                                margin: EdgeInsets.only(right: 8.0),
-                                child: Image.network(
-                                  comercio.productos![index].imagen!,
+                      child: GestureDetector(
+                        onTap: () {
+                          // Navegar a la página de ingredientes al hacer clic en el producto
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => IngredientesPage(
+                                  productos: comercio.productos![index]),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                              contentPadding: EdgeInsets.all(10.0),
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 8.0),
+                                  child: Image.network(
+                                    comercio.productos![index].imagen!,
+                                  ),
                                 ),
                               ),
+                              title: Center(
+                                  child:
+                                      Text(comercio.productos![index].name!)),
+                              trailing: Container(
+                                margin: EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                    "${comercio.productos?[index].precio}€"),
+                              ),
                             ),
-                            title: Center(
-                                child: Text(comercio.productos![index].name!)),
-                            trailing: Container(
-                              margin: EdgeInsets.only(top: 8.0),
-                              child:
-                                  Text("${comercio.productos?[index].precio}€"),
+                            Center(
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: const Text('Añadir al carrito',
+                                    style: TextStyle(fontSize: 20)),
+                              ),
                             ),
-                          ),
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: const Text('Añadir al carrito',
-                                  style: TextStyle(fontSize: 20)),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
