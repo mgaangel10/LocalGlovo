@@ -22,7 +22,8 @@ public class Ingredientes {
 
     @Column(name = "name")
     protected String name;
-    @ManyToOne
-    @JoinColumn(name = "producto_id")  // Nombre de la columna que hace referencia al Producto
-    protected Producto producto;
+
+
+
+
 }

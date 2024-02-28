@@ -12,14 +12,13 @@ class IngredientesPage extends StatefulWidget {
 }
 
 class _IngredientesPageState extends State<IngredientesPage> {
+  late Future<List<Ingredientes>> ingredientesFuture;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPersistentFrameCallback((_) {
-      context.read<ViewIngredientesBloc>().add(
-            IngredientesItem(id: widget.productos.id!),
-          );
-    });
+    context.read<ViewIngredientesBloc>().add(
+          IngredientesItem(id: widget.productos.id!),
+        );
   }
 
   @override

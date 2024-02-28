@@ -35,8 +35,9 @@ public class Producto {
     @Column(name = "disponible")
     protected boolean disponible;
 
-    @Column(name = "ingrediente_id")
-    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
+
+    @Column(name = "ingredientes_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ingredientes> ingredientes;
 
 
