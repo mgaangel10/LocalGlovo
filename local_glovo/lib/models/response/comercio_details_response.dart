@@ -101,18 +101,21 @@ class Productos {
 class Ingredientes {
   String? id;
   String? name;
+  String? imagen;
 
-  Ingredientes({this.id, this.name});
+  Ingredientes({this.id, this.name, this.imagen});
 
   Ingredientes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    imagen = json['imagen'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
+    data['imagen'] = this.imagen;
     return data;
   }
 }

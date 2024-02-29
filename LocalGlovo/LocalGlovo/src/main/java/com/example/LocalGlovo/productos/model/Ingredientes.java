@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +23,13 @@ public class Ingredientes {
 
     @Column(name = "name")
     protected String name;
+
+    @Column(name = "imagen")
+    protected String imagen;
+
+
+
+
 
 
 

@@ -87,7 +87,6 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                       elevation: 10,
                       child: GestureDetector(
                         onTap: () {
-                          // Navegar a la página de ingredientes al hacer clic en el producto
                           Navigator.push(
                             context,
                             MaterialPageRoute(

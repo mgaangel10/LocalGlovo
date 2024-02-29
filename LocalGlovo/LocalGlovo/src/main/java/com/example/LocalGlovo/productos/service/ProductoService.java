@@ -83,6 +83,15 @@ public class ProductoService {
         }
     }
 
+    public void EliminarIngredientes(UUID uuid) {
+        Optional<Ingredientes> ingredientesOptional = ingredientesRepo.findById(uuid);
+        if (ingredientesOptional.isEmpty()) {
+            throw new RuntimeException("No hay ingredientes con ese id");
+        } else {
+            ingredientesRepo.delete(ingredientesOptional.get());
+        }
+    }
+
 
 
 

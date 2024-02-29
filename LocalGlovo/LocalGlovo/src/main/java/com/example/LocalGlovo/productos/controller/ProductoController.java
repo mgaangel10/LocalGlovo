@@ -58,4 +58,10 @@ public class ProductoController {
         return ResponseEntity.ok(producto);
     }
 
+    @DeleteMapping("usuario/delete/ingredientes/{id}")
+    public ResponseEntity<?> eliminarIngredientes(@PathVariable UUID id){
+        productoService.EliminarIngredientes(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

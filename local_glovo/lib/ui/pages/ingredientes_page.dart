@@ -42,14 +42,14 @@ class _IngredientesPageState extends State<IngredientesPage> {
                   color: Colors.white,
                   elevation: 10,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(bottom: 8.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15.0),
                           child: Image.network(
-                            ingredientes.name!,
+                            ingredientes.imagen!,
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: 130,
@@ -86,11 +86,12 @@ class _IngredientesPageState extends State<IngredientesPage> {
                         ListTile(
                           contentPadding: EdgeInsets.all(10.0),
                           leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
                             child: Container(
                               margin: EdgeInsets.only(top: 8.0),
                               child: Text(
-                                  "${widget.productos.ingredientes![index].name}"),
+                                "${widget.productos.ingredientes![index].name}",
+                                style: TextStyle(fontSize: 12.0),
+                              ),
                             ),
                           ),
                         ),
@@ -99,7 +100,7 @@ class _IngredientesPageState extends State<IngredientesPage> {
                             onPressed: () {},
                             child: const Text("Eliminar"),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   );
