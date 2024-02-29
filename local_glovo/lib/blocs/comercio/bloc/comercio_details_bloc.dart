@@ -19,7 +19,7 @@ class ComercioDetailsBloc
 
   void _onComercioDetailsFecth(
       ComercioDetailsEvent event, Emitter<ComercioDetailsState> emit) async {
-    emit(ComercioDetailsLoading()); // Agrega un estado de carga
+    emit(ComercioDetailsLoading());
     try {
       final comercioDetailsResponse =
           await comercioRepository.comercioDetalles(event.comercioId);

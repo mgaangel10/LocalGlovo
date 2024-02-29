@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/ingredientes_page.dart';
 
 class ComercioDetailsPage extends StatefulWidget {
   final String comercioID;
-  const ComercioDetailsPage({super.key, required this.comercioID});
+  final CarritoRepository carritoRepository;
+  final String usuarioId;
+  const ComercioDetailsPage(
+      {Key? key,
+      required this.comercioID,
+      required this.carritoRepository,
+      required this.usuarioId})
+      : super(key: key);
 
   @override
   State<ComercioDetailsPage> createState() => _ComercioDetailsPageState();
@@ -120,8 +129,23 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                             ),
                             Center(
                               child: ElevatedButton(
-                                onPressed: () {},
-                                child: const Text('Añadir al carrito',
+                                onPressed: () async {
+                                  String productoId =
+                                      comercio.productos![index].id!;
+                                  await widget.carritoRepository.addAlCarrito(
+                                      widget.usuarioId, productoId);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CarritoPage(
+                                        usuarioId: widget.usuarioId,
+                                        carritoRepository: widget
+                                            .carritoRepository, // Asegúrate de pasar el carritoRepository aquí
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Agregar al carrito',
                                     style: TextStyle(fontSize: 20)),
                               ),
                             ),

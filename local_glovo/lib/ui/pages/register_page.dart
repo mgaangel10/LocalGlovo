@@ -3,10 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/register/bloc/register_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final String usuarioId;
+  final CarritoRepository carritoRepository;
+  const RegisterPage(
+      {super.key, required this.usuarioId, required this.carritoRepository});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -69,7 +73,12 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is DoRegisterSuccess) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => InicioSesion()),
+                MaterialPageRoute(
+                  builder: (context) => InicioSesion(
+                    usuarioId: widget.usuarioId,
+                    carritoRepository: widget.carritoRepository,
+                  ),
+                ),
               );
             }
           },
@@ -292,7 +301,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => InicioSesion()),
+                              builder: (context) => InicioSesion(
+                                usuarioId: widget.usuarioId,
+                                carritoRepository: widget.carritoRepository,
+                              ),
+                            ),
                           );
                         },
                       ),

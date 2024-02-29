@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.carrito.models;
 
 import com.example.LocalGlovo.productos.model.Producto;
+import com.example.LocalGlovo.users.model.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,13 @@ public class Carrito {
 
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LineaCarrito> lineasCarrito = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    protected Usuario usuario;
+
+    @Enumerated(EnumType.STRING)
+    protected Estado estado;
 
     public void agregarProducto(Producto producto) {
         LineaCarrito nuevaLinea = new LineaCarrito(producto, 1);

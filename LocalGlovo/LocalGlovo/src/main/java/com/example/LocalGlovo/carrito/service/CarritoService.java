@@ -1,10 +1,13 @@
 package com.example.LocalGlovo.carrito.service;
 
+import com.example.LocalGlovo.carrito.Dto.GetCarritoDto;
 import com.example.LocalGlovo.carrito.models.Carrito;
+import com.example.LocalGlovo.carrito.models.Estado;
 import com.example.LocalGlovo.carrito.models.LineaCarrito;
 import com.example.LocalGlovo.carrito.repository.CarritoRepo;
 import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.productos.repository.ProdcutoRepo;
+import com.example.LocalGlovo.users.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +28,7 @@ public class CarritoService {
 
 
 
-    public Carrito crearUnCarrito(){
-        Carrito carrito1 = Carrito.builder()
-                .cantidad(0)
 
-                .lineasCarrito(new HashSet<>())
-                .total(0.0)
-                .build();
-        carritoRepository.save(carrito1);
-        return carrito1;
-    }
 
     public Optional<Carrito> buscarCarritoPorId(UUID id){
         Optional<Carrito> carrito1 = carritoRepository.findById(id);
@@ -45,32 +39,30 @@ public class CarritoService {
         }
     }
 
-    public void agregarProductoAlCarrito(Carrito carrito, Producto producto) {
-        if (crearUnCarrito()!=null){
-
-            LineaCarrito lineaExistente = carrito.getLineasCarrito().stream()
-                    .filter(linea -> linea.getProducto().getId().equals(producto.getId()))
-                    .findFirst()
-                    .orElse(null);
-
-            if (lineaExistente != null) {
-
-                lineaExistente.aumentarCantidad();
-            } else {
-
-                LineaCarrito nuevaLinea = new LineaCarrito(producto, 1);
-                nuevaLinea.setCarrito(carrito);
-                carrito.getLineasCarrito().add(nuevaLinea);
-            }
-
-            carritoRepository.save(carrito);
-            actualizarTotalCarrito(carrito);
-            System.out.println(carrito.getId());
-        }else {
-            throw new RuntimeException("habido un error");
+    public void agregarProductoAlCarrito(Usuario usuario, Producto producto) {
+        Carrito carrito = buscarCarritoActivoDelUsuario(usuario);
+        if (carrito == null){
+            carrito = crearUnCarrito(usuario);
         }
 
+        LineaCarrito lineaExistente = carrito.getLineasCarrito().stream()
+                .filter(linea -> linea.getProducto().getId().equals(producto.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (lineaExistente != null) {
+            lineaExistente.aumentarCantidad();
+        } else {
+            LineaCarrito nuevaLinea = new LineaCarrito(producto, 1);
+            nuevaLinea.setCarrito(carrito);
+            carrito.getLineasCarrito().add(nuevaLinea);
+        }
+
+        carritoRepository.save(carrito);
+        actualizarTotalCarrito(carrito);
+        System.out.println(carrito.getId());
     }
+
 
     public void actualizarTotalCarrito(Carrito carrito) {
         double total = carrito.getLineasCarrito().stream()
@@ -139,5 +131,21 @@ public class CarritoService {
         carrito.getLineasCarrito().clear();
         carrito.setTotal(0);
         carritoRepository.save(carrito);
+    }
+
+    public Carrito buscarCarritoActivoDelUsuario(Usuario usuario) {
+        return carritoRepository.buscarCarritoActivoDelUsuario(usuario, Estado.ACTIVO)
+                .orElse(null);
+    }
+    public Carrito crearUnCarrito(Usuario usuario) {
+        Carrito carrito = new Carrito();
+        carrito.setUsuario(usuario);
+        carrito.setEstado(Estado.ACTIVO);
+        carritoRepository.save(carrito);
+        return carrito;
+    }
+
+    public List<GetCarritoDto> listarCarrito(){
+        return carritoRepository.getListCarrito();
     }
 }

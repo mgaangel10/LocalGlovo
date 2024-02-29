@@ -4,10 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/login/bloc/login_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
 
 class InicioSesion extends StatefulWidget {
-  const InicioSesion({super.key});
+  final String usuarioId;
+  final CarritoRepository carritoRepository;
+  const InicioSesion(
+      {super.key, required this.usuarioId, required this.carritoRepository});
 
   @override
   State<InicioSesion> createState() => _InicioSesionState();
@@ -179,7 +183,12 @@ class _InicioSesionState extends State<InicioSesion> {
                           }
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(
+                                usuarioId: widget.usuarioId,
+                                carritoRepository: widget.carritoRepository,
+                              ),
+                            ),
                           );
                         },
                       ),

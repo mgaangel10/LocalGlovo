@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final CarritoRepository carritoRepository;
+  final String usuarioId;
+  const HomePage(
+      {super.key, required this.carritoRepository, required this.usuarioId});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -60,16 +64,25 @@ class _HomePageState extends State<HomePage> {
                       ComercioDetailsBloc(comercioRepository);
                   detallesCoemercio.add(ComercioDetailsItem(comercioId: c.id!));
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BlocProvider.value(
-                                value: detallesCoemercio,
-                                child: ComercioDetailsPage(comercioID: c.id!),
-                              )));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider.value(
+                        value: detallesCoemercio,
+                        child: ComercioDetailsPage(
+                          comercioID: c.id!,
+                          usuarioId: widget
+                              .usuarioId, // Asegúrate de tener el usuarioId disponible aquí
+                          carritoRepository: widget
+                              .carritoRepository, // Y el carritoRepository
+                        ),
+                      ),
+                    ),
+                  );
                 },
                 child: ComercioWidget(
-                  contentElement: c,
-                ),
+                    contentElement: c,
+                    usuarioId: widget.usuarioId,
+                    carritoRepository: widget.carritoRepository),
               );
             },
           );
