@@ -1,6 +1,6 @@
 
 
-
+DELETE FROM producto_ingredientes;
 INSERT INTO usuario (id, name,last_name, username, email, password,phone_number,ACCOUNT_NON_EXPIRED,ACCOUNT_NON_LOCKED,CREDENTIALS_NON_EXPIRED,enabled) VALUES ('5d818565-99f9-4d80-920e-8259c6ecb8e6', 'Pedro','pepe', 'ToRechulon', 'pedro@gmail.com', '{bcrypt}$2a$10$05HASeZdtwl8NS/nWbNMJOU07tiGZ9Z/mVE2Z.FKhsyjkCK7yuLqa',383838,true,true,true,true);
 INSERT INTO usuario_roles ( roles,usuario_id) VALUES (0,'5d818565-99f9-4d80-920e-8259c6ecb8e6');
 INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen)VALUES ('f89f898a-70aa-48d5-8088-3f3c892d7bae', 'Las Lozas', '1233232', '232121', 4.8, 'La puebla del rio','https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
@@ -41,12 +41,18 @@ INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, image
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('efe9e900-9dad-11d1-80b4-00c04fd430c9', 'BAR');
 
 
-INSERT INTO ingredientes(id,name) VALUES('241149d3-01e0-4ab6-ab80-d5839d08d2dd','queso');
+INSERT INTO ingredientes(id,name,imagen) VALUES('241149d3-01e0-4ab6-ab80-d5839d08d2dd','queso','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-aJrV-c_wMpQuZd9CGVpTmGIxYsBBSD5Y9w&usqp=CAU');
+INSERT INTO ingredientes(id,name,imagen) VALUES('9dcc75d8-4b5d-4d1f-a4c8-fcae5b85b0ff','bacon','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToq2hM1WG_DfqtcNXFQitF0uYK7QlH22b7wg&usqp=CAU');
+
 INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'b714eea5-9b28-4e8c-b189-83d8fc14a834','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','Hamburguesa');
 INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'550e8400-e29b-41d4-a716-446655440000','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','Manzana');
 INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','CocaCola');
 INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'7b8e6e8d-a202-4927-9bb9-9124a3049c4e','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','Fanta');
+
+
 INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('241149d3-01e0-4ab6-ab80-d5839d08d2dd','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('9dcc75d8-4b5d-4d1f-a4c8-fcae5b85b0ff','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+
 
 
 INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('ffeae900-9dad-11d1-80b4-00c04fd430c9', 'Cafetería ', '1233232', '232121', 4.6, 'La puebla del rio', 'https://th.bing.com/th/id/OIP.EK3cUr1Ocrap5-a7LdHP_AHaE7?rs=1&pid=ImgDetMain');

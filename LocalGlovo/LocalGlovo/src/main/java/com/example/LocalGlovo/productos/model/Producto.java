@@ -35,8 +35,11 @@ public class Producto {
     @Column(name = "disponible")
     protected boolean disponible;
 
-    @Column(name = "ingrediente_id")
+
+    @Column(name = "ingredientes_id")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    protected Set<Ingredientes> ingredientes;
+    private Set<Ingredientes> ingredientes;
+
+
 
 }

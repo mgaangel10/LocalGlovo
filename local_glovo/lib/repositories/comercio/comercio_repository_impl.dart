@@ -59,4 +59,31 @@ class ComercioRepositoryImpl extends ComercioRepository {
       throw UnimplementedError('Failed to load detalles comercios');
     }
   }
+
+  @override
+  Future<Productos> viewIngredientes(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    final response = await _httpClient.get(
+      Uri.parse('http://localhost:9000/usuario/productos/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      print('Response body: ${response.body}');
+      final responseBody = Productos.fromJson(json.decode(response.body));
+
+      final content = responseBody;
+
+      return content;
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      print('Response body: ${response.body}');
+      throw UnimplementedError('Failed to load detalles comercios');
+    }
+  }
 }

@@ -7,16 +7,14 @@ import com.example.LocalGlovo.productos.Dto.GetListProducto;
 import com.example.LocalGlovo.productos.Dto.PostProductoDto;
 import com.example.LocalGlovo.productos.model.Ingredientes;
 import com.example.LocalGlovo.productos.model.Producto;
+import com.example.LocalGlovo.productos.repository.IngredientesRepo;
 import com.example.LocalGlovo.productos.repository.ProdcutoRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +22,7 @@ import java.util.stream.Collectors;
 public class ProductoService {
     private final ProdcutoRepo prodcutoRepo;
     private final ComercioRepo comercioRepo;
+    private final IngredientesRepo ingredientesRepo;
     public Producto crearProducto(PostProductoDto postProductoDto){
         Producto producto = new Producto();
         producto.setImagen(postProductoDto.imagen());
@@ -63,6 +62,34 @@ public class ProductoService {
 
 
        return comercioRepo.save(comercio);
+    }
+
+    public Ingredientes finByIdIngredientes(UUID uuid){
+        Optional<Ingredientes> ingredientes = ingredientesRepo.findById(uuid);
+        if (ingredientes.isEmpty()){
+            throw new RuntimeException("No hay ingredientes con ese id");
+        }else{
+            return ingredientes.get();
+        }
+
+    }
+
+    public Producto buscarPorID(UUID uuid){
+        Optional<Producto> productoOptional = prodcutoRepo.findById(uuid);
+        if (productoOptional.isEmpty()){
+            throw new RuntimeException("no hay productos con ese id");
+        }else{
+          return   productoOptional.get();
+        }
+    }
+
+    public void EliminarIngredientes(UUID uuid) {
+        Optional<Ingredientes> ingredientesOptional = ingredientesRepo.findById(uuid);
+        if (ingredientesOptional.isEmpty()) {
+            throw new RuntimeException("No hay ingredientes con ese id");
+        } else {
+            ingredientesRepo.delete(ingredientesOptional.get());
+        }
     }
 
 

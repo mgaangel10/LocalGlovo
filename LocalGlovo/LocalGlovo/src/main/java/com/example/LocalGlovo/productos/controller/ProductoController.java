@@ -4,6 +4,7 @@ import com.example.LocalGlovo.comercios.Dto.GetListComercios;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.productos.Dto.GetListProducto;
 import com.example.LocalGlovo.productos.Dto.PostProductoDto;
+import com.example.LocalGlovo.productos.model.Ingredientes;
 import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.productos.service.ProductoService;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,24 @@ public class ProductoController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("usuario/ingredientes/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable UUID id){
+        Ingredientes ingredientes = productoService.finByIdIngredientes(id);
+        return ResponseEntity.ok(ingredientes);
+    }
+
+    @GetMapping("usuario/productos/{id}")
+    public ResponseEntity<?> buscarPorIdProductos(@PathVariable UUID id){
+        Producto producto = productoService.buscarPorID(id);
+        return ResponseEntity.ok(producto);
+    }
+
+    @DeleteMapping("usuario/delete/ingredientes/{id}")
+    public ResponseEntity<?> eliminarIngredientes(@PathVariable UUID id){
+        productoService.EliminarIngredientes(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
