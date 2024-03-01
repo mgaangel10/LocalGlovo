@@ -10,9 +10,8 @@ import 'package:local_glovo/ui/widget/comercio_list.dart';
 
 class HomePage extends StatefulWidget {
   final CarritoRepository carritoRepository;
-  final String usuarioId;
-  const HomePage(
-      {super.key, required this.carritoRepository, required this.usuarioId});
+
+  const HomePage({super.key, required this.carritoRepository});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -52,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         if (state is ComercioSuccess) {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Número de tarjetas por fila
+              crossAxisCount: 2,
             ),
             itemCount: state.comercioList.length,
             itemBuilder: (context, index) {
@@ -70,10 +69,7 @@ class _HomePageState extends State<HomePage> {
                         value: detallesCoemercio,
                         child: ComercioDetailsPage(
                           comercioID: c.id!,
-                          usuarioId: widget
-                              .usuarioId, // Asegúrate de tener el usuarioId disponible aquí
-                          carritoRepository: widget
-                              .carritoRepository, // Y el carritoRepository
+                          carritoRepository: widget.carritoRepository,
                         ),
                       ),
                     ),
@@ -81,7 +77,6 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: ComercioWidget(
                     contentElement: c,
-                    usuarioId: widget.usuarioId,
                     carritoRepository: widget.carritoRepository),
               );
             },
@@ -103,11 +98,9 @@ class _HomePageState extends State<HomePage> {
       child: TextField(
         decoration: InputDecoration(
           labelText: 'Buscar',
-          suffixIcon:
-              Icon(Icons.search), // Añade un ícono de búsqueda a la derecha
+          suffixIcon: Icon(Icons.search),
           border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(30), // Hace que los bordes sean redondos
+            borderRadius: BorderRadius.circular(30),
           ),
         ),
       ),

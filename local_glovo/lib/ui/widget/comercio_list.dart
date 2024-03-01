@@ -4,13 +4,11 @@ import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 
 class ComercioWidget extends StatelessWidget {
-  final String usuarioId;
   final CarritoRepository carritoRepository;
   final Content contentElement;
   const ComercioWidget(
       {super.key,
       required this.contentElement,
-      required this.usuarioId,
       required this.carritoRepository});
 
   @override
@@ -22,9 +20,7 @@ class ComercioWidget extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ComercioDetailsPage(
               comercioID: contentElement.id!,
-              usuarioId:
-                  usuarioId, // Asegúrate de tener el usuarioId disponible aquí
-              carritoRepository: carritoRepository, // Y el carritoRepository
+              carritoRepository: carritoRepository,
             ),
           ),
         );

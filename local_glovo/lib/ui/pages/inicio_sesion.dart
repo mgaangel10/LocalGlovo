@@ -8,10 +8,8 @@ import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
 
 class InicioSesion extends StatefulWidget {
-  final String usuarioId;
   final CarritoRepository carritoRepository;
-  const InicioSesion(
-      {super.key, required this.usuarioId, required this.carritoRepository});
+  const InicioSesion({super.key, required this.carritoRepository});
 
   @override
   State<InicioSesion> createState() => _InicioSesionState();
@@ -185,7 +183,6 @@ class _InicioSesionState extends State<InicioSesion> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => HomePage(
-                                usuarioId: widget.usuarioId,
                                 carritoRepository: widget.carritoRepository,
                               ),
                             ),

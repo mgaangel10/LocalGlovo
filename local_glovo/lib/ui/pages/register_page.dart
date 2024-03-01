@@ -7,10 +7,8 @@ import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 
 class RegisterPage extends StatefulWidget {
-  final String usuarioId;
   final CarritoRepository carritoRepository;
-  const RegisterPage(
-      {super.key, required this.usuarioId, required this.carritoRepository});
+  const RegisterPage({super.key, required this.carritoRepository});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -75,7 +73,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => InicioSesion(
-                    usuarioId: widget.usuarioId,
                     carritoRepository: widget.carritoRepository,
                   ),
                 ),
@@ -302,7 +299,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => InicioSesion(
-                                usuarioId: widget.usuarioId,
                                 carritoRepository: widget.carritoRepository,
                               ),
                             ),

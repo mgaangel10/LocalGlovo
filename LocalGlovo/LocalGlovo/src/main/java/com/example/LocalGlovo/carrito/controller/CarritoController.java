@@ -32,7 +32,7 @@ public class CarritoController {
         Producto producto = productoService.buscarPorID(productoId);
         carritoService.agregarProductoAlCarrito(usuario.get(), producto);
         Carrito carrito= carritoService.buscarCarritoActivoDelUsuario(usuario.get());
-        return ResponseEntity.ok(carrito);
+        return ResponseEntity.status(201).body(carrito);
     }
 
 

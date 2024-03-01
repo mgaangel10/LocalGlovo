@@ -8,12 +8,9 @@ import 'package:local_glovo/ui/pages/ingredientes_page.dart';
 class ComercioDetailsPage extends StatefulWidget {
   final String comercioID;
   final CarritoRepository carritoRepository;
-  final String usuarioId;
+
   const ComercioDetailsPage(
-      {Key? key,
-      required this.comercioID,
-      required this.carritoRepository,
-      required this.usuarioId})
+      {Key? key, required this.comercioID, required this.carritoRepository})
       : super(key: key);
 
   @override
@@ -132,13 +129,12 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                                 onPressed: () async {
                                   String productoId =
                                       comercio.productos![index].id!;
-                                  await widget.carritoRepository.addAlCarrito(
-                                      widget.usuarioId, productoId);
+                                  await widget.carritoRepository
+                                      .addAlCarrito(productoId);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CarritoPage(
-                                        usuarioId: widget.usuarioId,
                                         carritoRepository: widget
                                             .carritoRepository, // Asegúrate de pasar el carritoRepository aquí
                                       ),

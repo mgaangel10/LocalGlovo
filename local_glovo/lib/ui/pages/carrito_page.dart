@@ -6,9 +6,8 @@ import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 
 class CarritoPage extends StatefulWidget {
   final CarritoRepository carritoRepository;
-  final String usuarioId;
-  const CarritoPage(
-      {super.key, required this.usuarioId, required this.carritoRepository});
+
+  const CarritoPage({super.key, required this.carritoRepository});
 
   @override
   State<CarritoPage> createState() => _CarritoPageState();
@@ -38,9 +37,7 @@ class _CarritoPageState extends State<CarritoPage> {
                         Text('${lineaCarrito.producto!.precio.toString()}€'),
                     trailing: IconButton(
                       icon: Icon(Icons.delete),
-                      onPressed: () {
-                        // Aquí puedes implementar la lógica para eliminar un producto del carrito
-                      },
+                      onPressed: () {},
                     ),
                   ),
                 );

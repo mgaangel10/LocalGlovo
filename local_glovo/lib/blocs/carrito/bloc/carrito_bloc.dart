@@ -20,9 +20,9 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
     emit(CarritoLoading());
     final SharedPreferences preferences = await _prefs;
     try {
-      final carritoResponse = await carritoRepository.addAlCarrito(
-          event.usuarioId, event.productoId);
-      preferences.setString('usuarioId', carritoResponse.usuario!.id!);
+      final carritoResponse =
+          await carritoRepository.addAlCarrito(event.productoId);
+
       print(
           'usuarioId guardado: ${carritoResponse.usuario!.id!}'); // Imprime el usuarioId guardado
       emit(CarritoSucces(carritoResponse));
