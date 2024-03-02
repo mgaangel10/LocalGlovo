@@ -18,7 +18,9 @@ public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
             c.name,
             c.rating,
             c.nameDirection,
-            c.imagen
+            c.imagen,
+            c.latitud,
+            c.longitud
             )
             from Comercio c
             """)

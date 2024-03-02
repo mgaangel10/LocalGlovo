@@ -74,8 +74,17 @@ class Content {
   double? rating;
   String? nameDirection;
   String? imagen;
+  double? latitud;
+  double? longitud;
 
-  Content({this.id, this.name, this.rating, this.nameDirection, this.imagen});
+  Content(
+      {this.id,
+      this.name,
+      this.rating,
+      this.nameDirection,
+      this.imagen,
+      this.latitud,
+      this.longitud});
 
   Content.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -83,6 +92,8 @@ class Content {
     rating = json['rating'];
     nameDirection = json['nameDirection'];
     imagen = json['imagen'];
+    latitud = json['latitud'];
+    longitud = json['longitud'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,6 +103,8 @@ class Content {
     data['rating'] = this.rating;
     data['nameDirection'] = this.nameDirection;
     data['imagen'] = this.imagen;
+    data['latitud'] = this.latitud;
+    data['longitud'] = this.longitud;
     return data;
   }
 }
@@ -101,24 +114,24 @@ class Pageable {
   int? pageSize;
   Sort? sort;
   int? offset;
-  bool? paged;
   bool? unpaged;
+  bool? paged;
 
   Pageable(
       {this.pageNumber,
       this.pageSize,
       this.sort,
       this.offset,
-      this.paged,
-      this.unpaged});
+      this.unpaged,
+      this.paged});
 
   Pageable.fromJson(Map<String, dynamic> json) {
     pageNumber = json['pageNumber'];
     pageSize = json['pageSize'];
     sort = json['sort'] != null ? new Sort.fromJson(json['sort']) : null;
     offset = json['offset'];
-    paged = json['paged'];
     unpaged = json['unpaged'];
+    paged = json['paged'];
   }
 
   Map<String, dynamic> toJson() {
@@ -129,8 +142,8 @@ class Pageable {
       data['sort'] = this.sort!.toJson();
     }
     data['offset'] = this.offset;
-    data['paged'] = this.paged;
     data['unpaged'] = this.unpaged;
+    data['paged'] = this.paged;
     return data;
   }
 }

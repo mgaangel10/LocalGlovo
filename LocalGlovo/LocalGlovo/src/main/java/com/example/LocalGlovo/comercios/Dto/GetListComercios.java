@@ -6,5 +6,7 @@ public record GetListComercios(UUID id,
                                String name,
                                double rating,
                                String nameDirection,
-                               String imagen) {
+                               String imagen,
+                               double latitud,
+                               double longitud) {
 }

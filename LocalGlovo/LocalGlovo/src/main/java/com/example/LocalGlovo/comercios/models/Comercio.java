@@ -28,10 +28,10 @@ public class Comercio {
     protected String name;
 
     @Column(name = "latitud")
-    protected String latitud;
+    protected double latitud;
 
     @Column(name = "longitud")
-    protected String longitud;
+    protected double longitud;
 
     @Column(name = "rating")
     protected double rating;
