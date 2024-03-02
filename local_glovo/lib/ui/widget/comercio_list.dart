@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:local_glovo/models/response/comercio_response.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 
 class ComercioWidget extends StatelessWidget {
+  final CarritoRepository carritoRepository;
   final Content contentElement;
-  const ComercioWidget({super.key, required this.contentElement});
+  const ComercioWidget(
+      {super.key,
+      required this.contentElement,
+      required this.carritoRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +18,11 @@ class ComercioWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ComercioDetailsPage(
-                    comercioID: contentElement.id!,
-                  )),
+            builder: (context) => ComercioDetailsPage(
+              comercioID: contentElement.id!,
+              carritoRepository: carritoRepository,
+            ),
+          ),
         );
       },
       child: Container(
