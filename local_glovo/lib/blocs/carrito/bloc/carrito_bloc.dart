@@ -13,7 +13,8 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
   final CarritoRepository carritoRepository;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   CarritoBloc(this.carritoRepository) : super(CarritoInitial()) {
-    on<CarritoEvent>(_onCarritoFetch);
+    on<CarritoItem>(_onCarritoFetch);
+    on<CArritoDeleteItem>(_onCarritoDeteleFetch);
   }
 
   void _onCarritoFetch(CarritoEvent event, Emitter<CarritoState> emit) async {
@@ -26,6 +27,19 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
       print(
           'usuarioId guardado: ${carritoResponse.usuario!.id!}'); // Imprime el usuarioId guardado
       emit(CarritoSucces(carritoResponse));
+    } catch (e) {
+      emit(CarritoError(e.toString()));
+    }
+  }
+
+  void _onCarritoDeteleFetch(
+      CarritoEvent event, Emitter<CarritoState> emit) async {
+    emit(CarritoLoading());
+    final SharedPreferences preferences = await _prefs;
+    try {
+      final carritoDeleteResponse = await carritoRepository.deleteProducto(
+          event.carritoId, event.productoId);
+      emit(CarritoDeleteSucess());
     } catch (e) {
       emit(CarritoError(e.toString()));
     }

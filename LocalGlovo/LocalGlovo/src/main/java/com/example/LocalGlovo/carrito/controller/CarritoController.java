@@ -10,10 +10,7 @@ import com.example.LocalGlovo.users.model.Usuario;
 import com.example.LocalGlovo.users.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -57,6 +54,12 @@ public class CarritoController {
     public ResponseEntity<List<GetCarritoDto>> allCarrito(){
         List<GetCarritoDto> carritoDtos = carritoService.listarCarrito();
         return ResponseEntity.ok(carritoDtos);
+    }
+
+    @DeleteMapping("usuario/eliminar/producto/carrito/{carritoId}/{productoId}")
+    public ResponseEntity<?> eliminarProductoDelCarrito(@PathVariable UUID carritoId,@PathVariable UUID productoId){
+        carritoService.eliminarProductoDelCarrito(carritoId,productoId);
+        return ResponseEntity.noContent().build();
     }
 
 }

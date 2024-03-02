@@ -35,4 +35,26 @@ class CarritoRepositoryImpl extends CarritoRepository {
       throw UnimplementedError('Failed to load carrito');
     }
   }
+
+  @override
+  Future<void> deleteProducto(String carritoId, String productoId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    final response = await _httpClient.delete(
+      Uri.parse(
+          'http://localhost:9000/usuario/eliminar/producto/carrito/$carritoId/$productoId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    print('Response status: ${response.statusCode}');
+    if (response.statusCode == 204) {
+      return;
+    } else {
+      throw UnimplementedError('Failed to load delete');
+    }
+  }
 }

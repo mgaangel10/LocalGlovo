@@ -93,7 +93,13 @@ public class CarritoService {
 
 
 
-    public void eliminarProductoDelCarrito(Carrito carrito, Producto producto) {
+    public void eliminarProductoDelCarrito(UUID idCarrito, UUID idProducto) {
+        Carrito carrito = carritoRepository.findById(idCarrito)
+                .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
+
+        Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
         LineaCarrito lineaCarrito = carrito.getLineasCarrito().stream()
                 .filter(linea -> linea.getProducto().getId().equals(producto.getId()))
                 .findFirst()
@@ -108,6 +114,7 @@ public class CarritoService {
         carritoRepository.save(carrito);
         actualizarTotalCarrito(carrito);
     }
+
 
 
     public List<LineaCarrito> obtenerProductosEnCarrito(UUID id) {

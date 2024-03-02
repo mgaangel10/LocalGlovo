@@ -2,12 +2,18 @@ part of 'carrito_bloc.dart';
 
 @immutable
 sealed class CarritoEvent {
-  late final String usuarioId;
+  late final String carritoId;
   late final String productoId;
 }
 
 final class CarritoItem extends CarritoEvent {
-  final String usuarioId;
   final String productoId;
-  CarritoItem({required this.usuarioId, required this.productoId});
+  CarritoItem({required this.productoId});
+}
+
+final class CArritoDeleteItem extends CarritoEvent {
+  final String carritoId;
+  final String productoId;
+
+  CArritoDeleteItem({required this.carritoId, required this.productoId});
 }
