@@ -12,7 +12,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<LoginResponse> login(LoginDto loginDto) async {
     final response = await _httpClient.post(
-      Uri.parse('http://localhost:9000/auth/login/user'),
+      Uri.parse('http://10.0.2.2:9000/auth/login/user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'accept': 'application/json',
@@ -36,7 +36,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<RegisterResponse> register(RegisterDto registerDto) async {
     final response = await _httpClient.post(
-      Uri.parse('http://localhost:9000/auth/register/user'),
+      Uri.parse('http://10.0.2.2:9000/auth/register/user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

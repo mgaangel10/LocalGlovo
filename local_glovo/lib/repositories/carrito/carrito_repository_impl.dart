@@ -15,8 +15,7 @@ class CarritoRepositoryImpl extends CarritoRepository {
     String? id = prefs.getString("usuarioId");
 
     final response = await _httpClient.post(
-      Uri.parse(
-          'http://localhost:9000/usuario/$id/agregar/carrito/$productoId'),
+      Uri.parse('http://10.0.2.2:9000/usuario/$id/agregar/carrito/$productoId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'accept': 'application/json',
@@ -43,7 +42,7 @@ class CarritoRepositoryImpl extends CarritoRepository {
 
     final response = await _httpClient.delete(
       Uri.parse(
-          'http://localhost:9000/usuario/eliminar/producto/carrito/$carritoId/$productoId'),
+          'http://10.0.2.2:9000/usuario/eliminar/producto/carrito/$carritoId/$productoId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'accept': 'application/json',

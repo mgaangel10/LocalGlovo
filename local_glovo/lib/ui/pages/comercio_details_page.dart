@@ -97,16 +97,14 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                       Container(
                         margin: EdgeInsets.only(bottom: 8.0),
                         child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.network(
-                              comercio.imagen != null &&
-                                      Uri.parse(comercio.imagen!).isAbsolute
-                                  ? comercio.imagen!
-                                  : 'https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no',
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 130,
-                            )),
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.network(
+                            comercio.imagen!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 130,
+                          ),
+                        ),
                       ),
                       ListTile(
                         leading: Row(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:local_glovo/models/response/comercio_response.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository_impl.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
+import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 
 class ListadoComercios extends StatefulWidget {
   const ListadoComercios({Key? key}) : super(key: key);
@@ -25,57 +27,46 @@ class _ListadoComerciosState extends State<ListadoComercios> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<Content>>(
       future: list,
-      builder: (context, AsyncSnapshot<List<Content>> snapshot) {
+      builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Text("Ha ocurrido un error");
+          return Text('Error: ${snapshot.error}');
         } else {
-          final comercioList = snapshot.data!;
-          return Scaffold(
-            body: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: comercioList.length,
-                    itemBuilder: (context, index) {
-                      final comercio = comercioList[index];
-                      return ListTile(
-                        title: Text(comercio.name! + ""),
-                        subtitle: Text(comercio.nameDirection! + ""),
-                        onTap: () {
-                          // Aquí puedes manejar la selección del comercio
-                        },
-                      );
-                    },
-                  ),
-                ),
-                Container(
-                  height: 200, // Altura del mapa
-                  child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                          comercioList[0].latitud!, comercioList[0].longitud!),
-                    ),
-                    markers: comercioList.map((comercio) {
-                      return Marker(
-                        markerId: MarkerId(comercio.id.toString()),
-                        position: LatLng(comercio.latitud!, comercio.longitud!),
-                        infoWindow: InfoWindow(
-                          title: comercio.name!,
-                          snippet: comercio.nameDirection!,
-                        ),
-                      );
-                    }).toSet(),
-                    onMapCreated: (GoogleMapController controller) {
-                      mapController = controller;
-                    },
-                  ),
-                ),
-              ],
+          return GoogleMap(
+            onMapCreated: (GoogleMapController controller) {
+              mapController = controller;
+            },
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                  snapshot.data![0].latitud!, snapshot.data![0].longitud!),
+              zoom: 14.0,
             ),
+            markers: snapshot.data!.map((comercio) {
+              return Marker(
+                markerId: MarkerId(comercio.id!),
+                position: LatLng(comercio.latitud ?? 0, comercio.longitud ?? 0),
+                infoWindow: InfoWindow(
+                  title: comercio.name,
+                  snippet: comercio.nameDirection,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ComercioDetailsPage(
+                          comercioID: comercio.id!,
+                          carritoRepository: CarritoRepositoryImpl(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueViolet),
+              );
+            }).toSet(),
           );
         }
       },
