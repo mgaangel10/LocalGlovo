@@ -132,12 +132,12 @@ public class CarritoService {
     }
 
 
-    public void vaciarCarrito(UUID id) {
+    public Carrito vaciarCarrito(UUID id) {
         Carrito carrito = carritoRepository.findById(id).orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
         carrito.setCantidad(0);
         carrito.getLineasCarrito().clear();
         carrito.setTotal(0);
-        carritoRepository.save(carrito);
+       return carritoRepository.save(carrito);
     }
 
     public Carrito buscarCarritoActivoDelUsuario(Usuario usuario) {
@@ -151,6 +151,18 @@ public class CarritoService {
         carritoRepository.save(carrito);
         return carrito;
     }
+
+    public Carrito TerminarCarrito(UUID id) {
+        Optional<Carrito> carritoOptional = carritoRepository.findById(id);
+        if (carritoOptional.isEmpty()) {
+            throw new RuntimeException("No se encontró el carrito");
+        } else {
+            carritoOptional.get().setEstado(Estado.TERMINADO);
+            return  carritoRepository.save(carritoOptional.get());
+
+        }
+    }
+
 
     public List<GetCarritoDto> listarCarrito(){
         return carritoRepository.getListCarrito();

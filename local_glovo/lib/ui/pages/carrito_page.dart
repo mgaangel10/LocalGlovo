@@ -4,6 +4,7 @@ import 'package:local_glovo/blocs/carrito/bloc/carrito_bloc.dart';
 import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to_cart.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository_impl.dart';
+import 'package:local_glovo/ui/pages/entrega_page.dart';
 
 class CarritoPage extends StatefulWidget {
   final CarritoRepository carritoRepository;
@@ -181,25 +182,32 @@ class _CarritoPageState extends State<CarritoPage> {
               left: 0,
               right: 0,
               child: Container(
-                width: 150,
-                height: 68,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                  ),
-                  onPressed: () {},
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(width: 8),
-                      Text('Proceder a pago',
-                          style: TextStyle(color: Colors.white, fontSize: 20)),
-                      Icon(Icons.shopping_cart, color: Colors.white),
-                    ],
-                  ),
-                ),
-              ),
+                  width: 150,
+                  height: 68,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.black),
+                    ),
+                    onPressed: () {
+                      // Navegar a la página EntregaPage
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EntregaPage()),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(width: 8),
+                        Text(
+                          'Proceder a pago',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        Icon(Icons.shopping_cart, color: Colors.white),
+                      ],
+                    ),
+                  )),
             ),
           ],
         );

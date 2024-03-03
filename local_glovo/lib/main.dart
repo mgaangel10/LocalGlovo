@@ -29,10 +29,6 @@ class MyApp extends StatelessWidget {
               ComercioBloc(context.read<ComercioRepositoryImpl>()),
           dispose: (_, ComercioBloc bloc) => bloc.close(),
         ),
-        Provider<ViewIngredientesBloc>(
-          create: (BuildContext context) =>
-              ViewIngredientesBloc(context.read<ComercioRepositoryImpl>()),
-        ),
       ],
       child: MaterialApp(
         title: 'My App',
