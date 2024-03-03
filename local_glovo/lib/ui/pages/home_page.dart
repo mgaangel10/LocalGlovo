@@ -8,11 +8,12 @@ import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart'
 import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
+import 'package:local_glovo/ui/widget/geocalizacion.dart';
 
 class HomePage extends StatefulWidget {
   final CarritoRepository carritoRepository;
 
-  const HomePage({super.key, required this.carritoRepository});
+  const HomePage({Key? key, required this.carritoRepository}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -50,7 +51,12 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildSearchBar(),
             _buildFilterButtons(),
-            Expanded(child: _ComercioList()),
+            Expanded(
+              child: ListadoComercios(),
+            ),
+            Expanded(
+              child: _ComercioList(),
+            ),
           ],
         ),
         bottomNavigationBar: Container(

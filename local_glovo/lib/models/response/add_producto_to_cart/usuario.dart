@@ -16,7 +16,7 @@ class Usuario {
   bool? accountNonLocked;
   bool? credentialsNonExpired;
   bool? enabled;
-  List<dynamic>? roles;
+  List<String>? roles;
   dynamic createdAt;
   dynamic lastPasswordChangeAt;
   List<dynamic>? usuarios;
@@ -59,7 +59,9 @@ class Usuario {
         accountNonLocked: data['accountNonLocked'] as bool?,
         credentialsNonExpired: data['credentialsNonExpired'] as bool?,
         enabled: data['enabled'] as bool?,
-        roles: data['roles'] as List<dynamic>?,
+        roles: (data['roles'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .toList(),
         createdAt: data['createdAt'] as dynamic,
         lastPasswordChangeAt: data['lastPasswordChangeAt'] as dynamic,
         usuarios: data['usuarios'] as List<dynamic>?,

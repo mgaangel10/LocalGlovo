@@ -62,4 +62,10 @@ public class CarritoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("usuario/terminar/carrito/{id}")
+    public ResponseEntity<Carrito> terminarCarrito(@PathVariable UUID id){
+        Carrito carrito = carritoService.TerminarCarrito(id);
+        return  ResponseEntity.status(201).body(carrito);
+    }
+
 }

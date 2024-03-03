@@ -25,6 +25,7 @@ class ComercioDetailsBloc
           await comercioRepository.comercioDetalles(event.comercioId);
       emit(ComercioDetailsSucces(comercioDetailsResponse));
     } catch (e) {
+      print('Error: $e');
       emit(ComercioDetailsError(e.toString()));
     }
   }

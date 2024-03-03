@@ -2,8 +2,8 @@ class ComercioDetailsResponse {
   String? id;
   String? imagen;
   String? name;
-  String? latitud;
-  String? longitud;
+  double? latitud;
+  double? longitud;
   double? rating;
   String? nameDirection;
   List<String>? categorias;
@@ -58,7 +58,7 @@ class Productos {
   String? id;
   String? imagen;
   String? name;
-  int? precio;
+  double? precio; // Cambia 'int?' a 'double?'
   bool? disponible;
   List<Ingredientes>? ingredientes;
 
@@ -74,7 +74,8 @@ class Productos {
     id = json['id'];
     imagen = json['imagen'];
     name = json['name'];
-    precio = json['precio'];
+    precio =
+        json['precio'].toDouble(); // Asegúrate de convertir el valor a 'double'
     disponible = json['disponible'];
     if (json['ingredientes'] != null) {
       ingredientes = <Ingredientes>[];
