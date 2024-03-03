@@ -15,6 +15,7 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
   CarritoBloc(this.carritoRepository) : super(CarritoInitial()) {
     on<CarritoItem>(_onCarritoFetch);
     on<CArritoDeleteItem>(_onCarritoDeteleFetch);
+    on<CarritoTerminadoItem>(_onCarritoTerminadoFetch);
   }
 
   void _onCarritoFetch(CarritoEvent event, Emitter<CarritoState> emit) async {
@@ -40,6 +41,20 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
       final carritoDeleteResponse = await carritoRepository.deleteProducto(
           event.carritoId, event.productoId);
       emit(CarritoDeleteSucess());
+    } catch (e) {
+      emit(CarritoError(e.toString()));
+    }
+  }
+
+  void _onCarritoTerminadoFetch(
+      CarritoTerminadoItem event, Emitter<CarritoState> emit) async {
+    emit(CarritoLoading());
+    final SharedPreferences preferences = await _prefs;
+    try {
+      final carritoTerminadoResponse =
+          await carritoRepository.terminarCarrito(event.carritoId);
+
+      emit(CarritoTerminadoSucess(carritoTerminadoResponse));
     } catch (e) {
       emit(CarritoError(e.toString()));
     }

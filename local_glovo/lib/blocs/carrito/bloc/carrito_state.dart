@@ -16,7 +16,10 @@ final class CarritoDeleteSucess extends CarritoInitial {
   CarritoDeleteSucess();
 }
 
-final class CarritoTerminadoSucess extends CarritoInitial {}
+final class CarritoTerminadoSucess extends CarritoInitial {
+  final AddProductoToCart carrito;
+  CarritoTerminadoSucess(this.carrito);
+}
 
 final class CarritoError extends CarritoInitial {
   final String error;

@@ -16,8 +16,8 @@ class LineasCarrito {
             ? null
             : Producto.fromMap(data['producto'] as Map<String, dynamic>),
         cantidad: data['cantidad'] as int?,
-        total: (data['total'] as num?)?.toDouble() ??
-            0.0, // Proporciona un valor predeterminado en caso de que la conversión falle
+        total: data['total'] != null ? data['total'].toDouble() : null,
+// Proporciona un valor predeterminado en caso de que la conversión falle
       );
 
   Map<String, dynamic> toMap() => {

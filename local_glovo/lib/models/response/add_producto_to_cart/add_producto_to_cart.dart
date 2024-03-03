@@ -25,11 +25,11 @@ class AddProductoToCart {
     return AddProductoToCart(
       id: data['id'] as String?,
       cantidad: data['cantidad'] as int?,
-      total: data['total'].toDouble(),
+      total: data['total'] != null ? data['total'].toDouble() : null,
       lineasCarrito: (data['lineasCarrito'] as List<dynamic>?)
               ?.map((e) => LineasCarrito.fromMap(e as Map<String, dynamic>))
               .toList() ??
-          [], // Agrega el operador de null-aware (??) para manejar el caso en que 'lineasCarrito' sea null
+          [],
       usuario: data['usuario'] == null
           ? null
           : Usuario.fromMap(data['usuario'] as Map<String, dynamic>),
@@ -46,15 +46,9 @@ class AddProductoToCart {
         'estado': estado,
       };
 
-  /// `dart:convert`
-  ///
-  /// Parses the string and returns the resulting Json object as [AddProductoToCart].
   factory AddProductoToCart.fromJson(String data) {
     return AddProductoToCart.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
-  /// `dart:convert`
-  ///
-  /// Converts [AddProductoToCart] to a JSON string.
   String toJson() => json.encode(toMap());
 }

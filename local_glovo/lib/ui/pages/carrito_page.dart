@@ -193,7 +193,10 @@ class _CarritoPageState extends State<CarritoPage> {
                       // Navegar a la página EntregaPage
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EntregaPage()),
+                        MaterialPageRoute(
+                            builder: (context) => EntregaPage(
+                                  carritoId: state.carrito.id!,
+                                )),
                       );
                     },
                     child: Row(

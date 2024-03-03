@@ -72,6 +72,7 @@ class CarritoRepositoryImpl extends CarritoRepository {
     );
 
     print('token: $token');
+    print('carritoId:$carritoId');
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     if (response.statusCode == 201) {
@@ -79,6 +80,8 @@ class CarritoRepositoryImpl extends CarritoRepository {
       final content = responseBody;
       return content;
     } else {
+      print('Request failed with status: ${response.statusCode}.');
+      print('Response body: ${response.body}');
       throw UnimplementedError('Failed to load carrito');
     }
   }
