@@ -5,4 +5,5 @@ abstract class ComercioRepository {
   Future<List<Content>> listarComercios();
   Future<ComercioDetailsResponse> comercioDetalles(String id);
   Future<Productos> viewIngredientes(String id);
+  Future<List<Content>> filtrarCategorias(String categorias);
 }

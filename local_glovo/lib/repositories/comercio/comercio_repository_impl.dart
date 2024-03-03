@@ -86,4 +86,27 @@ class ComercioRepositoryImpl extends ComercioRepository {
       throw UnimplementedError('Failed to load detalles comercios');
     }
   }
+
+  @override
+  Future<List<Content>> filtrarCategorias(String categorias) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    final response = await _httpClient.get(
+      Uri.parse('http://10.0.2.2:9000/usuario/filtrar/comercios/$categorias'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      final responseBody =
+          ComercioResponse.fromJson(json.decode(response.body));
+      final content = responseBody.content!;
+      return content;
+    } else {
+      throw UnimplementedError('Failed to load comercios categorias');
+    }
+  }
 }

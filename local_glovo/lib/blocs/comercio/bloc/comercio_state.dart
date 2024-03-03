@@ -10,6 +10,8 @@ sealed class ComercioState {
 
 final class ComercioInitial extends ComercioState {}
 
+final class ComercioLoading extends ComercioState {}
+
 final class ComercioSuccess extends ComercioState {
   final List<Content> comercioList;
   const ComercioSuccess(this.comercioList);
@@ -23,4 +25,9 @@ final class ComercioError extends ComercioState {
 final class ComercioDetallesClick extends ComercioState {
   final String coemercioId;
   const ComercioDetallesClick(this.coemercioId);
+}
+
+final class ComercioCategoriaSucess extends ComercioState {
+  final List<Content> categorias;
+  ComercioCategoriaSucess(this.categorias);
 }

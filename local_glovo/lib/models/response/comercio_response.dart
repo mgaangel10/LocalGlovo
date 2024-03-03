@@ -76,6 +76,7 @@ class Content {
   String? imagen;
   double? latitud;
   double? longitud;
+  String? categorias;
 
   Content(
       {this.id,
@@ -84,7 +85,8 @@ class Content {
       this.nameDirection,
       this.imagen,
       this.latitud,
-      this.longitud});
+      this.longitud,
+      this.categorias});
 
   Content.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -94,6 +96,7 @@ class Content {
     imagen = json['imagen'];
     latitud = json['latitud'];
     longitud = json['longitud'];
+    categorias = json['categorias'];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +108,7 @@ class Content {
     data['imagen'] = this.imagen;
     data['latitud'] = this.latitud;
     data['longitud'] = this.longitud;
+    data['categorias'] = this.categorias;
     return data;
   }
 }
@@ -114,24 +118,24 @@ class Pageable {
   int? pageSize;
   Sort? sort;
   int? offset;
-  bool? unpaged;
   bool? paged;
+  bool? unpaged;
 
   Pageable(
       {this.pageNumber,
       this.pageSize,
       this.sort,
       this.offset,
-      this.unpaged,
-      this.paged});
+      this.paged,
+      this.unpaged});
 
   Pageable.fromJson(Map<String, dynamic> json) {
     pageNumber = json['pageNumber'];
     pageSize = json['pageSize'];
     sort = json['sort'] != null ? new Sort.fromJson(json['sort']) : null;
     offset = json['offset'];
-    unpaged = json['unpaged'];
     paged = json['paged'];
+    unpaged = json['unpaged'];
   }
 
   Map<String, dynamic> toJson() {
@@ -142,30 +146,30 @@ class Pageable {
       data['sort'] = this.sort!.toJson();
     }
     data['offset'] = this.offset;
-    data['unpaged'] = this.unpaged;
     data['paged'] = this.paged;
+    data['unpaged'] = this.unpaged;
     return data;
   }
 }
 
 class Sort {
   bool? empty;
-  bool? sorted;
   bool? unsorted;
+  bool? sorted;
 
-  Sort({this.empty, this.sorted, this.unsorted});
+  Sort({this.empty, this.unsorted, this.sorted});
 
   Sort.fromJson(Map<String, dynamic> json) {
     empty = json['empty'];
-    sorted = json['sorted'];
     unsorted = json['unsorted'];
+    sorted = json['sorted'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['empty'] = this.empty;
-    data['sorted'] = this.sorted;
     data['unsorted'] = this.unsorted;
+    data['sorted'] = this.sorted;
     return data;
   }
 }

@@ -7,6 +7,7 @@ import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
+import 'package:local_glovo/ui/widget/botones_filtro.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
 import 'package:local_glovo/ui/widget/geocalizacion.dart';
 
@@ -28,10 +29,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   late ComercioRepository comercioRepository;
+  late ComercioBloc _comercioBloc;
+
   @override
   void initState() {
     super.initState();
     comercioRepository = ComercioRepositoryImpl();
+    _comercioBloc = ComercioBloc(comercioRepository);
+    _comercioBloc.add(ComercioList());
   }
 
   static List<Widget> _widgetOptions(CarritoRepository carritoRepository) => [
@@ -156,19 +161,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildFilterButtons() {
-    return Container(
-      height: 50,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          _buildFilterButton('Filtro 1', Icons.fastfood_sharp),
-          _buildFilterButton('Filtro 2', Icons.local_pharmacy_outlined),
-          _buildFilterButton('Filtro 3', Icons.living_outlined),
-          _buildFilterButton('Filtro 4', Icons.filter_4),
-          _buildFilterButton('Filtro 5', Icons.filter_5),
-        ],
-      ),
-    );
+    return BlocBuilder<ComercioBloc, ComercioState>(builder: (context, state) {
+      if (state is ComercioCategoriaSucess && state.categorias.isNotEmpty) {
+        print("Categorías cargadas: ${state.categorias}");
+        return Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                child: Row(
+                  children: [Text(state.categorias[0].categorias!)],
+                ),
+              )
+            ],
+          ),
+        );
+      } else if (state is ComercioError) {
+        print("Error al cargar categorías: ${state.errorMensaje}");
+        return Text(state.errorMensaje);
+      } else {
+        print("Estado no reconocido: $state");
+        return Center(child: Text("no carga"));
+      }
+    });
   }
 
   Widget _buildFilterButton(String title, IconData icon) {
