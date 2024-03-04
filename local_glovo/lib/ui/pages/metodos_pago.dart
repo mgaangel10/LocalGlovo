@@ -8,6 +8,7 @@ import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart'
 import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
+import 'package:local_glovo/ui/pages/inicio_page.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
 import 'package:local_glovo/ui/widget/geocalizacion.dart';
 
@@ -37,7 +38,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },
@@ -57,7 +58,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },
@@ -77,7 +78,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },
@@ -97,7 +98,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },

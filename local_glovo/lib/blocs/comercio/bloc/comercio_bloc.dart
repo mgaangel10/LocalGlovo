@@ -33,6 +33,7 @@ class ComercioBloc extends Bloc<ComercioEvent, ComercioState> {
     try {
       final comercioResponse =
           await comercioRepository.filtrarCategorias(event.categorias);
+      print(comercioResponse);
       emit(ComercioCategoriaSucess(comercioResponse));
     } catch (e) {
       emit(ComercioError(e.toString()));

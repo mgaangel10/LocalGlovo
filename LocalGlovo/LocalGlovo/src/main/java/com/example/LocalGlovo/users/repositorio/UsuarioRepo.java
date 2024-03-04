@@ -2,6 +2,7 @@ package com.example.LocalGlovo.users.repositorio;
 
 
 
+import com.example.LocalGlovo.users.Dto.GetUsuario;
 import com.example.LocalGlovo.users.model.User;
 import com.example.LocalGlovo.users.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, UUID> {
 
     @Query("""
             select new com.example.LocalGlovo.users.Dto.GetUsuario(
+            u.id,
             u.username,
               u.name,
               u.lastName,
@@ -27,8 +29,9 @@ public interface UsuarioRepo extends JpaRepository<Usuario, UUID> {
             
             )
             from Usuario u
+            where u.id = ?1
             """)
-    User getUsuario();
+    GetUsuario getUsuario(UUID uuid);
 
 
 }

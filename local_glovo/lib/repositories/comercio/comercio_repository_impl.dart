@@ -102,11 +102,11 @@ class ComercioRepositoryImpl extends ComercioRepository {
     );
     print(categorias);
     if (response.statusCode == 200) {
-      final responseBody =
-          ComercioResponse.fromJson(json.decode(response.body));
+      final List<dynamic> responseBody = json.decode(response.body);
       print(response.body!);
       print(response.statusCode);
-      final content = responseBody.content!;
+      final content =
+          responseBody.map((item) => Content.fromJson(item)).toList();
       print(content);
       return content;
     } else {

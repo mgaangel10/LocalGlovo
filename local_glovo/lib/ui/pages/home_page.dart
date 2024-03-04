@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
+import 'package:local_glovo/models/response/comercio_response.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
+import 'package:local_glovo/ui/pages/User_page.dart';
 import 'package:local_glovo/ui/pages/carrito_page.dart';
-import 'package:local_glovo/ui/pages/comercio_categorias.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/widget/botones_filtro.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
@@ -39,9 +40,8 @@ class _HomePageState extends State<HomePage> {
     _comercioBloc = ComercioBloc(comercioRepository)..add(ComercioList());
   }
 
-  static List<Widget> _widgetOptions(CarritoRepository carritoRepository) => [
-        HomePage(carritoRepository: carritoRepository),
-      ];
+  static List<Widget> _widgetOptions(CarritoRepository carritoRepository) =>
+      [HomePage(carritoRepository: carritoRepository), UserPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Column(
           children: [
-            _buildSearchBar(),
+            // _buildSearchBar(),
             _buildFilterButtons(),
             Expanded(
               child: ListadoComercios(),
@@ -62,36 +62,6 @@ class _HomePageState extends State<HomePage> {
               child: _ComercioList(),
             ),
           ],
-        ),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              topRight: Radius.circular(15),
-            ),
-            color: Colors.black,
-          ),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home, color: Colors.white),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart, color: Colors.white),
-                label: 'Shop',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person, color: Colors.white),
-                label: 'Profile',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.deepPurple,
-            onTap: _onItemTapped,
-          ),
         ),
       ),
     );
@@ -102,8 +72,9 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         if (state is ComercioSuccess) {
           return GridView.builder(
+            scrollDirection: Axis.horizontal,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: 1,
             ),
             itemCount: state.comercioList.length,
             itemBuilder: (context, index) {
@@ -135,8 +106,9 @@ class _HomePageState extends State<HomePage> {
           );
         } else if (state is ComercioCategoriaSucess) {
           return GridView.builder(
+            scrollDirection: Axis.horizontal,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: 1,
             ),
             itemCount: state.categorias.length,
             itemBuilder: (context, index) {
@@ -167,39 +139,42 @@ class _HomePageState extends State<HomePage> {
             },
           );
         } else if (state is ComercioError) {
+          print(state.errorMensaje);
           return Text(state.errorMensaje);
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: Text("hola"),
           );
         }
       },
     );
   }
 
-  Widget _buildSearchBar() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'Buscar',
-          suffixIcon: Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-      ),
-    );
-  }
+  //Widget _buildSearchBar() {
+  //return Padding(
+  //padding: const EdgeInsets.all(8.0),
+  //child: TextField(
+  //decoration: InputDecoration(
+  //labelText: 'Buscar',
+  //suffixIcon: Icon(Icons.search),
+  //border: OutlineInputBorder(
+  //borderRadius: BorderRadius.circular(30),
+  //),
+  //),
+  //),
+  //);
+  // }
 
   Widget _buildFilterButtons() {
     return BlocBuilder<ComercioBloc, ComercioState>(
       builder: (context, state) {
         if (state is ComercioSuccess) {
           return Container(
-            height: 50,
+            height: 60,
+            width: double.infinity,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              itemCount: state.comercioList.length,
               itemBuilder: (context, index) {
                 final c = state.comercioList[index];
                 return GestureDetector(
@@ -210,16 +185,40 @@ class _HomePageState extends State<HomePage> {
                   child: ElevatedButton(
                     onPressed: () {
                       final comercioRepo = ComercioRepositoryImpl();
-                      final categoriasComercio = ComercioBloc(comercioRepo);
-                      categoriasComercio.add(
-                          ComercioCategoriasItem(categorias: c.categorias!));
                       _comercioBloc.add(
                           ComercioCategoriasItem(categorias: c.categorias!));
                     },
                     child: Row(
-                      children: [Text(state.comercioList[index].categorias!)],
+                      children: [
+                        Text(
+                          state.comercioList[index].categorias!,
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
                     ),
                   ),
+                );
+              },
+            ),
+          );
+        } else if (state is ComercioCategoriaSucess) {
+          return Container(
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: state.categorias.length,
+              itemBuilder: (context, index) {
+                final c = state.categorias[0];
+                return GestureDetector(
+                  onTap: () {
+                    _comercioBloc.add(ComercioList());
+                  },
+                  child: ElevatedButton(
+                      onPressed: () {
+                        final comercioRepo = ComercioRepositoryImpl();
+                        _comercioBloc.add(ComercioList());
+                      },
+                      child: Icon(Icons.arrow_back_ios_new)),
                 );
               },
             ),

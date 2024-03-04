@@ -26,10 +26,17 @@ class ComercioResponse {
 
   ComercioResponse.fromJson(Map<String, dynamic> json) {
     if (json['content'] != null) {
-      content = <Content>[];
-      json['content'].forEach((v) {
-        content!.add(new Content.fromJson(v));
-      });
+      if (json['content'] is Map<String, dynamic>) {
+        content = (json['content']['your_list_key'] as List)
+            .map((item) => Content.fromJson(item))
+            .toList();
+      } else if (json['content'] is List) {
+        content = (json['content'] as List)
+            .map((item) => Content.fromJson(item))
+            .toList();
+      } else {
+        content = <Content>[];
+      }
     }
     pageable = json['pageable'] != null
         ? new Pageable.fromJson(json['pageable'])

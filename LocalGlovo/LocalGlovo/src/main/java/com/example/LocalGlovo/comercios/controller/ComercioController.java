@@ -41,8 +41,8 @@ public class ComercioController {
 
     }
     @GetMapping("usuario/filtrar/comercios/{categoria}")
-    public ResponseEntity<List<Comercio>> getComerciosPorCategoria(@PathVariable CategoriaComercios categoria) {
-        List<Comercio> comercios= comercioService.getComerciosPorCategoria(categoria);
+    public ResponseEntity<List<GetListComercios>> getComerciosPorCategoria(@PathVariable CategoriaComercios categoria) {
+        List<GetListComercios> comercios= comercioService.getComerciosPorCategoria(categoria);
         return ResponseEntity.ok(comercios);
     }
 }

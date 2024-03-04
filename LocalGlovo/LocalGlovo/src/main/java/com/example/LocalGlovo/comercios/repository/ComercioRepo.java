@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
 
-    List<Comercio> findByCategoriasContains(CategoriaComercios categoria);
+    List<GetListComercios> findByCategoriasContains(CategoriaComercios categoria);
     @Query("""
             select new com.example.LocalGlovo.comercios.Dto.GetListComercios(
             c.id,
@@ -28,6 +28,8 @@ public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
             from Comercio c
             """)
     Page<GetListComercios> getListComercios(Pageable pageable);
+
+
 
     Comercio findByName(String name);
 }

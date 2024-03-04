@@ -59,7 +59,7 @@ class ComercioWidget extends StatelessWidget {
                 Text(
                   contentElement.name!,
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -1,6 +1,9 @@
 package com.example.LocalGlovo.users.Dto;
 
-public record GetUsuario(String username,
+import java.util.UUID;
+
+public record GetUsuario(UUID id,
+        String username,
                          String name,
                          String lastName,
                          String phoneNumber,

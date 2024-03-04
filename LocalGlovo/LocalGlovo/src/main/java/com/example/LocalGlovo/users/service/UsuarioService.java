@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.users.service;
 
 
+import com.example.LocalGlovo.users.Dto.GetUsuario;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
 import com.example.LocalGlovo.users.model.User;
 import com.example.LocalGlovo.users.model.UserRoles;
@@ -57,12 +58,11 @@ public class UsuarioService {
     public Usuario createWithRole(PostCrearUserDto postCrearUserDto){
         return crearUsuario(postCrearUserDto,EnumSet.of(UserRoles.USER));
     }
-    public User getUsuario(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User usuario = (Usuario) authentication.getPrincipal();
-        usuario= usuarioRepo.getUsuario();
+    public GetUsuario getUsuario(UUID uuid){
+        GetUsuario usuario = usuarioRepo.getUsuario(uuid);
         return usuario;
 
     }
+
 
 }

@@ -4,6 +4,7 @@ import 'package:local_glovo/blocs/carrito/bloc/carrito_bloc.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository_impl.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
+import 'package:local_glovo/ui/pages/inicio_page.dart';
 import 'package:local_glovo/ui/pages/metodos_pago.dart';
 
 class EntregaPage extends StatefulWidget {
@@ -96,7 +97,7 @@ class _EntregaPageState extends State<EntregaPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            HomePage(carritoRepository: carritoRepository)),
+                            InicioPage(carritoRepository: carritoRepository)),
                   );
                 },
                 child: const ListTile(

@@ -8,3 +8,7 @@ class DoLoginEvent extends LoginEvent {
   final String password;
   DoLoginEvent(this.email, this.password);
 }
+
+class DetallesUsuarioItem extends LoginEvent {
+  DetallesUsuarioItem();
+}
