@@ -5,6 +5,7 @@ import com.example.LocalGlovo.users.Dto.JwtUserResponse;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
 import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.Dto.PostRegistroDto;
+import com.example.LocalGlovo.users.model.User;
 import com.example.LocalGlovo.users.model.Usuario;
 import com.example.LocalGlovo.users.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +22,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -106,5 +109,11 @@ public class UsuarioController {
         Usuario usuario = (Usuario) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(JwtUserResponse.ofUsuario(usuario, token));
+    }
+
+    @GetMapping("usuario/ver/detalles")
+    public ResponseEntity<User> verDetallesUsuario(@AuthenticationPrincipal Usuario usuario){
+        User usuario1 = usuarioService.getUsuario();
+       return ResponseEntity.ok(usuario1);
     }
 }

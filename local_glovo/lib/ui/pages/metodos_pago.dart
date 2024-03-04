@@ -48,8 +48,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Visa',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing: Icon(Icons.account_balance_wallet_sharp,
-                    size: 40), // Icono a la derecha
+                trailing: Icon(Icons.account_balance_wallet_sharp, size: 40),
               ),
             ),
             SizedBox(height: 16),
@@ -69,8 +68,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Paypal',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing:
-                    Icon(Icons.paypal_rounded, size: 40), // Icono a la derecha
+                trailing: Icon(Icons.paypal_rounded, size: 40),
               ),
             ),
             SizedBox(height: 16),
@@ -90,8 +88,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Tarjeta Credito',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing:
-                    Icon(Icons.credit_card, size: 40), // Icono a la derecha
+                trailing: Icon(Icons.credit_card, size: 40),
               ),
             ),
             SizedBox(height: 16),
@@ -111,8 +108,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Efectivo',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing: Icon(Icons.attach_money_rounded,
-                    size: 40), // Icono a la derecha
+                trailing: Icon(Icons.attach_money_rounded, size: 40),
               ),
             ),
             SizedBox(height: 16),

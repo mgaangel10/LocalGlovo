@@ -100,10 +100,14 @@ class ComercioRepositoryImpl extends ComercioRepository {
         'Authorization': 'Bearer $token'
       },
     );
+    print(categorias);
     if (response.statusCode == 200) {
       final responseBody =
           ComercioResponse.fromJson(json.decode(response.body));
+      print(response.body!);
+      print(response.statusCode);
       final content = responseBody.content!;
+      print(content);
       return content;
     } else {
       throw UnimplementedError('Failed to load comercios categorias');

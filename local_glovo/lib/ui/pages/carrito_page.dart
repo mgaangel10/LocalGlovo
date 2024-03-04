@@ -47,9 +47,7 @@ class _CarritoPageState extends State<CarritoPage> {
         value: _carritoBloc,
         child: BlocConsumer<CarritoBloc, CarritoState>(
           listener: (context, state) {
-            if (state is CarritoError) {
-              // Maneja el error aquí si es necesario
-            }
+            if (state is CarritoError) {}
           },
           builder: (context, state) {
             if (state is CarritoLoading) {
@@ -115,7 +113,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                   carritoId: state.carrito.id!,
                                   productoId: lineaCarrito.producto!.id!,
                                 ));
-                                // Añade un evento para cargar los detalles del carrito después de eliminar el producto
+
                                 bloc.add(
                                     CarritoItem(productoId: widget.productoId));
                               },
@@ -133,7 +131,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                 carritoId: state.carrito.id!,
                                 productoId: lineaCarrito.producto!.id!,
                               ));
-                              // Añade un evento para cargar los detalles del carrito después de eliminar el producto
+
                               bloc.add(
                                   CarritoItem(productoId: widget.productoId));
                             })
@@ -190,7 +188,6 @@ class _CarritoPageState extends State<CarritoPage> {
                           MaterialStateProperty.all<Color>(Colors.black),
                     ),
                     onPressed: () {
-                      // Navegar a la página EntregaPage
                       Navigator.push(
                         context,
                         MaterialPageRoute(

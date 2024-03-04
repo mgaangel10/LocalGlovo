@@ -6,6 +6,7 @@ import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/ui/pages/carrito_page.dart';
+import 'package:local_glovo/ui/pages/comercio_categorias.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/widget/botones_filtro.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
@@ -35,8 +36,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     comercioRepository = ComercioRepositoryImpl();
-    _comercioBloc = ComercioBloc(comercioRepository);
-    _comercioBloc.add(ComercioList());
+    _comercioBloc = ComercioBloc(comercioRepository)..add(ComercioList());
   }
 
   static List<Widget> _widgetOptions(CarritoRepository carritoRepository) => [
@@ -45,9 +45,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          ComercioBloc(comercioRepository)..add(ComercioList()),
+    return BlocProvider.value(
+      value: _comercioBloc,
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Home page"),
@@ -134,6 +133,39 @@ class _HomePageState extends State<HomePage> {
               );
             },
           );
+        } else if (state is ComercioCategoriaSucess) {
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: state.categorias.length,
+            itemBuilder: (context, index) {
+              final c = state.categorias[index];
+              return GestureDetector(
+                onTap: () {
+                  final comercioRepositorio = ComercioRepositoryImpl();
+                  final detallesCoemercio =
+                      ComercioDetailsBloc(comercioRepository);
+                  detallesCoemercio.add(ComercioDetailsItem(comercioId: c.id!));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider.value(
+                        value: detallesCoemercio,
+                        child: ComercioDetailsPage(
+                          comercioID: c.id!,
+                          carritoRepository: widget.carritoRepository,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                child: ComercioWidget(
+                    contentElement: c,
+                    carritoRepository: widget.carritoRepository),
+              );
+            },
+          );
         } else if (state is ComercioError) {
           return Text(state.errorMensaje);
         } else {
@@ -161,31 +193,46 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildFilterButtons() {
-    return BlocBuilder<ComercioBloc, ComercioState>(builder: (context, state) {
-      if (state is ComercioCategoriaSucess && state.categorias.isNotEmpty) {
-        print("Categorías cargadas: ${state.categorias}");
-        return Container(
-          height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Row(
-                  children: [Text(state.categorias[0].categorias!)],
-                ),
-              )
-            ],
-          ),
-        );
-      } else if (state is ComercioError) {
-        print("Error al cargar categorías: ${state.errorMensaje}");
-        return Text(state.errorMensaje);
-      } else {
-        print("Estado no reconocido: $state");
-        return Center(child: Text("no carga"));
-      }
-    });
+    return BlocBuilder<ComercioBloc, ComercioState>(
+      builder: (context, state) {
+        if (state is ComercioSuccess) {
+          return Container(
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                final c = state.comercioList[index];
+                return GestureDetector(
+                  onTap: () {
+                    _comercioBloc
+                        .add(ComercioCategoriasItem(categorias: c.categorias!));
+                  },
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final comercioRepo = ComercioRepositoryImpl();
+                      final categoriasComercio = ComercioBloc(comercioRepo);
+                      categoriasComercio.add(
+                          ComercioCategoriasItem(categorias: c.categorias!));
+                      _comercioBloc.add(
+                          ComercioCategoriasItem(categorias: c.categorias!));
+                    },
+                    child: Row(
+                      children: [Text(state.comercioList[index].categorias!)],
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        } else if (state is ComercioError) {
+          return Text(state.errorMensaje);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
   }
 
   Widget _buildFilterButton(String title, IconData icon) {
@@ -196,7 +243,7 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(icon), // Usa el ícono pasado como parámetro
+            Icon(icon),
             SizedBox(width: 10),
             Text(
               title,

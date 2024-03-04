@@ -72,7 +72,6 @@ class _EntregaPageState extends State<EntregaPage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  // Navegar a MetodoPagoPage
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -87,14 +86,12 @@ class _EntregaPageState extends State<EntregaPage> {
                     'A Domicilio',
                     style: TextStyle(fontSize: 20),
                   ),
-                  trailing: Icon(Icons.motorcycle_sharp,
-                      size: 40), // Icono a la derecha
+                  trailing: Icon(Icons.motorcycle_sharp, size: 40),
                 ),
               ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  // Navegar a MetodoPagoPage
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -109,8 +106,7 @@ class _EntregaPageState extends State<EntregaPage> {
                     'En Tienda',
                     style: TextStyle(fontSize: 20),
                   ),
-                  trailing:
-                      Icon(Icons.storefront, size: 40), // Icono a la derecha
+                  trailing: Icon(Icons.storefront, size: 40),
                 ),
               ),
             ],
