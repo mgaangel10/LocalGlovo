@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/carrito/bloc/carrito_bloc.dart';
-import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to_cart.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
-import 'package:local_glovo/repositories/carrito/carrito_repository_impl.dart';
 import 'package:local_glovo/ui/pages/entrega_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CarritoPage extends StatefulWidget {
+class VerCarrito extends StatefulWidget {
   final CarritoRepository carritoRepository;
-  final String productoId;
-  const CarritoPage(
-      {Key? key, required this.carritoRepository, required this.productoId})
-      : super(key: key);
+  const VerCarrito({super.key, required this.carritoRepository});
 
   @override
-  State<CarritoPage> createState() => _CarritoPageState();
+  State<VerCarrito> createState() => _VerCarritoState();
 }
 
-class _CarritoPageState extends State<CarritoPage> {
+class _VerCarritoState extends State<VerCarrito> {
   late CarritoRepository carritoRepository;
   late CarritoBloc _carritoBloc;
 
@@ -27,14 +23,8 @@ class _CarritoPageState extends State<CarritoPage> {
     carritoRepository = widget.carritoRepository;
     _carritoBloc = CarritoBloc(carritoRepository);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      _carritoBloc.add(CarritoItem(productoId: widget.productoId));
+      _carritoBloc.add(VerCarritoItem());
     });
-  }
-
-  @override
-  void dispose() {
-    _carritoBloc.close();
-    super.dispose();
   }
 
   @override
@@ -54,7 +44,7 @@ class _CarritoPageState extends State<CarritoPage> {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is CarritoSucces) {
+            } else if (state is VerCarritoSucess) {
               return _buildCarritoDetails(state);
             } else if (state is CarritoDeleteSucess) {
               return Center(
@@ -62,7 +52,7 @@ class _CarritoPageState extends State<CarritoPage> {
               );
             } else if (state is CarritoError) {
               return Center(
-                child: Text('Ha ocurrido un error: ${state.error}'),
+                child: Text('Tu carrito esta vacio...'),
               );
             } else {
               return Center(
@@ -75,7 +65,7 @@ class _CarritoPageState extends State<CarritoPage> {
     );
   }
 
-  Widget _buildCarritoDetails(CarritoSucces state) {
+  Widget _buildCarritoDetails(VerCarritoSucess state) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Stack(
@@ -114,8 +104,9 @@ class _CarritoPageState extends State<CarritoPage> {
                                   productoId: lineaCarrito.producto!.id!,
                                 ));
 
-                                bloc.add(
-                                    CarritoItem(productoId: widget.productoId));
+                                bloc.add(CarritoItem(
+                                    productoId: state.carrito.lineasCarrito![0]
+                                        .producto!.id!));
                               },
                               child: Text('x${lineaCarrito.cantidad!}',
                                   style: TextStyle(color: Colors.black)),
@@ -132,8 +123,9 @@ class _CarritoPageState extends State<CarritoPage> {
                                 productoId: lineaCarrito.producto!.id!,
                               ));
 
-                              bloc.add(
-                                  CarritoItem(productoId: widget.productoId));
+                              bloc.add(CarritoItem(
+                                  productoId: state.carrito.lineasCarrito![0]
+                                      .producto!.id!));
                             })
                       ],
                     ),

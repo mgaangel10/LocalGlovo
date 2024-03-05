@@ -1,13 +1,18 @@
 package com.example.LocalGlovo.users.service;
 
 
+import com.example.LocalGlovo.users.Dto.GetUsuario;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
+import com.example.LocalGlovo.users.model.User;
 import com.example.LocalGlovo.users.model.UserRoles;
 import com.example.LocalGlovo.users.model.Usuario;
 import com.example.LocalGlovo.users.repositorio.AdministradorRepo;
 import com.example.LocalGlovo.users.repositorio.UsuarioRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -53,5 +58,11 @@ public class UsuarioService {
     public Usuario createWithRole(PostCrearUserDto postCrearUserDto){
         return crearUsuario(postCrearUserDto,EnumSet.of(UserRoles.USER));
     }
+    public GetUsuario getUsuario(UUID uuid){
+        GetUsuario usuario = usuarioRepo.getUsuario(uuid);
+        return usuario;
+
+    }
+
 
 }

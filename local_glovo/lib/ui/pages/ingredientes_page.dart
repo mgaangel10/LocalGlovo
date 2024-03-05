@@ -124,8 +124,7 @@ class _IngredientesPageState extends State<IngredientesPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16.0), // Ajusta el padding horizontal
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(15.0),
                       child: Container(

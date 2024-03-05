@@ -1,7 +1,9 @@
 part of 'comercio_bloc.dart';
 
 @immutable
-sealed class ComercioEvent {}
+sealed class ComercioEvent {
+  late final String categorias;
+}
 
 final class ComercioFetchEvents extends ComercioEvent {}
 
@@ -12,4 +14,9 @@ class ComercioList extends ComercioEvent {
 class ComercioDetalles extends ComercioEvent {
   final String comercioId;
   ComercioDetalles(this.comercioId);
+}
+
+class ComercioCategoriasItem extends ComercioEvent {
+  final String categorias;
+  ComercioCategoriasItem({required this.categorias});
 }

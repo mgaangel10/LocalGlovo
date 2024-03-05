@@ -4,6 +4,7 @@ import 'package:local_glovo/blocs/carrito/bloc/carrito_bloc.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository_impl.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
+import 'package:local_glovo/ui/pages/inicio_page.dart';
 import 'package:local_glovo/ui/pages/metodos_pago.dart';
 
 class EntregaPage extends StatefulWidget {
@@ -72,7 +73,6 @@ class _EntregaPageState extends State<EntregaPage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  // Navegar a MetodoPagoPage
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -87,19 +87,17 @@ class _EntregaPageState extends State<EntregaPage> {
                     'A Domicilio',
                     style: TextStyle(fontSize: 20),
                   ),
-                  trailing: Icon(Icons.motorcycle_sharp,
-                      size: 40), // Icono a la derecha
+                  trailing: Icon(Icons.motorcycle_sharp, size: 40),
                 ),
               ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  // Navegar a MetodoPagoPage
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            HomePage(carritoRepository: carritoRepository)),
+                            InicioPage(carritoRepository: carritoRepository)),
                   );
                 },
                 child: const ListTile(
@@ -109,8 +107,7 @@ class _EntregaPageState extends State<EntregaPage> {
                     'En Tienda',
                     style: TextStyle(fontSize: 20),
                   ),
-                  trailing:
-                      Icon(Icons.storefront, size: 40), // Icono a la derecha
+                  trailing: Icon(Icons.storefront, size: 40),
                 ),
               ),
             ],

@@ -21,6 +21,11 @@ final class CarritoTerminadoSucess extends CarritoInitial {
   CarritoTerminadoSucess(this.carrito);
 }
 
+final class VerCarritoSucess extends CarritoInitial {
+  final AddProductoToCart carrito;
+  VerCarritoSucess(this.carrito);
+}
+
 final class CarritoError extends CarritoInitial {
   final String error;
 

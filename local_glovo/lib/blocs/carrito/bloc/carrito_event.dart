@@ -18,6 +18,10 @@ final class CArritoDeleteItem extends CarritoEvent {
   CArritoDeleteItem({required this.carritoId, required this.productoId});
 }
 
+final class VerCarritoItem extends CarritoEvent {
+  VerCarritoItem();
+}
+
 final class CarritoTerminadoItem extends CarritoEvent {
   final String carritoId;
   CarritoTerminadoItem({required this.carritoId});

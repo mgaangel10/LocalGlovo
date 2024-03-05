@@ -85,4 +85,34 @@ class CarritoRepositoryImpl extends CarritoRepository {
       throw UnimplementedError('Failed to load carrito');
     }
   }
+
+  @override
+  Future<AddProductoToCart> verCarritoid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+    String? carritoId = prefs.getString("carritoId");
+
+    final response = await _httpClient.get(
+      Uri.parse('http://10.0.2.2:9000/usuario/buscar/carrito/$carritoId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    print('token: $token');
+    print('carritoId:$carritoId');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      final responseBody = AddProductoToCart.fromJson(response.body);
+      final content = responseBody;
+      return content;
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      print('Response body: ${response.body}');
+      throw UnimplementedError('Failed to load carrito');
+    }
+  }
 }

@@ -33,22 +33,12 @@ public class CarritoController {
     }
 
 
-    @GetMapping("usuario/buscar/carrito/{id}")
-    public Map<String, Object> verCarrito(@PathVariable UUID id) {
-        Carrito carrito = carritoService.buscarCarritoPorId(id).orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
-        List<LineaCarritoDto> lineasCarritoDto = carrito.getLineasCarrito().stream()
-                .map(LineaCarritoDto::of)
-                .collect(Collectors.toList());
 
 
-        double totalCarrito = carritoService.calcularTotalCarrito(carrito);
-
-
-        Map<String, Object> resultado = new HashMap<>();
-        resultado.put("lineasCarrito", lineasCarritoDto);
-        resultado.put("total", totalCarrito);
-
-        return resultado;
+    @GetMapping("usuario/buscar/carrito/{uuid}")
+    public ResponseEntity<Carrito> buscar(@PathVariable UUID uuid){
+        Optional<Carrito> carrito = carritoService.buscarCarritoPorId(uuid);
+        return  ResponseEntity.ok(carrito.get());
     }
     @GetMapping("usuario/all/carrito")
     public ResponseEntity<List<GetCarritoDto>> allCarrito(){

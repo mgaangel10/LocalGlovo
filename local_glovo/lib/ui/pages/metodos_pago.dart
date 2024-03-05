@@ -8,6 +8,7 @@ import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart'
 import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
+import 'package:local_glovo/ui/pages/inicio_page.dart';
 import 'package:local_glovo/ui/widget/comercio_list.dart';
 import 'package:local_glovo/ui/widget/geocalizacion.dart';
 
@@ -37,7 +38,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },
@@ -48,8 +49,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Visa',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing: Icon(Icons.account_balance_wallet_sharp,
-                    size: 40), // Icono a la derecha
+                trailing: Icon(Icons.account_balance_wallet_sharp, size: 40),
               ),
             ),
             SizedBox(height: 16),
@@ -58,7 +58,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },
@@ -69,8 +69,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Paypal',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing:
-                    Icon(Icons.paypal_rounded, size: 40), // Icono a la derecha
+                trailing: Icon(Icons.paypal_rounded, size: 40),
               ),
             ),
             SizedBox(height: 16),
@@ -79,7 +78,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },
@@ -90,8 +89,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Tarjeta Credito',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing:
-                    Icon(Icons.credit_card, size: 40), // Icono a la derecha
+                trailing: Icon(Icons.credit_card, size: 40),
               ),
             ),
             SizedBox(height: 16),
@@ -100,7 +98,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => InicioPage(
                           carritoRepository: widget.carritoRepository)),
                 );
               },
@@ -111,8 +109,7 @@ class _MetodoPagoPageState extends State<MetodoPagoPage> {
                   'Efectivo',
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing: Icon(Icons.attach_money_rounded,
-                    size: 40), // Icono a la derecha
+                trailing: Icon(Icons.attach_money_rounded, size: 40),
               ),
             ),
             SizedBox(height: 16),

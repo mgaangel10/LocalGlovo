@@ -6,6 +6,7 @@ import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
+import 'package:local_glovo/ui/pages/inicio_page.dart';
 
 class InicioSesion extends StatefulWidget {
   final CarritoRepository carritoRepository;
@@ -182,7 +183,7 @@ class _InicioSesionState extends State<InicioSesion> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomePage(
+                              builder: (context) => InicioPage(
                                 carritoRepository: widget.carritoRepository,
                               ),
                             ),

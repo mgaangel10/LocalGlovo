@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +38,9 @@ public class ComercioService {
 
                 .build();
         return comercioRepo.save(comercio);
+    }
+    public List<GetListComercios> getComerciosPorCategoria(CategoriaComercios categoria) {
+        return comercioRepo.findByCategoriasContains(categoria);
     }
 
     public Page<GetListComercios> listarComercios(Pageable pageable){

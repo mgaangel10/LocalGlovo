@@ -16,6 +16,7 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
     on<CarritoItem>(_onCarritoFetch);
     on<CArritoDeleteItem>(_onCarritoDeteleFetch);
     on<CarritoTerminadoItem>(_onCarritoTerminadoFetch);
+    on<VerCarritoItem>(_onVerCarritoFetch);
   }
 
   void _onCarritoFetch(CarritoEvent event, Emitter<CarritoState> emit) async {
@@ -25,8 +26,9 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
       final carritoResponse =
           await carritoRepository.addAlCarrito(event.productoId);
 
-      print(
-          'usuarioId guardado: ${carritoResponse.usuario!.id!}'); // Imprime el usuarioId guardado
+      print('usuarioId guardado: ${carritoResponse.usuario!.id!}');
+      print('carritoID: ${carritoResponse.id!}');
+      preferences.setString('carritoId', carritoResponse.id!);
       emit(CarritoSucces(carritoResponse));
     } catch (e) {
       emit(CarritoError(e.toString()));
@@ -55,6 +57,18 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
           await carritoRepository.terminarCarrito(event.carritoId);
 
       emit(CarritoTerminadoSucess(carritoTerminadoResponse));
+    } catch (e) {
+      emit(CarritoError(e.toString()));
+    }
+  }
+
+  void _onVerCarritoFetch(
+      VerCarritoItem event, Emitter<CarritoState> emit) async {
+    emit(CarritoLoading());
+    final SharedPreferences preferences = await _prefs;
+    try {
+      final verCarrito = await carritoRepository.verCarritoid();
+      emit(VerCarritoSucess(verCarrito));
     } catch (e) {
       emit(CarritoError(e.toString()));
     }

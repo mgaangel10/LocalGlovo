@@ -33,6 +33,9 @@ public class CarritoService {
     public Optional<Carrito> buscarCarritoPorId(UUID id){
         Optional<Carrito> carrito1 = carritoRepository.findById(id);
         if (carrito1.isPresent()){
+            if (carrito1.get().getEstado()==Estado.TERMINADO){
+                vaciarCarrito(id);
+            }
             return carrito1;
         }else{
             throw new RuntimeException("no se encuentra el carrito ");

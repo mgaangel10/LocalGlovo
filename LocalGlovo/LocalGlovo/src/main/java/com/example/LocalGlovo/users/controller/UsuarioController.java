@@ -1,10 +1,8 @@
 package com.example.LocalGlovo.users.controller;
 
 import com.example.LocalGlovo.security.jwt.JwtProvider;
-import com.example.LocalGlovo.users.Dto.JwtUserResponse;
-import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
-import com.example.LocalGlovo.users.Dto.PostLogin;
-import com.example.LocalGlovo.users.Dto.PostRegistroDto;
+import com.example.LocalGlovo.users.Dto.*;
+import com.example.LocalGlovo.users.model.User;
 import com.example.LocalGlovo.users.model.Usuario;
 import com.example.LocalGlovo.users.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,11 +19,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -106,5 +105,11 @@ public class UsuarioController {
         Usuario usuario = (Usuario) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(JwtUserResponse.ofUsuario(usuario, token));
+    }
+
+    @GetMapping("usuario/ver/detalles/{id}")
+    public ResponseEntity<GetUsuario> verDetallesUsuario(@PathVariable UUID id){
+        GetUsuario usuario1 = usuarioService.getUsuario(id);
+       return ResponseEntity.ok(usuario1);
     }
 }

@@ -64,7 +64,7 @@ class _ListadoComerciosState extends State<ListadoComercios> {
                   },
                 ),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueViolet),
+                    BitmapDescriptor.hueRed),
               );
             }).toSet(),
           );

@@ -12,6 +12,11 @@ final class DoLoginSucces extends LoginState {
   DoLoginSucces(this.email);
 }
 
+final class DetallesUsuarioSucess extends LoginState {
+  final DetallesUsuarioResponse registerResponse;
+  DetallesUsuarioSucess(this.registerResponse);
+}
+
 final class DoLoginError extends LoginState {
   final String errorMensaje;
   DoLoginError(this.errorMensaje);
