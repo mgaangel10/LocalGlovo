@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
+import 'package:local_glovo/blocs/favorito/bloc/favorito_bloc.dart';
 import 'package:local_glovo/models/response/comercio_response.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
@@ -80,28 +81,101 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               final c = state.comercioList[index];
               return GestureDetector(
-                onTap: () {
-                  final comercioRepositorio = ComercioRepositoryImpl();
-                  final detallesCoemercio =
-                      ComercioDetailsBloc(comercioRepository);
-                  detallesCoemercio.add(ComercioDetailsItem(comercioId: c.id!));
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BlocProvider.value(
-                        value: detallesCoemercio,
-                        child: ComercioDetailsPage(
-                          comercioID: c.id!,
-                          carritoRepository: widget.carritoRepository,
+                  onTap: () {
+                    final comercioRepositorio = ComercioRepositoryImpl();
+                    final detallesCoemercio =
+                        ComercioDetailsBloc(comercioRepository);
+                    detallesCoemercio
+                        .add(ComercioDetailsItem(comercioId: c.id!));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: detallesCoemercio,
+                          child: ComercioDetailsPage(
+                            comercioID: c.id!,
+                            carritoRepository: widget.carritoRepository,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ComercioDetailsPage(
+                            comercioID: state.comercioList[0].id!,
+                            carritoRepository: widget.carritoRepository,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 211,
+                      child: Card(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        shadowColor: Color.fromARGB(255, 0, 0, 0),
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Colors.white,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(25),
+                                    child: Image(
+                                      image: NetworkImage(
+                                          state.comercioList[0].imagen!),
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                state.comercioList[0].name!,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.star, color: Colors.yellow),
+                                      SizedBox(width: 5),
+                                      Text(state.comercioList[0].rating
+                                          .toString()),
+                                    ],
+                                  ),
+                                  Icon(
+                                    Icons.favorite,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  );
-                },
-                child: ComercioWidget(
-                    contentElement: c,
-                    carritoRepository: widget.carritoRepository),
-              );
+                  ));
             },
           );
         } else if (state is ComercioCategoriaSucess) {
@@ -136,6 +210,112 @@ class _HomePageState extends State<HomePage> {
                     contentElement: c,
                     carritoRepository: widget.carritoRepository),
               );
+            },
+          );
+        } else if (state is AddfavoritoSucess) {
+          return GridView.builder(
+            scrollDirection: Axis.horizontal,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+            ),
+            itemCount: state.list.length,
+            itemBuilder: (context, index) {
+              final c = state.list[index];
+              return GestureDetector(
+                  onTap: () {
+                    final comercioRepositorio = ComercioRepositoryImpl();
+                    final detallesCoemercio =
+                        ComercioDetailsBloc(comercioRepository);
+                    detallesCoemercio
+                        .add(ComercioDetailsItem(comercioId: c.id!));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: detallesCoemercio,
+                          child: ComercioDetailsPage(
+                            comercioID: c.id!,
+                            carritoRepository: widget.carritoRepository,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ComercioDetailsPage(
+                            comercioID: state.list[0].id!,
+                            carritoRepository: widget.carritoRepository,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 211,
+                      child: Card(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        shadowColor: Color.fromARGB(255, 0, 0, 0),
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Colors.white,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(25),
+                                    child: Image(
+                                      image:
+                                          NetworkImage(state.list[0].imagen!),
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                state.list[0].name!,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.star, color: Colors.yellow),
+                                      SizedBox(width: 5),
+                                      Text(state.list[0].rating.toString()),
+                                    ],
+                                  ),
+                                  Icon(
+                                    Icons.favorite,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ));
             },
           );
         } else if (state is ComercioError) {

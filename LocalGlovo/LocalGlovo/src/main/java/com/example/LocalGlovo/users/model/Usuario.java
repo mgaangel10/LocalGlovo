@@ -1,6 +1,8 @@
 package com.example.LocalGlovo.users.model;
 
 
+import com.example.LocalGlovo.Favoritos.models.Favorito;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,6 +26,10 @@ public class Usuario extends User {
     private List<Usuario> usuarios = new ArrayList<>();
     @ManyToMany(mappedBy = "usuarios")
     private List<Usuario> inChargeof;
+
+    @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference
+    private List<Favorito> favoritos ;
 
 
 
