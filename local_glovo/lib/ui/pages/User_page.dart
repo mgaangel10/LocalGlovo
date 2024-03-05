@@ -64,33 +64,147 @@ class _UserPageState extends State<UserPage> {
         final detalles = state.registerResponse;
         return ListView(
           children: <Widget>[
+            Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+                color: Colors.white,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(35),
+                child: Image(
+                  image: NetworkImage(detalles.fotoUrl!),
+                ),
+              ),
+            ),
             Center(
               child: Card(
+                surfaceTintColor: Colors.white,
                 margin: EdgeInsets.all(8.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
                 color: Colors.white,
                 elevation: 10,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8.0),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Text(detalles.name!)),
+                    Container(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        const Column(
+                          children: <Widget>[
+                            Text(
+                              'Nombre',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                            Text(
+                              'Apellidos',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                            Text(
+                              'Nombre usuario',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                            Text(
+                              'Telefono',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              detalles.name!,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                            Text(
+                              detalles.lastName!,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                            Text(
+                              detalles.username!,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                            Text(
+                              detalles.phoneNumber!,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            )
+                          ],
+                        ),
+                      ],
                     ),
-                    ListTile(
-                      leading: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Icon(Icons.star, size: 24),
-                          Text("${detalles.lastName!}")
-                        ],
-                      ),
-                      title:
-                          Center(child: Text(detalles.phoneNumber.toString())),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Card(
+                surfaceTintColor: Colors.white,
+                margin: EdgeInsets.all(8.0),
+                color: Colors.white,
+                elevation: 10,
+                child: Column(
+                  children: <Widget>[
+                    Container(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: Icon(
+                                Icons.favorite,
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: Icon(Icons.receipt_long_rounded),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: Icon(Icons.edit),
+                            ),
+                          ],
+                        ),
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "ver Favoritos",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "Ver historial de pedidos",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "editar perfil",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),

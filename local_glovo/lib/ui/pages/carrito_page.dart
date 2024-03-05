@@ -141,73 +141,80 @@ class _CarritoPageState extends State<CarritoPage> {
                 );
               },
             ),
-            Positioned(
-              top: constraints.maxHeight / 2 - 50,
-              left: 0,
-              right: 0,
-              child: Container(
-                width: 366,
-                height: 71,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  color: const Color.fromARGB(255, 248, 248, 248),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          "Total:",
-                          style: TextStyle(fontSize: 20),
-                        ),
+            Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    width: 366,
+                    height: 200,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          state.carrito.total.toString() + "€",
-                          style: TextStyle(fontSize: 20),
-                        ),
+                      color: const Color.fromARGB(255, 248, 248, 248),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              "Total:",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              state.carrito.total.toString() + "€",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Positioned(
-              top: constraints.maxHeight / 2 + 58,
-              left: 0,
-              right: 0,
-              child: Container(
-                  width: 150,
-                  height: 68,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    width: 80,
+                    height: 60,
+                    margin: EdgeInsets.only(left: 19, right: 19, bottom: 14),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context) => EntregaPage(
-                                  carritoId: state.carrito.id!,
-                                )),
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(width: 8),
-                        Text(
-                          'Proceder a pago',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        Icon(Icons.shopping_cart, color: Colors.white),
-                      ],
+                              carritoId: state.carrito.id!,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(width: 8),
+                          Text(
+                            'Proceder a pago',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          Icon(Icons.shopping_cart, color: Colors.white),
+                        ],
+                      ),
                     ),
-                  )),
+                  ),
+                ),
+              ],
             ),
           ],
         );
