@@ -36,7 +36,7 @@ si le das al boton de proceder a pago el carrito se te cerrara y navegaras a est
 ![5](https://github.com/mgaangel10/LocalGlovo/assets/114217003/8327aaff-ec47-4dde-ab88-973f3f1067b1)<br>
 ![6](https://github.com/mgaangel10/LocalGlovo/assets/114217003/1e7f10d4-6d64-488b-8747-1e8bbb37d9d6)<br>
 que despues de esta ultima se te navega a la home page. Si en la home page decides ver el carrito con el menu de navegacion una vez ya hallas hecho el metodo de pago 
-te aparecera esto:
+te aparecera esto:<br>
 ![7](https://github.com/mgaangel10/LocalGlovo/assets/114217003/a9184b1b-dae7-4b79-815e-a3a60cd8e008)<br>
 mostrando que el carrito no esta lleno y si pulsas el boton de proceder a pago no te hara nada ya que no hay productos que comprar.
 En la home page, desde el mapa puedes pulsar en el icono y navegar a la pagina de detalles de ese comercio: 
