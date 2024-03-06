@@ -1,10 +1,13 @@
 part of 'favorito_bloc.dart';
 
 @immutable
-sealed class FavoritoEvent {}
+sealed class FavoritoEvent {
+  late String comercioId;
+}
 
 final class AddFavoritoItem extends FavoritoEvent {
-  AddFavoritoItem();
+  final String comercioId;
+  AddFavoritoItem({required this.comercioId});
 }
 
 final class VerFavoritoItem extends FavoritoEvent {

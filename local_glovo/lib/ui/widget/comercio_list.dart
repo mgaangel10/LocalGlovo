@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_glovo/models/response/comercio_response.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
+import 'package:local_glovo/ui/pages/favorito_page.dart';
 
 class ComercioWidget extends StatelessWidget {
   final CarritoRepository carritoRepository;
@@ -74,10 +75,20 @@ class ComercioWidget extends StatelessWidget {
                         Text(contentElement.rating.toString()),
                       ],
                     ),
-                    Icon(
-                      Icons.favorite,
-                      color: Colors.grey,
-                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FavoritoPage(
+                                    comercioId: contentElement.id!,
+                                    carritoRepository: carritoRepository)),
+                          );
+                        },
+                        child: Icon(
+                          Icons.favorite,
+                          color: Colors.grey,
+                        )),
                   ],
                 ),
               ],

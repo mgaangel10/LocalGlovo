@@ -8,8 +8,10 @@ import 'package:local_glovo/repositories/favorito/favorito_repository_impl.dart'
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 
 class FavoritoPage extends StatefulWidget {
+  final String comercioId;
   final CarritoRepository carritoRepository;
-  const FavoritoPage({super.key, required this.carritoRepository});
+  const FavoritoPage(
+      {super.key, required this.carritoRepository, required this.comercioId});
 
   @override
   State<FavoritoPage> createState() => _FavoritoPageState();
@@ -26,7 +28,7 @@ class _FavoritoPageState extends State<FavoritoPage> {
     _favoritoBloc = FavoritoBloc(favoritoRepository);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _favoritoBloc.add(
-        VerFavoritoItem(),
+        AddFavoritoItem(comercioId: widget.comercioId),
       );
     });
   }
@@ -42,15 +44,15 @@ class _FavoritoPageState extends State<FavoritoPage> {
         child: BlocConsumer<FavoritoBloc, FavoritoState>(
           buildWhen: (context, state) {
             return state is FavoritoInitial ||
-                state is VerFavoritoSucess ||
+                state is AddfavoritoSucess ||
                 state is FavoritoError ||
                 state is FavoritoLoading;
           },
           builder: (context, state) {
-            if (state is VerFavoritoSucess) {
+            if (state is AddfavoritoSucess) {
               return _buildVerFavorito();
             } else if (state is FavoritoError) {
-              return const Text("error al cargar los favoritos");
+              return Text(state.error);
             } else if (state is FavoritoLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -66,14 +68,14 @@ class _FavoritoPageState extends State<FavoritoPage> {
 
   Widget _buildVerFavorito() {
     return BlocBuilder<FavoritoBloc, FavoritoState>(builder: (context, state) {
-      if (state is VerFavoritoSucess) {
+      if (state is AddfavoritoSucess) {
         return GestureDetector(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => ComercioDetailsPage(
-                  comercioID: state.verFavoritoResponse.id!,
+                  comercioID: state.favoritoResponse.id!,
                   carritoRepository: widget.carritoRepository,
                 ),
               ),
@@ -102,8 +104,7 @@ class _FavoritoPageState extends State<FavoritoPage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(25),
                           child: Image(
-                            image:
-                                NetworkImage(state.verFavoritoResponse.imagen!),
+                            image: NetworkImage(state.favoritoResponse.imagen!),
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
@@ -112,7 +113,7 @@ class _FavoritoPageState extends State<FavoritoPage> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      state.verFavoritoResponse.name!,
+                      state.favoritoResponse.name!,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -126,12 +127,12 @@ class _FavoritoPageState extends State<FavoritoPage> {
                           children: [
                             Icon(Icons.star, color: Colors.yellow),
                             SizedBox(width: 5),
-                            Text(state.verFavoritoResponse.rating.toString()),
+                            Text(state.favoritoResponse.rating.toString()),
                           ],
                         ),
                         Icon(
                           Icons.favorite,
-                          color: Colors.grey,
+                          color: const Color.fromARGB(255, 252, 0, 0),
                         ),
                       ],
                     ),

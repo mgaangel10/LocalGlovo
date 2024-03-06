@@ -24,7 +24,7 @@ public class FavoritoService {
     final UsuarioRepo usuarioRepo;
     final ComercioRepo comercioRepo;
 
-    public Favorito darAFavorito(UUID usuarioId,UUID comercioId){
+    public Comercio darAFavorito(UUID usuarioId,UUID comercioId){
         Optional<Usuario> usuario = usuarioRepo.findById(usuarioId);
         Optional<Comercio> comercio = comercioRepo.findById(comercioId);
 
@@ -35,7 +35,10 @@ public class FavoritoService {
 
                .build();
 
-      return favoritoRepo.save(favorito);
+       favoritoRepo.save(favorito);
+       Optional<Comercio> comercio1 = comercio;
+
+       return comercio1.get();
 
     }
 

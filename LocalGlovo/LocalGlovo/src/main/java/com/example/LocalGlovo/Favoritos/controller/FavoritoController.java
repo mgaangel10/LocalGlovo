@@ -18,8 +18,8 @@ public class FavoritoController {
     private final FavoritoService favoritoService;
 
     @PostMapping("usuario/añadir/favorito/{usuarioId}/{comercioId}")
-    public ResponseEntity<Favorito> addFavorito(@PathVariable UUID usuarioId,@PathVariable UUID comercioId ){
-      Favorito favorito =  favoritoService.darAFavorito(usuarioId,comercioId);
+    public ResponseEntity<Comercio> addFavorito(@PathVariable UUID usuarioId,@PathVariable UUID comercioId ){
+      Comercio favorito =  favoritoService.darAFavorito(usuarioId,comercioId);
         return ResponseEntity.status(201).body(favorito);
     }
 

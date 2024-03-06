@@ -22,6 +22,7 @@ class ComercioBloc extends Bloc<ComercioEvent, ComercioState> {
     try {
       final comercioList = await comercioRepository.listarComercios();
       preferences.setString('carritoId', comercioList[0].id!);
+      preferences.setString('comercioId', comercioList[0].id!);
       emit(ComercioSuccess(comercioList));
     } catch (e) {
       emit(ComercioError(e.toString()));

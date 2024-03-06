@@ -23,7 +23,9 @@ class FavoritoBloc extends Bloc<FavoritoEvent, FavoritoState> {
     emit(FavoritoLoading());
     final SharedPreferences preferences = await _prefs;
     try {
-      final favoritoResponse = await favoritoRepository.addFavorito();
+      final favoritoResponse =
+          await favoritoRepository.addFavorito(event.comercioId);
+      print(favoritoResponse);
       emit(AddfavoritoSucess(favoritoResponse));
     } catch (e) {
       emit(FavoritoError(e.toString()));

@@ -26,7 +26,9 @@ class _InicioPageState extends State<InicioPage> {
   static List<Widget> _widgetOptions(CarritoRepository carritoRepository) => [
         HomePage(carritoRepository: carritoRepository),
         VerCarrito(carritoRepository: carritoRepository),
-        UserPage(),
+        UserPage(
+          carritoRepository: carritoRepository,
+        ),
       ];
   @override
   Widget build(BuildContext context) {
