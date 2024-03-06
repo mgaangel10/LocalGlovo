@@ -1,4 +1,4 @@
-![3](https://github.com/mgaangel10/LocalGlovo/assets/114217003/13e17d08-d71e-40e9-8fce-e874c01cae57)![1](https://github.com/mgaangel10/LocalGlovo/assets/114217003/cf720576-68f3-4a25-97bd-1d06c39fc234)# Comercio Local Unificado
+Comercio Local Unificado
 
 ![10](https://github.com/mgaangel10/LocalGlovo/assets/114217003/d2a86049-496d-4950-a210-05f289760dcb)
 
