@@ -19,7 +19,7 @@ El proyecto está actualmente en desarrollo. Las funcionalidades para añadir co
 
 ## Demostración de Funciones y Aplicaciones
 <h1>Inicio Sesion</h1>
-![0](https://github.com/mgaangel10/LocalGlovo/assets/114217003/bdb19333-7763-45d8-b8e1-a5998248591e)
+![0](https://github.com/mgaangel10/LocalGlovo/assets/114217003/bdb19333-7763-45d8-b8e1-a5998248591e)<br>
 
 esta es la pantalla de inicio de sesion en el cual si te logueas con el correo:pedro@gmail.com y la contraseña: 1234, entrarias a la home page.
 <h1>Home Page</h1>
