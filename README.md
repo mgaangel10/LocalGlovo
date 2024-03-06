@@ -27,7 +27,7 @@ esta es la pantalla de inicio de sesion en el cual si te logueas con el correo:p
 La home page muestra con botones los tipos de comercios que hay, un mapa con la geocaliazcion de los comercios que hay , y en scroll horizontal la lista de comercios .
 Si pulsas en el card de un comercio te llevara a la pantalla de detalles del comercio.
 <h1>Comercio Detalles</h1>
-![3](https://github.com/mgaangel10/LocalGlovo/assets/114217003/d2d2a0e8-105c-49c9-bbfc-be64539830ef)
+(https://github.com/mgaangel10/LocalGlovo/assets/114217003/d2d2a0e8-105c-49c9-bbfc-be64539830ef)
 aqui te muestra los productops que contiene ese comercio , si pulsas en el card de los productos podras ver los ingredientes que tiene:
 ![2](https://github.com/mgaangel10/LocalGlovo/assets/114217003/b88b2efe-2173-41a3-8973-836df59cf357)
 si pulsas en agregar al carrito te navega a la pantalla del carrito donde se te mostrara los productos:
