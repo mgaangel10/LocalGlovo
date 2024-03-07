@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class VerFavoritoResponse {
   String? id;
   String? imagen;
@@ -30,7 +32,7 @@ class VerFavoritoResponse {
     longitud = json['longitud'];
     rating = json['rating'];
     nameDirection = json['nameDirection'];
-    categorias = json['categorias'].cast<String>();
+    categorias = List<String>.from(json['categorias'] ?? []);
     if (json['productos'] != null) {
       productos = <Productos>[];
       json['productos'].forEach((v) {
@@ -69,7 +71,7 @@ class Productos {
   String? id;
   String? imagen;
   String? name;
-  int? precio;
+  double? precio;
   bool? disponible;
   List<Ingredientes>? ingredientes;
 

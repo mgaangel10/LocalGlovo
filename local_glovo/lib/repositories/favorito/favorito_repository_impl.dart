@@ -43,7 +43,7 @@ class FavoritoRepositoryImpl extends FavoritoRepository {
   }
 
   @override
-  Future<VerFavoritoResponse> verFavorito() async {
+  Future<List<VerFavoritoResponse>> verFavorito() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
     String? usuarioId = prefs.getString("usuarioId");
@@ -58,12 +58,11 @@ class FavoritoRepositoryImpl extends FavoritoRepository {
     );
     if (response.statusCode == 200) {
       print('Response body: ${response.body}');
-      final responseBody =
-          VerFavoritoResponse.fromJson(json.decode(response.body));
+      final List<dynamic> list = json.decode(response.body);
+      final List<VerFavoritoResponse> responseBody =
+          list.map((item) => VerFavoritoResponse.fromJson(item)).toList();
 
-      final content = responseBody;
-
-      return content;
+      return responseBody;
     } else {
       print('Request failed with status: ${response.statusCode}.');
       print('Response body: ${response.body}');

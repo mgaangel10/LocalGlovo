@@ -37,7 +37,7 @@ class _FavoritoPageState extends State<FavoritoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ver Tu lista de favoritos"),
+        title: Text("Añadido a tus favoritos"),
       ),
       body: BlocProvider.value(
         value: _favoritoBloc,
@@ -81,9 +81,7 @@ class _FavoritoPageState extends State<FavoritoPage> {
               ),
             );
           },
-          child: Container(
-            width: 130,
-            height: 211,
+          child: Center(
             child: Card(
               color: Color.fromARGB(255, 255, 255, 255),
               shadowColor: Color.fromARGB(255, 0, 0, 0),

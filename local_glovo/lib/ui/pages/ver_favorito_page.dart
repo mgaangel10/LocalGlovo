@@ -68,20 +68,22 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
   Widget _buildVerFavorito() {
     return BlocBuilder<FavoritoBloc, FavoritoState>(builder: (context, state) {
       if (state is VerFavoritoSucess) {
-        return ListView.builder(
-          itemCount: state.verFavoritoResponse.favoritoList!
-              .length, // Reemplaza "listaDeTarjetas" con la lista de tarjetas que quieres mostrar
+        return GridView.builder(
+          scrollDirection: Axis.vertical,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+          ),
+          itemCount: state.verFavoritoResponse.length,
           itemBuilder: (context, index) {
-            var tarjeta = state.verFavoritoResponse.favoritoList![
-                index]; // Reemplaza "tarjeta" con el tipo de objeto que representa cada tarjeta
+            var tarjeta = state.verFavoritoResponse[index];
 
-            GestureDetector(
+            return GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ComercioDetailsPage(
-                      comercioID: state.verFavoritoResponse.id!,
+                      comercioID: tarjeta.id!,
                       carritoRepository: widget.carritoRepository,
                     ),
                   ),
@@ -110,8 +112,7 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),
                               child: Image(
-                                image: NetworkImage(
-                                    state.verFavoritoResponse.imagen!),
+                                image: NetworkImage(tarjeta.imagen!),
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                               ),
@@ -120,7 +121,7 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          state.verFavoritoResponse.imagen!,
+                          tarjeta.name!,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -134,13 +135,12 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
                               children: [
                                 Icon(Icons.star, color: Colors.yellow),
                                 SizedBox(width: 5),
-                                Text(state.verFavoritoResponse.rating
-                                    .toString()),
+                                Text(tarjeta.rating.toString()),
                               ],
                             ),
                             Icon(
                               Icons.favorite,
-                              color: Colors.grey,
+                              color: const Color.fromARGB(255, 252, 0, 0),
                             ),
                           ],
                         ),

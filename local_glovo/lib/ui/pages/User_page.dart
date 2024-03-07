@@ -5,6 +5,7 @@ import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/favorito_page.dart';
+import 'package:local_glovo/ui/pages/ver_favorito_page.dart';
 
 class UserPage extends StatefulWidget {
   final CarritoRepository carritoRepository;
@@ -163,10 +164,18 @@ class _UserPageState extends State<UserPage> {
                         Column(
                           children: <Widget>[
                             ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => VerFavoritoPage(
+                                              carritoRepository:
+                                                  widget.carritoRepository,
+                                            )),
+                                  );
+                                },
                                 child: Icon(
                                   Icons.favorite,
-                                  color: Colors.grey,
                                 )),
                             ElevatedButton(
                               onPressed: () {},

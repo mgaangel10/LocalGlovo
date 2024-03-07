@@ -30,7 +30,8 @@ class FavoritoResponse {
     longitud = json['longitud'];
     rating = json['rating'];
     nameDirection = json['nameDirection'];
-    categorias = json['categorias'].cast<String>();
+    categorias =
+        json['categorias'] != null ? List<String>.from(json['categorias']) : [];
     if (json['productos'] != null) {
       productos = <Productos>[];
       json['productos'].forEach((v) {

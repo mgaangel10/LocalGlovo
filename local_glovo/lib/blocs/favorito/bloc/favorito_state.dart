@@ -13,7 +13,7 @@ final class AddfavoritoSucess extends FavoritoInitial {
 }
 
 final class VerFavoritoSucess extends FavoritoInitial {
-  final VerFavoritoResponse verFavoritoResponse;
+  final List<VerFavoritoResponse> verFavoritoResponse;
   VerFavoritoSucess(this.verFavoritoResponse);
 }
 
