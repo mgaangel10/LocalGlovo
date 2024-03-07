@@ -138,10 +138,15 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
                                 Text(tarjeta.rating.toString()),
                               ],
                             ),
-                            Icon(
-                              Icons.favorite,
-                              color: const Color.fromARGB(255, 252, 0, 0),
-                            ),
+                            IconButton(
+                                iconSize: 30,
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  final bloc = context.read<FavoritoBloc>();
+                                  bloc.add(DeleteFavoritoItem(
+                                      comercioId:
+                                          state.verFavoritoResponse[0].id!));
+                                })
                           ],
                         ),
                       ],

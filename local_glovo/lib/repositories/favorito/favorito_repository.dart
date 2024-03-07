@@ -4,4 +4,5 @@ import 'package:local_glovo/models/response/ver_favorito_response.dart';
 abstract class FavoritoRepository {
   Future<FavoritoResponse> addFavorito(String comercioId);
   Future<List<VerFavoritoResponse>> verFavorito();
+  Future<void> quitarFavorito(String comercioId);
 }

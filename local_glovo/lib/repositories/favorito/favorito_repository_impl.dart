@@ -70,4 +70,30 @@ class FavoritoRepositoryImpl extends FavoritoRepository {
           'Failed to load detalles comercios. Status code: ${response.statusCode}');
     }
   }
+
+  @override
+  Future<void> quitarFavorito(String comercioId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+    String? usuarioId = prefs.getString("usuarioId");
+
+    final response = await _httpClient.delete(
+      Uri.parse(
+          'http://10.0.2.2:9000/usuario/quitar/favorito/$usuarioId/$comercioId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    if (response.statusCode == 204) {
+      return;
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      print('Response body: ${response.body}');
+      throw Exception(
+          'Failed to load detalles comercios. Status code: ${response.statusCode}');
+    }
+  }
 }

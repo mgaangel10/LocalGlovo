@@ -13,3 +13,8 @@ final class AddFavoritoItem extends FavoritoEvent {
 final class VerFavoritoItem extends FavoritoEvent {
   VerFavoritoItem();
 }
+
+final class DeleteFavoritoItem extends FavoritoEvent {
+  final String comercioId;
+  DeleteFavoritoItem({required this.comercioId});
+}

@@ -17,6 +17,10 @@ final class VerFavoritoSucess extends FavoritoInitial {
   VerFavoritoSucess(this.verFavoritoResponse);
 }
 
+final class DeleteFavoirtoSucess extends FavoritoInitial {
+  DeleteFavoirtoSucess();
+}
+
 final class FavoritoError extends FavoritoInitial {
   final String error;
   FavoritoError(this.error);

@@ -16,6 +16,7 @@ class FavoritoBloc extends Bloc<FavoritoEvent, FavoritoState> {
   FavoritoBloc(this.favoritoRepository) : super(FavoritoInitial()) {
     on<AddFavoritoItem>(_onAddFavoritoFetch);
     on<VerFavoritoItem>(_onVerFavoritoFetch);
+    on<DeleteFavoritoItem>(_onDeleteFavoirtoFetch);
   }
 
   void _onAddFavoritoFetch(
@@ -39,6 +40,19 @@ class FavoritoBloc extends Bloc<FavoritoEvent, FavoritoState> {
     try {
       final favoritoResponse = await favoritoRepository.verFavorito();
       emit(VerFavoritoSucess(favoritoResponse));
+    } catch (e) {
+      emit(FavoritoError(e.toString()));
+    }
+  }
+
+  void _onDeleteFavoirtoFetch(
+      DeleteFavoritoItem event, Emitter<FavoritoState> emit) async {
+    emit(FavoritoLoading());
+    final SharedPreferences preferences = await _prefs;
+    try {
+      final favoritoResponse =
+          await favoritoRepository.quitarFavorito(event.comercioId);
+      emit(DeleteFavoirtoSucess());
     } catch (e) {
       emit(FavoritoError(e.toString()));
     }
