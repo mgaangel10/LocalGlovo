@@ -15,7 +15,7 @@ Comercio Local Unificado
 Comercio Local Unificado es una aplicación que une todos los comercios de un pueblo en una sola plataforma. Los ciudadanos pueden elegir entre una variedad de comercios, como farmacias, bares, restaurantes, tiendas de ropa, carnicerías, etc., y comprar sus productos directamente a través de la aplicación. Los usuarios tienen la opción de solicitar la entrega a domicilio o recoger sus compras en el comercio.
 
 ## Estado del Proyecto
-El proyecto está actualmente en desarrollo. Las funcionalidades para añadir comercios a favoritos, editar el perfil del usuario y valorar los comercios están en proceso de implementación.
+El proyecto está actualmente en desarrollo. Las funcionalidades para editar el perfil del usuario y valorar los comercios están en proceso de implementación.
 
 ## Demostración de Funciones y Aplicaciones
 <h1>Inicio Sesion</h1>
