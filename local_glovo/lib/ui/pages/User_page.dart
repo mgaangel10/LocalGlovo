@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/login/bloc/login_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/ui/pages/favorito_page.dart';
+import 'package:local_glovo/ui/pages/ver_favorito_page.dart';
 
 class UserPage extends StatefulWidget {
-  const UserPage({super.key});
+  final CarritoRepository carritoRepository;
+  const UserPage({super.key, required this.carritoRepository});
 
   @override
   State<UserPage> createState() => _UserPageState();
@@ -160,11 +164,19 @@ class _UserPageState extends State<UserPage> {
                         Column(
                           children: <Widget>[
                             ElevatedButton(
-                              onPressed: () {},
-                              child: Icon(
-                                Icons.favorite,
-                              ),
-                            ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => VerFavoritoPage(
+                                              carritoRepository:
+                                                  widget.carritoRepository,
+                                            )),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.favorite,
+                                )),
                             ElevatedButton(
                               onPressed: () {},
                               child: Icon(Icons.receipt_long_rounded),

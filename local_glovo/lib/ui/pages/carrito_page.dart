@@ -131,9 +131,6 @@ class _CarritoPageState extends State<CarritoPage> {
                                 carritoId: state.carrito.id!,
                                 productoId: lineaCarrito.producto!.id!,
                               ));
-
-                              bloc.add(
-                                  CarritoItem(productoId: widget.productoId));
                             })
                       ],
                     ),

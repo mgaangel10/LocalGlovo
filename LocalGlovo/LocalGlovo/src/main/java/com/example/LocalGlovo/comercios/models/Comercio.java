@@ -1,12 +1,15 @@
 package com.example.LocalGlovo.comercios.models;
 
+import com.example.LocalGlovo.Favoritos.models.Favorito;
 import com.example.LocalGlovo.productos.model.Producto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,6 +50,10 @@ public class Comercio {
     @Column(name = "producto_id")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Producto> productos;
+
+    @OneToMany(mappedBy = "comercio")
+    @JsonManagedReference
+    protected List<Favorito> favoritoList;
 
 
 
