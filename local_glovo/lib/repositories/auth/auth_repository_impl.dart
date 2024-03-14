@@ -24,8 +24,7 @@ class AuthRepositoryImpl extends AuthRepository {
     );
     if (response.statusCode == 201) {
       LoginResponse loginResponse = LoginResponse.fromJson(response.body);
-      String? token = loginResponse
-          .token; // Asegúrate de reemplazar 'token' con el nombre correcto del campo
+      String? token = loginResponse.token;
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token!);

@@ -2,6 +2,7 @@ package com.example.LocalGlovo.comercios.models;
 
 import com.example.LocalGlovo.Favoritos.models.Favorito;
 import com.example.LocalGlovo.productos.model.Producto;
+import com.example.LocalGlovo.valoracion.models.Valoracion;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -54,6 +55,10 @@ public class Comercio {
     @OneToMany(mappedBy = "comercio")
     @JsonManagedReference
     protected List<Favorito> favoritoList;
+
+    @OneToMany(mappedBy = "comercioV")
+    @JsonManagedReference
+    protected List<Valoracion> valoracions;
 
 
 

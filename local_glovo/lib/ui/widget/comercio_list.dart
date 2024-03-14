@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:local_glovo/blocs/valoracion/bloc/valoracion_bloc.dart';
 import 'package:local_glovo/models/response/comercio_response.dart';
+import 'package:local_glovo/models/response/valoracion_response/valoracion_response.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
 import 'package:local_glovo/ui/pages/favorito_page.dart';
@@ -70,7 +74,41 @@ class ComercioWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.yellow),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: RatingBar.builder(
+                                    initialRating: 3,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding:
+                                        EdgeInsets.symmetric(horizontal: 4.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                      final ra = ValoracionResponse();
+                                      ra.rating = rating;
+                                      final bloc =
+                                          context.read<ValoracionBloc>();
+                                      bloc.add(ValoracionItem(
+                                          valoracion: ra.rating!,
+                                          comercioId: contentElement.id!));
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Icon(Icons.star, color: Colors.yellow),
+                        ),
                         SizedBox(width: 5),
                         Text(contentElement.rating.toString()),
                       ],
