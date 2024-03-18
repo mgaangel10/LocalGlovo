@@ -1,10 +1,12 @@
 package com.example.LocalGlovo.productos.model;
 
+import com.example.LocalGlovo.comercios.models.Comercio;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Set;
@@ -15,6 +17,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+
 public class Ingredientes {
     @Id
     @GeneratedValue(generator = "UUID",strategy = GenerationType.UUID)

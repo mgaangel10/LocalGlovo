@@ -71,4 +71,25 @@ public class ComercioService {
             comercioRepo.delete(comercio.get());
         }
     }
+
+    public Comercio editarComercio(UUID comerciId,PostCrearComercio postCrearComercio){
+        Optional<Comercio> comercio = comercioRepo.findById(comerciId);
+
+        if (comercio.isEmpty()){
+            throw new RuntimeException("no se encuentra el comercio");
+        }else{
+            CategoriaComercios comercios = CategoriaComercios.valueOf(postCrearComercio.categorias().toUpperCase());
+            if (comercios == null){
+                throw new RuntimeException("Categoria de comercio no validas");
+            }
+           comercio.get().setName(postCrearComercio.name());
+            comercio.get().setImagen(postCrearComercio.imagen());
+            comercio.get().setLatitud(postCrearComercio.latitud());
+            comercio.get().setLongitud(postCrearComercio.longitud());
+            comercio.get().setCategorias(EnumSet.of(comercios));
+            comercio.get().setNameDirection(postCrearComercio.nameDirection());
+            return comercioRepo.save(comercio.get());
+        }
+
+    }
 }

@@ -51,4 +51,10 @@ public class ComercioController {
         comercioService.elimarComercio(comercioId);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("administrador/editar/comercio/{comercioId}")
+    public ResponseEntity<Comercio> editarComercio(@PathVariable UUID comercioId,@RequestBody PostCrearComercio postCrearComercio){
+        Comercio comercio = comercioService.editarComercio(comercioId,postCrearComercio);
+        return ResponseEntity.status(201).body(comercio);
+    }
 }

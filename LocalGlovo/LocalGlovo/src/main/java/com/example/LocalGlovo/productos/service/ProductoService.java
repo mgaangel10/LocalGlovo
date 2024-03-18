@@ -23,18 +23,15 @@ public class ProductoService {
     private final ProdcutoRepo prodcutoRepo;
     private final ComercioRepo comercioRepo;
     private final IngredientesRepo ingredientesRepo;
-    public Producto crearProducto(PostProductoDto postProductoDto){
+    public Producto crearProducto(PostProductoDto postProductoDto,UUID comercioId){
         Producto producto = new Producto();
         producto.setImagen(postProductoDto.imagen());
         producto.setName(postProductoDto.name());
         producto.setPrecio(postProductoDto.precio());
         producto.setDisponible(postProductoDto.disponible());
+        Optional<Comercio> comercio = comercioRepo.findById(comercioId);
+        comercio.get().getProductos().add(producto);
 
-        Set<Ingredientes> ingredientes = postProductoDto.ingredientes();
-        if (ingredientes == null) {
-            ingredientes = new HashSet<>();
-        }
-        producto.setIngredientes(ingredientes);
 
         return prodcutoRepo.save(producto);
     }
@@ -102,6 +99,55 @@ public class ProductoService {
         }else{
             prodcutoRepo.delete(producto.get());
         }
+    }
+
+    public Ingredientes crearIngredientes(Ingredientes ingredientes,UUID productoId){
+
+        Ingredientes ingredientes1 = Ingredientes.builder()
+                .id(ingredientes.getId())
+                .imagen(ingredientes.getImagen())
+                .name(ingredientes.getName())
+                .build();
+
+
+         Optional<Producto> producto = prodcutoRepo.findById(productoId);
+         producto.get().getIngredientes().add(ingredientes);
+
+         prodcutoRepo.save(producto.get());
+       return ingredientesRepo.save(ingredientes1);
+
+    }
+    public void eliminarIngrediente(UUID ingredienteId){
+        Optional<Ingredientes> ingredienteOptional = ingredientesRepo.findById(ingredienteId);
+
+        if (ingredienteOptional.isEmpty()) {
+            throw new RuntimeException("El ingrediente no se encuentra");
+        }
+
+        Ingredientes ingrediente = ingredienteOptional.get();
+
+        List<Producto> productos = prodcutoRepo.findAllByIngredientesContaining(ingrediente);
+        for (Producto producto : productos) {
+            producto.getIngredientes().remove(ingrediente);
+        }
+
+        ingredientesRepo.delete(ingrediente);
+    }
+
+    public Producto editarProdcuto(UUID porductoId,PostProductoDto postProductoDto){
+
+        Optional<Producto> producto = prodcutoRepo.findById(porductoId);
+
+        if (producto.isEmpty()){
+            throw new RuntimeException("no se encuentra el producto");
+        }else{
+            producto.get().setName(postProductoDto.name());
+            producto.get().setImagen(postProductoDto.imagen());
+            producto.get().setDisponible(postProductoDto.disponible());
+            producto.get().setPrecio(postProductoDto.precio());
+            return prodcutoRepo.save(producto.get());
+        }
+
     }
 
 

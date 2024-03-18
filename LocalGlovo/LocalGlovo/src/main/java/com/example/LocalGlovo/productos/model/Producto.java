@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.productos.model;
 
 import com.example.LocalGlovo.comercios.models.Comercio;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class Producto {
     @Column(name = "disponible")
     protected boolean disponible;
 
-
+    @JsonManagedReference
     @Column(name = "ingredientes_id")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ingredientes> ingredientes;

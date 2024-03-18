@@ -24,9 +24,10 @@ public class ProductoController {
 
     private final ProductoService productoService;
 
-    @PostMapping("/administrador/crear/producto")
-    public ResponseEntity<?> crearProducto(@RequestBody PostProductoDto postProductoDto){
-        Producto producto = productoService.crearProducto(postProductoDto);
+
+    @PostMapping("/administrador/crear/producto/{comercioId}")
+    public ResponseEntity<?> crearProducto(@RequestBody PostProductoDto postProductoDto,@PathVariable UUID comercioId){
+        Producto producto = productoService.crearProducto(postProductoDto,comercioId);
         return ResponseEntity.ok(producto);
     }
 
@@ -58,16 +59,33 @@ public class ProductoController {
         return ResponseEntity.ok(producto);
     }
 
-    @DeleteMapping("usuario/delete/ingredientes/{id}")
+   /* @DeleteMapping("usuario/delete/ingredientes/{id}")
     public ResponseEntity<?> eliminarIngredientes(@PathVariable UUID id){
         productoService.EliminarIngredientes(id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
     @DeleteMapping("administrador/delete/producto/{productoId}")
     public ResponseEntity<?> EliminarProducto (@PathVariable UUID productoId){
         productoService.eliminarProducto(productoId);
         return  ResponseEntity.noContent().build();
+    }
+    @PostMapping("administrador/add/ingredientes/{productoId}")
+    public ResponseEntity<Ingredientes> crearIngredientes(@RequestBody Ingredientes ingredientes,@PathVariable UUID productoId){
+        Ingredientes ingredientes1 = productoService.crearIngredientes(ingredientes,productoId);
+        return ResponseEntity.status(201).body(ingredientes1);
+    }
+
+    @DeleteMapping("administrador/eliminar/{ingredientesId}")
+    public ResponseEntity<?> eliminarIngredientes(@PathVariable UUID ingredientesId){
+        productoService.eliminarIngrediente(ingredientesId);
+      return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("administrador/editar/producto/{productoId}")
+    public ResponseEntity<Producto> editarProducto(@PathVariable UUID productoId,@RequestBody PostProductoDto postProductoDto){
+        Producto producto = productoService.editarProdcuto(productoId,postProductoDto);
+        return ResponseEntity.status(201).body(producto);
     }
 
 }
