@@ -7,6 +7,7 @@ import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
 import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.Dto.PostRegistroDto;
 import com.example.LocalGlovo.users.model.Administrador;
+import com.example.LocalGlovo.users.model.Usuario;
 import com.example.LocalGlovo.users.service.AdministradorService;
 import com.example.LocalGlovo.users.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -108,6 +112,18 @@ public class AdministradorController {
         Administrador administrador = (Administrador) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(JwtUserResponse.ofAdminsitrador(administrador, token));
+    }
+
+    @PutMapping("administrador/quitar/cuenta/usuario/{usuarioId}")
+    public ResponseEntity<Usuario> quitarCuentaUsuario(@PathVariable UUID usuarioId){
+        Usuario usuario = administradorService.setearEneable(usuarioId);
+        return ResponseEntity.status(201).body(usuario);
+    }
+
+    @GetMapping("administrador/ver/usuarios")
+    public ResponseEntity<List<Usuario>> listarUsuario(){
+        List<Usuario> usuarios = administradorService.listadoUsuarios();
+        return ResponseEntity.ok(usuarios);
     }
 
 

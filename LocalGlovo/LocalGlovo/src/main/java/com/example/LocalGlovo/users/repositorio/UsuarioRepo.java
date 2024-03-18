@@ -17,6 +17,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, UUID> {
     Usuario findByEmail(String email);
     boolean existsByEmailIgnoreCase(String email);
     List<Usuario> findByEnabledFalse();
+    List<Usuario> findByEnabledTrue();
 
     @Query("""
             select new com.example.LocalGlovo.users.Dto.GetUsuario(
