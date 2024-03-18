@@ -88,6 +88,7 @@ public class CarritoService {
             Carrito carrito = carritoOptional.get();
             carrito.getLineasCarrito().clear();
             carritoRepository.deleteById(id);
+
         } else {
             throw new RuntimeException("No se encontró el carrito con ID: " + id);
         }

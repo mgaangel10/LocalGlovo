@@ -92,6 +92,20 @@ public class ProductoService {
         }
     }
 
+    public void eliminarProducto(UUID productoId){
+
+        Optional<Producto> producto = prodcutoRepo.findById(productoId);
+        List<Comercio> comercio = comercioRepo.findAll();
+        comercio.get(0).getProductos().remove(producto.get());
+        if (producto.isEmpty()){
+            throw new RuntimeException("no existe el producto");
+        }else{
+            prodcutoRepo.delete(producto.get());
+        }
+    }
+
+
+
 
 
 

@@ -61,4 +61,14 @@ public class ComercioService {
             return comercio.get();
         }
     }
+
+    public void elimarComercio(UUID comercioId){
+        Optional<Comercio> comercio = comercioRepo.findById(comercioId);
+
+        if (comercio.isEmpty()){
+            throw new RuntimeException("no se ha encontrado el comercio");
+        }else{
+            comercioRepo.delete(comercio.get());
+        }
+    }
 }

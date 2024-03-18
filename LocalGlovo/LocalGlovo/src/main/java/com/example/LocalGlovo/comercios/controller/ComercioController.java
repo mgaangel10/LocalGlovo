@@ -45,4 +45,10 @@ public class ComercioController {
         List<GetListComercios> comercios= comercioService.getComerciosPorCategoria(categoria);
         return ResponseEntity.ok(comercios);
     }
+
+    @DeleteMapping("administrador/eliminar/comercio/{comercioId}")
+    public ResponseEntity<?> eliminarComercio(@PathVariable UUID comercioId){
+        comercioService.elimarComercio(comercioId);
+        return ResponseEntity.noContent().build();
+    }
 }

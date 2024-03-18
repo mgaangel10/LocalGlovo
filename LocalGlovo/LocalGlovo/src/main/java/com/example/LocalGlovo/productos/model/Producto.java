@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.productos.model;
 
+import com.example.LocalGlovo.comercios.models.Comercio;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,6 +40,9 @@ public class Producto {
     @Column(name = "ingredientes_id")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ingredientes> ingredientes;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Comercio comercio;
 
 
 
