@@ -4,14 +4,18 @@ import com.example.LocalGlovo.carrito.Dto.GetCarritoDto;
 import com.example.LocalGlovo.carrito.models.Carrito;
 import com.example.LocalGlovo.carrito.models.Estado;
 import com.example.LocalGlovo.carrito.models.LineaCarrito;
+import com.example.LocalGlovo.carrito.models.Ventas;
 import com.example.LocalGlovo.carrito.repository.CarritoRepo;
+import com.example.LocalGlovo.carrito.repository.VentasRepo;
 import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.productos.repository.ProdcutoRepo;
 import com.example.LocalGlovo.users.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +24,7 @@ public class CarritoService {
     private final Map<UUID, LineaCarrito> carrito = new HashMap<>();
     private final CarritoRepo carritoRepository;
     private final ProdcutoRepo productoRepository;
-
+    private final VentasRepo ventasRepo;
 
     public List<Carrito> findAllTodosLosCarritos(){
         return carritoRepository.findAll();
@@ -162,7 +166,20 @@ public class CarritoService {
             throw new RuntimeException("No se encontró el carrito");
         } else {
             carritoOptional.get().setEstado(Estado.TERMINADO);
-            return  carritoRepository.save(carritoOptional.get());
+             carritoRepository.save(carritoOptional.get());
+
+             List<Producto> productos = carritoOptional.get().getLineasCarrito().stream()
+                     .map(LineaCarrito::getProducto)
+                     .collect(Collectors.toList());
+
+            Ventas ventas = Ventas.builder()
+                    .total(carritoOptional.get().getTotal())
+                    .fecha(LocalDate.now())
+                    .usuarios(List.of(carritoOptional.get().getUsuario()))
+                    .productos(productos)
+                    .build();
+            ventasRepo.save(ventas);
+            return carritoOptional.get();
 
         }
     }
