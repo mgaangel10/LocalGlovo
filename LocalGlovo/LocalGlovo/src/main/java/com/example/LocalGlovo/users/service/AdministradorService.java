@@ -60,14 +60,18 @@ public class AdministradorService {
 
     }
 
-    public void setearEneable (String email){
-        Optional<Usuario> usuario = usuarioRepo.findFirstByEmail(email);
+    public Usuario setearEneable (UUID usuarioId){
+        Optional<Usuario> usuario = usuarioRepo.findById(usuarioId);
         if (usuario.isPresent()){
             Usuario usuario1 = usuario.get();
-            usuario1.setEnabled(true);
-            usuarioRepo.save(usuario1);
+            usuario1.setEnabled(false);
+         return    usuarioRepo.save(usuario1);
         }else {
-            throw new RuntimeException("Usuario con email: '"+email+"' no encontrado");
+            throw new RuntimeException("Usuario con email: '"+usuarioId+"' no encontrado");
         }
+    }
+
+    public List<Usuario> listadoUsuarios(){
+        return usuarioRepo.findByEnabledTrue();
     }
 }
