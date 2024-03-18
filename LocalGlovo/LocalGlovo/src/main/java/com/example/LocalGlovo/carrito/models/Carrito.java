@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -40,6 +42,10 @@ public class Carrito {
 
     @Enumerated(EnumType.STRING)
     protected Estado estado;
+
+
+
+
 
     public void agregarProducto(Producto producto) {
         LineaCarrito nuevaLinea = new LineaCarrito(producto, 1);
