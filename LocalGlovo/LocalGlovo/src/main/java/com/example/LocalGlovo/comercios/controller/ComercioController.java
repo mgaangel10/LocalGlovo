@@ -33,6 +33,11 @@ public class ComercioController {
         Page<GetListComercios> getListComerciosPage = comercioService.listarComercios(pageable);
         return ResponseEntity.ok(getListComerciosPage);
     }
+    @GetMapping("administrador/listar/comercios")
+    public ResponseEntity<Page<GetListComercios>> findAllAdministrador(@PageableDefault(page = 0,size = 10)Pageable pageable){
+        Page<GetListComercios> getListComerciosPage = comercioService.listarComercios(pageable);
+        return ResponseEntity.ok(getListComerciosPage);
+    }
 
     @GetMapping("/usuario/buscar/id/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id){
