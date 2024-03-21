@@ -8,13 +8,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './ui/login/login/login.component';
 import { HomePageAdministradorComponent } from './ui/homePage/home-page-administrador/home-page-administrador.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComercioListComponent } from './ui/comercios/comercio-list/comercio-list.component';
+import { ComercioItemComponent } from './components/comercio-item/comercio-item/comercio-item.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
-        HomePageAdministradorComponent
+        HomePageAdministradorComponent,
+        ComercioListComponent,
+        ComercioItemComponent
     ],
     providers: [],
     bootstrap: [AppComponent],
