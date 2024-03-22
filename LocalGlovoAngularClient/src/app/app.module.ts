@@ -10,6 +10,8 @@ import { HomePageAdministradorComponent } from './ui/homePage/home-page-administ
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComercioListComponent } from './ui/comercios/comercio-list/comercio-list.component';
 import { ComercioItemComponent } from './components/comercio-item/comercio-item/comercio-item.component';
+import { PageComercioDetailsComponent } from './ui/comercios/page-comercio-details/page-comercio-details.component';
+import { ComercioDetailsComponent } from './components/comercio-details/comercio-details/comercio-details.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { ComercioItemComponent } from './components/comercio-item/comercio-item/
         LoginComponent,
         HomePageAdministradorComponent,
         ComercioListComponent,
-        ComercioItemComponent
+        ComercioItemComponent,
+        PageComercioDetailsComponent,
+        ComercioDetailsComponent
     ],
     providers: [],
     bootstrap: [AppComponent],

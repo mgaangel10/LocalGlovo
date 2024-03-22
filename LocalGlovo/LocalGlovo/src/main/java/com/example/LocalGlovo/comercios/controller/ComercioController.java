@@ -45,6 +45,12 @@ public class ComercioController {
         return ResponseEntity.ok(comercio);
 
     }
+    @GetMapping("/administrador/buscar/id/{id}")
+    public ResponseEntity<?> findByIdComercio(@PathVariable UUID id){
+        Comercio comercio = comercioService.finfbyid(id);
+        return ResponseEntity.ok(comercio);
+
+    }
     @GetMapping("usuario/filtrar/comercios/{categoria}")
     public ResponseEntity<List<GetListComercios>> getComerciosPorCategoria(@PathVariable CategoriaComercios categoria) {
         List<GetListComercios> comercios= comercioService.getComerciosPorCategoria(categoria);
