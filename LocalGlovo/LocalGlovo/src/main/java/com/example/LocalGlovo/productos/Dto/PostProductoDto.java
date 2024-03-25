@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.productos.Dto;
 
+import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.productos.model.Ingredientes;
 
 import java.util.HashSet;
@@ -10,6 +11,8 @@ public record PostProductoDto(String imagen,
                               double precio,
                               boolean disponible,
                               Set<Ingredientes> ingredientes
+
+                             // Comercio comercio
                               ) {
 
 }

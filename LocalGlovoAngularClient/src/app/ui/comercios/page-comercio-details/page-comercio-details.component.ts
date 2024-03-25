@@ -26,5 +26,11 @@ export class PageComercioDetailsComponent implements OnInit {
     }
 
   }
+  verIngredientes(producto: Producto) {
+    this.router.navigate(['/ingredientes-details', producto.id]);
+  }
+  addProducto() {
+    this.router.navigate(['/crear-productos',this.id]);
+  }
 
 }

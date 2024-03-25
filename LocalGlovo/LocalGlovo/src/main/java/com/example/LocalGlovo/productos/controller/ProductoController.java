@@ -58,6 +58,11 @@ public class ProductoController {
         Producto producto = productoService.buscarPorID(id);
         return ResponseEntity.ok(producto);
     }
+    @GetMapping("administrador/productos/{id}")
+    public ResponseEntity<?> buscarPorIdProductosAmdim(@PathVariable UUID id){
+        Producto producto = productoService.buscarPorID(id);
+        return ResponseEntity.ok(producto);
+    }
 
    /* @DeleteMapping("usuario/delete/ingredientes/{id}")
     public ResponseEntity<?> eliminarIngredientes(@PathVariable UUID id){

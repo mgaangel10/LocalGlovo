@@ -13,12 +13,12 @@ export class LoginComponent {
   constructor(private loginService: AdministradorService,private router:Router){};
 
   profileLogin = new FormGroup({
-    email: new FormControl(''), // Usa FormControl en lugar de FormGroup
-    password: new FormControl('') // Usa FormControl en lugar de FormGroup
+    email: new FormControl(''), 
+    password: new FormControl('') 
   })
 
   login() {
-    console.log('Datos enviados al servidor:', this.profileLogin.value); // Agregar esta línea para imprimir los datos antes de enviarlos
+    console.log('Datos enviados al servidor:', this.profileLogin.value); 
   
     this.loginService.LoginResponseAdministrador(this.profileLogin.value.email!, this.profileLogin.value.password!)
       .subscribe((l: LoginResponse) => {

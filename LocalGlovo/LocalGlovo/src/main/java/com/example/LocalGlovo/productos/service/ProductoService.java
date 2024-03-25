@@ -29,6 +29,7 @@ public class ProductoService {
         producto.setName(postProductoDto.name());
         producto.setPrecio(postProductoDto.precio());
         producto.setDisponible(postProductoDto.disponible());
+        //producto.setComercio(postProductoDto.comercio());
         Optional<Comercio> comercio = comercioRepo.findById(comercioId);
         comercio.get().getProductos().add(producto);
 
@@ -90,16 +91,19 @@ public class ProductoService {
     }
 
     public void eliminarProducto(UUID productoId){
-
         Optional<Producto> producto = prodcutoRepo.findById(productoId);
-        List<Comercio> comercio = comercioRepo.findAll();
-        comercio.get(0).getProductos().remove(producto.get());
         if (producto.isEmpty()){
             throw new RuntimeException("no existe el producto");
         }else{
+            List<Comercio> comercios = comercioRepo.findAll();
+            for (Comercio comercio : comercios) {
+                comercio.getProductos().remove(producto.get());
+                comercioRepo.save(comercio);
+            }
             prodcutoRepo.delete(producto.get());
         }
     }
+
 
     public Ingredientes crearIngredientes(Ingredientes ingredientes,UUID productoId){
 

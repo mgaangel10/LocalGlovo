@@ -12,6 +12,10 @@ import { ComercioListComponent } from './ui/comercios/comercio-list/comercio-lis
 import { ComercioItemComponent } from './components/comercio-item/comercio-item/comercio-item.component';
 import { PageComercioDetailsComponent } from './ui/comercios/page-comercio-details/page-comercio-details.component';
 import { ComercioDetailsComponent } from './components/comercio-details/comercio-details/comercio-details.component';
+import { PageIngredientesDetailsComponent } from './ui/comercios/page-ingredientes-details/page-ingredientes-details.component';
+import { IngredienteItemComponent } from './components/ingrediente-item/ingrediente-item/ingrediente-item.component';
+import { PageCrearProductosComponent } from './ui/productos/page-crear-productos/page-crear-productos.component';
+
 
 
 @NgModule({
@@ -22,7 +26,10 @@ import { ComercioDetailsComponent } from './components/comercio-details/comercio
         ComercioListComponent,
         ComercioItemComponent,
         PageComercioDetailsComponent,
-        ComercioDetailsComponent
+        ComercioDetailsComponent,
+        PageIngredientesDetailsComponent,
+        IngredienteItemComponent,
+        PageCrearProductosComponent
     ],
     providers: [],
     bootstrap: [AppComponent],
