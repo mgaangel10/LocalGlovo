@@ -52,8 +52,8 @@ INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'3f33b5a
 INSERT INTO producto(disponible,precio,id,imagen,name) VALUES (true,5.0,'7b8e6e8d-a202-4927-9bb9-9124a3049c4e','https://th.bing.com/th/id/OIP.xpHtN8nOMEDD69KJLoiHDAHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7','Fanta');
 
 
---INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('241149d3-01e0-4ab6-ab80-d5839d08d2dd','b714eea5-9b28-4e8c-b189-83d8fc14a834');
---INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('9dcc75d8-4b5d-4d1f-a4c8-fcae5b85b0ff','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('241149d3-01e0-4ab6-ab80-d5839d08d2dd','b714eea5-9b28-4e8c-b189-83d8fc14a834');
+INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('9dcc75d8-4b5d-4d1f-a4c8-fcae5b85b0ff','b714eea5-9b28-4e8c-b189-83d8fc14a834');
 
 
 
