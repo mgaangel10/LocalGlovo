@@ -10,7 +10,7 @@ import { PageCrearProductosComponent } from './ui/productos/page-crear-productos
 const routes: Routes = [
   { path: 'home', component: HomePageAdministradorComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'comercio-details/:id', component: PageComercioDetailsComponent },
+  { path: 'comercio-details/:comercioId', component: PageComercioDetailsComponent },
   { path: 'ingredientes-details/:id', component: PageIngredientesDetailsComponent },
   { path: 'crear-productos/:id', component: PageCrearProductosComponent},
   { path: 'listado-comercios', component: ComercioListComponent },
