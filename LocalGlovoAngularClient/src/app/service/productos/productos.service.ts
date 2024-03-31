@@ -38,4 +38,14 @@ export class ProductosService {
     })
   }
 
+  eliminarProducto(idProducto:string){
+    let token = localStorage.getItem('TOKEN');
+    return this.http.delete(`${environment.HeadUrl}/administrador/delete/producto/${idProducto}`, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Producto, Ingrediente, ComercioDetails } from '../../../models/comercio-details';
 import { ComerciosService } from '../../../service/comercios/comercios.service';
 import { ProductosService } from '../../../service/productos/productos.service';
@@ -11,12 +11,19 @@ import { ProductosDetails } from '../../../models/productos-details';
   styleUrl: './page-ingredientes-details.component.css'
 })
 export class PageIngredientesDetailsComponent {
-  id!: String | null;
+  id!: string | null;
+  comercioId!:string;
   comercioDetails!: ComercioDetails;
   producto!: ProductosDetails;
   ingredientes: Ingrediente []=[];
 
-  constructor(private productoService: ProductosService, private route: ActivatedRoute) { }
+  constructor(private productoService: ProductosService, private route: ActivatedRoute, private router: Router) {
+    this.route.params.subscribe(params => {
+      this.id = params['productoId'];
+      this.comercioId = params['comercioId'];
+     
+    });
+   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -26,5 +33,15 @@ export class PageIngredientesDetailsComponent {
       this.ingredientes = p.ingredientes;
      })
     }
+  }
+
+  eliminarProducto(){
+    this.productoService.eliminarProducto(this.id!).subscribe(p=>{
+      this.router.navigate(['/comercio-details', this.comercioId]);
+    })
+  }
+
+  navegar(){
+    
   }
 }

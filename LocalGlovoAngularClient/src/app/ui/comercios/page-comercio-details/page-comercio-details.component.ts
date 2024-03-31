@@ -17,7 +17,7 @@ export class PageComercioDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.id = this.r.snapshot.paramMap.get('id');
+    this.id = this.r.snapshot.paramMap.get('comercioId');
     if (this.id != null) {
       this.comercioService.getComercioDetails(this.id).subscribe(r => {
         this.comercioDetails = r;
