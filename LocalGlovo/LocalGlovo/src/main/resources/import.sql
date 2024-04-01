@@ -23,11 +23,11 @@ INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, image
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('9dd4e900-9dad-11d1-80b4-00c04fd430c9', 'TIENDAROPA');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('aee5e900-9dad-11d1-80b4-00c04fd430c9', 'Supermercado ', 37.268698190432744, -6.065863976966079, 4.6, 'Coria del Rio', 'https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('aee5e900-9dad-11d1-80b4-00c04fd430c9', 'Supermercado', 37.268698190432744, -6.065863976966079, 4.6, 'Coria del Rio', 'https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9', 'TIENDACOMESTIBLES');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('bee6e900-9dad-11d1-80b4-00c04fd430c9', 'Carnicería ', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('bee6e900-9dad-11d1-80b4-00c04fd430c9', 'Carnicería', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('bee6e900-9dad-11d1-80b4-00c04fd430c9', 'CARNECERIA');
 
 
@@ -35,7 +35,7 @@ INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, image
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('cee7e900-9dad-11d1-80b4-00c04fd430c9', 'FARMACIA');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('dee8e900-9dad-11d1-80b4-00c04fd430c9', 'Restaurante ', 37.26473838920224, -6.066084591003926, 4.3, 'La puebla del rio', 'https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('dee8e900-9dad-11d1-80b4-00c04fd430c9', 'Restaurante', 37.26473838920224, -6.066084591003926, 4.3, 'La puebla del rio', 'https://lh5.googleusercontent.com/p/AF1QipM77k8VJggh1IVj0goQEB17nnwn3RFpKd_HQPFv=w426-h240-k-no');
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('dee8e900-9dad-11d1-80b4-00c04fd430c9', 'RESTAURANTE');
 
 

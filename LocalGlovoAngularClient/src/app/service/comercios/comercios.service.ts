@@ -31,6 +31,15 @@ export class ComerciosService {
       }
     })
   }
+  getComercioByNombre(nombre:string): Observable<ListadoComercioResponse>{
+    let token = localStorage.getItem('TOKEN');
+    return this.http.get<ListadoComercioResponse>(`${environment.HeadUrl}/administrador/buscar/comercio/${nombre}`, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
 
 
 
