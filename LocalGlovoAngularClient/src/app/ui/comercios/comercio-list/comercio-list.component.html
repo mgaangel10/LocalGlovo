@@ -45,21 +45,26 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" style=" border-radius: 15px;" placeholder="Buscar"
-              aria-label="Buscar">
-            <div class="input-group-append">
-
-            </div>
+            <input #searchBox type="text" class="form-control" style="border-radius: 30px;" placeholder="Buscar un comercio" (keyup)="onKeyUp($event)">
+           
+           
           </div>
         </div>
       </div>
+      
+      
+      
     </div>
+    
+    <div class="row">
+    
 
     <div class="row">
       <div class="col-md-12 ms-5">
         <div class="row" style="max-height: 600px; overflow-y: auto;">
-          <app-comercio-item class="col-4 mt-5" *ngFor="let m of comercioList" [comercio]="m"
-            (comercioClick)="comercioClickLista($event)"></app-comercio-item>
+          <app-comercio-item class="col-4 mt-5" *ngFor="let m of results" [comercio]="m"
+  (comercioClick)="comercioClickLista($event)"></app-comercio-item>
+
         </div>
       </div>
     </div>

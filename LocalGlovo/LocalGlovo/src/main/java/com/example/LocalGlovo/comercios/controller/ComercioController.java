@@ -38,6 +38,11 @@ public class ComercioController {
         Page<GetListComercios> getListComerciosPage = comercioService.listarComercios(pageable);
         return ResponseEntity.ok(getListComerciosPage);
     }
+    @GetMapping("administrador/buscar/comercio/{nombre}")
+    public ResponseEntity<List<GetListComercios>> buscarPorNombre(@PathVariable String nombre){
+       List<GetListComercios>  comercio = comercioService.findByNombre(nombre);
+        return ResponseEntity.ok(comercio);
+    }
 
     @GetMapping("/usuario/buscar/id/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id){

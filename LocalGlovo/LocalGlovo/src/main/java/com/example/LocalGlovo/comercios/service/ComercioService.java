@@ -39,6 +39,12 @@ public class ComercioService {
                 .build();
         return comercioRepo.save(comercio);
     }
+    public List<GetListComercios> findByNombre(String name){
+
+
+        return comercioRepo.findByNombreGetListComercio(name);
+
+    }
     public List<GetListComercios> getComerciosPorCategoria(CategoriaComercios categoria) {
         return comercioRepo.findByCategoriasContains(categoria);
     }

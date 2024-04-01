@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
@@ -29,7 +30,21 @@ public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
             from Comercio c
             """)
     Page<GetListComercios> getListComercios(Pageable pageable);
-
+    @Query("""
+            select new com.example.LocalGlovo.comercios.Dto.GetListComercios(
+            c.id,
+            c.name,
+            c.rating,
+            c.nameDirection,
+            c.imagen,
+            c.latitud,
+            c.longitud,
+            c.categorias
+            )
+            from Comercio c
+            where c.name = ?1
+            """)
+    List<GetListComercios> findByNombreGetListComercio(String nombre);
 
 
     Comercio findByName(String name);
