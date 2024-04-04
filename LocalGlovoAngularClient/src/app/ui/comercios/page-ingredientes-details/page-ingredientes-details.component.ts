@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { Location } from '@angular/common';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Producto, Ingrediente, ComercioDetails } from '../../../models/comercio-details';
 import { ComerciosService } from '../../../service/comercios/comercios.service';
@@ -17,7 +19,7 @@ export class PageIngredientesDetailsComponent {
   producto!: ProductosDetails;
   ingredientes: Ingrediente []=[];
 
-  constructor(private productoService: ProductosService, private route: ActivatedRoute, private router: Router) {
+  constructor(private productoService: ProductosService, private route: ActivatedRoute, private router: Router,private location:Location) {
     this.route.params.subscribe(params => {
       this.id = params['productoId'];
       this.comercioId = params['comercioId'];
@@ -37,9 +39,10 @@ export class PageIngredientesDetailsComponent {
 
   eliminarProducto(){
     this.productoService.eliminarProducto(this.id!).subscribe(p=>{
-      this.router.navigate(['/comercio-details', this.comercioId]);
+      this.location.back();
     })
   }
+  
 
   navegar(){
     

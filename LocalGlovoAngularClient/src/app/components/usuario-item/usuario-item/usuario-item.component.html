@@ -1,0 +1,22 @@
+<div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Foto de Perfil</th>
+          <th>Correo Electrónico</th>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+          <td><img [src]="usuarios.fotoUrl" class="img-thumbnail" width="50" height="50"></td>
+          <td>{{usuarios.email}}</td>
+          <td>{{usuarios.name}}</td>
+          <td>{{usuarios.phoneNumber}}</td>
+          <td><button class="btn btn-danger" ><i class="fa fa-trash"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

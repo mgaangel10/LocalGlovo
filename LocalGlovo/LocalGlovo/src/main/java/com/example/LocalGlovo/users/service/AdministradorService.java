@@ -74,4 +74,6 @@ public class AdministradorService {
     public List<Usuario> listadoUsuarios(){
         return usuarioRepo.findByEnabledTrue();
     }
+
+
 }
