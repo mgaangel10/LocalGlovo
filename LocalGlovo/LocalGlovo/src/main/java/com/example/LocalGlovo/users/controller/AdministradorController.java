@@ -114,7 +114,7 @@ public class AdministradorController {
                 .body(JwtUserResponse.ofAdminsitrador(administrador, token));
     }
 
-    @PutMapping("administrador/quitar/cuenta/usuario/{usuarioId}")
+    @PostMapping("administrador/quitar/cuenta/usuario/{usuarioId}")
     public ResponseEntity<Usuario> quitarCuentaUsuario(@PathVariable UUID usuarioId){
         Usuario usuario = administradorService.setearEneable(usuarioId);
         return ResponseEntity.status(201).body(usuario);
