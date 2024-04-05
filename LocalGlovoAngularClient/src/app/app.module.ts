@@ -17,6 +17,7 @@ import { IngredienteItemComponent } from './components/ingrediente-item/ingredie
 import { PageCrearProductosComponent } from './ui/productos/page-crear-productos/page-crear-productos.component';
 import { UsuarioItemComponent } from './components/usuario-item/usuario-item/usuario-item.component';
 import { PageUsuariosComponent } from './ui/usuarios/page-usuarios/page-usuarios.component';
+import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-comercio-page.component';
 
 
 
@@ -33,7 +34,8 @@ import { PageUsuariosComponent } from './ui/usuarios/page-usuarios/page-usuarios
         IngredienteItemComponent,
         PageCrearProductosComponent,
         UsuarioItemComponent,
-        PageUsuariosComponent
+        PageUsuariosComponent,
+        AddComercioPageComponent
     ],
     providers: [],
     bootstrap: [AppComponent],
