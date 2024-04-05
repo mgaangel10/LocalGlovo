@@ -94,12 +94,14 @@ public class UsuarioController {
     })
     @PostMapping("/auth/login/user")
     public ResponseEntity<JwtUserResponse> loginUser(@RequestBody PostLogin postLogin){
+        usuarioService.setearEnabled(postLogin);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         postLogin.email(),
                         postLogin.password()
                 )
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
         Usuario usuario = (Usuario) authentication.getPrincipal();
