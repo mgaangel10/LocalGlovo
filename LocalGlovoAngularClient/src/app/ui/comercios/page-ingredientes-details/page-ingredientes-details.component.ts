@@ -42,6 +42,11 @@ export class PageIngredientesDetailsComponent {
       this.location.back();
     })
   }
+  eliminarIngredientes(){
+    this.productoService.eliminarIngredientes(this.producto .ingredientes[0].id!).subscribe(i=>{
+      
+    })
+  }
   
 
   navegar(){
