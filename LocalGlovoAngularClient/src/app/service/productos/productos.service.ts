@@ -48,4 +48,14 @@ export class ProductosService {
     })
   }
 
+  eliminarIngredientes(id:string){
+    let token = localStorage.getItem('TOKEN');
+    return this.http.delete(`${environment.HeadUrl}/administrador/eliminar/${id}`, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
+
 }
