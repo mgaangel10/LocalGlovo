@@ -18,6 +18,7 @@ import { PageCrearProductosComponent } from './ui/productos/page-crear-productos
 import { UsuarioItemComponent } from './components/usuario-item/usuario-item/usuario-item.component';
 import { PageUsuariosComponent } from './ui/usuarios/page-usuarios/page-usuarios.component';
 import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-comercio-page.component';
+import { HeaderComponent } from './components/header/header/header.component';
 
 
 
@@ -35,7 +36,8 @@ import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-c
         PageCrearProductosComponent,
         UsuarioItemComponent,
         PageUsuariosComponent,
-        AddComercioPageComponent
+        AddComercioPageComponent,
+        HeaderComponent
     ],
     providers: [],
     bootstrap: [AppComponent],

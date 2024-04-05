@@ -9,7 +9,7 @@ import { ComerciosService } from '../../../service/comercios/comercios.service';
   styleUrl: './page-comercio-details.component.css'
 })
 export class PageComercioDetailsComponent implements OnInit {
-  id!: String | null;
+  id!: string | null;
   comercioDetails!: ComercioDetails;
   producto: Producto[] = [];
 
@@ -25,6 +25,11 @@ export class PageComercioDetailsComponent implements OnInit {
       })
     }
 
+  }
+  eliminarComercio(){
+    this.comercioService.eliminarComercio(this.id!).subscribe(c=>{
+      this.router.navigate(['/listado-comercios']);
+    })
   }
   verIngredientes(producto: Producto) {
     this.router.navigate(['/ingredientes-details', producto.id]);

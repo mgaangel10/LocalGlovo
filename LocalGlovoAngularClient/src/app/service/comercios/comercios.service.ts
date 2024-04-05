@@ -59,6 +59,16 @@ export class ComerciosService {
     })
   }
 
+  eliminarComercio(id:string){
+    let token = localStorage.getItem('TOKEN');
+    return this.http.delete(`${environment.HeadUrl}/administrador/eliminar/comercio/${id}`, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
+
 
 
 }

@@ -3,6 +3,7 @@ package com.example.LocalGlovo.users.service;
 
 import com.example.LocalGlovo.users.Dto.GetUsuario;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
+import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.model.User;
 import com.example.LocalGlovo.users.model.UserRoles;
 import com.example.LocalGlovo.users.model.Usuario;
@@ -15,10 +16,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,7 +51,7 @@ public class UsuarioService {
                 .createdAt(LocalDateTime.now())
                 .birthDate(postCrearUserDto.nacimiento())
                 .roles(EnumSet.of(UserRoles.USER))
-                .enabled(true)
+                .enabled(false)
                 .build();
 
         return usuarioRepo.save(usuario);
@@ -62,6 +65,16 @@ public class UsuarioService {
         GetUsuario usuario = usuarioRepo.getUsuario(uuid);
         return usuario;
 
+    }
+    public Usuario setearEnabled(PostLogin postCrearUserDto){
+        Optional<Usuario> usuario = usuarioRepo.findByEmailIgnoreCase(postCrearUserDto.email());
+
+        if (usuario.isPresent() || usuario.get().isEnabled()){
+            usuario.get().setEnabled(true);
+            return usuarioRepo.save(usuario.get());
+        }else {
+            throw new RuntimeException("No se encuentra el usuario");
+        }
     }
 
 

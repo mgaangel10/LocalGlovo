@@ -17,6 +17,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, UUID> {
     Usuario findByEmail(String email);
     boolean existsByEmailIgnoreCase(String email);
     List<Usuario> findByEnabledFalse();
+    Optional<Usuario> findByEmailIgnoreCase(String nombre);
     List<Usuario> findByEnabledTrue();
 
     @Query("""
