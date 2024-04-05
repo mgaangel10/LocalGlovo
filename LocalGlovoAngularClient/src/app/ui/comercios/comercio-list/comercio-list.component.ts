@@ -11,17 +11,37 @@ export class ComercioListComponent implements OnInit {
   comercioList: Content[] = [];
   results: any[] = [];
   searchTerm: string = '';
+  paginaActual: number = 0;
   @Output() comercioClick = new EventEmitter<String>();
   constructor(private comercioSer: ComerciosService,private ngZone:NgZone,private cdr:ChangeDetectorRef) { }
 
-  ngOnInit(): void {
-    this.comercioSer.ListadoDeComercioResponse().subscribe((response: ListadoComercioResponse) => {
-      this.comercioList = response.content;
-      this.results = [...this.comercioList];     });
-  }
+ 
 
   comercioClickLista(id: String) {
     this.comercioClick.emit(id);
+  }
+  ngOnInit(): void {
+    this.cargarComercios(this.paginaActual);
+  }
+
+  cargarComercios(pagina: number) {
+    this.comercioSer.ListadoDeComercioResponse(pagina).subscribe((response: ListadoComercioResponse) => {
+      this.comercioList = response.content;
+      this.results = [...this.comercioList];
+    });
+  }
+
+  // Agrega funciones para navegar a la página siguiente y anterior
+  paginaSiguiente() {
+    this.paginaActual++;
+    this.cargarComercios(this.paginaActual);
+  }
+
+  paginaAnterior() {
+    if (this.paginaActual > 0) {
+      this.paginaActual--;
+      this.cargarComercios(this.paginaActual);
+    }
   }
   
 

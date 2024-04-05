@@ -1,0 +1,29 @@
+<form [formGroup]="crearComercio" (ngSubmit)="add()">
+    
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="name" formControlName="name" placeholder="Introduce el nombre del producto">
+    </div>
+    <div class="mb-3">
+      <label for="latitud" class="form-label">Latitud</label>
+      <input type="text" step="0.01" class="form-control" id="latitud" formControlName="latitud" placeholder="Introduce la latitud">
+    </div>
+    <div class="mb-3">
+        <label for="longitud" class="form-label">Longitud</label>
+        <input type="text" step="0.01" class="form-control" id="longitud" formControlName="longitud" placeholder="Introduce la longitud">
+      </div>
+      <div class="mb-3">
+        <label for="nameDirection" class="form-label">Nombre de la direccion</label>
+        <input type="text" step="0.01" class="form-control" id="nameDirection" formControlName="nameDirection" placeholder="Introduce la nameDirection">
+      </div>
+      <div class="mb-3">
+        <label for="categorias" class="form-label">Categorias</label>
+        <input type="text" step="0.01" class="form-control" id="categorias" formControlName="categorias" placeholder="Introduce la categorias">
+      </div>
+    <div class="mb-3">
+        <label for="imagen" class="form-label">URL de la imagen</label>
+        <input type="text" class="form-control" id="imagen" formControlName="imagen" placeholder="Introduce la URL de la imagen">
+      </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+  
