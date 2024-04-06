@@ -19,6 +19,7 @@ import { UsuarioItemComponent } from './components/usuario-item/usuario-item/usu
 import { PageUsuariosComponent } from './ui/usuarios/page-usuarios/page-usuarios.component';
 import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-comercio-page.component';
 import { HeaderComponent } from './components/header/header/header.component';
+import { AddIngredientesPageComponent } from './ui/add-ingredientes/add-ingredientes-page/add-ingredientes-page.component';
 
 
 
@@ -37,7 +38,8 @@ import { HeaderComponent } from './components/header/header/header.component';
         UsuarioItemComponent,
         PageUsuariosComponent,
         AddComercioPageComponent,
-        HeaderComponent
+        HeaderComponent,
+        AddIngredientesPageComponent
     ],
     providers: [],
     bootstrap: [AppComponent],

@@ -35,7 +35,7 @@ public class VentasService {
                 .distinct()
                 .collect(Collectors.toList());
 
-        // Actualiza la venta
+
         if (ventas.isEmpty()){
             throw new RuntimeException("no hay ventas para ese dia");
         }else{

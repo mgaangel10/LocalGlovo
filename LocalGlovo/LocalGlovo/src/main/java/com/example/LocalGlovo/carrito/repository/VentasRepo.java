@@ -12,9 +12,21 @@ import java.util.List;
 import java.util.UUID;
 
 public interface VentasRepo extends JpaRepository<Ventas, UUID> {
-    @Query("SELECT v.productos, COUNT(v.productos) as count FROM Ventas v WHERE v.fecha = :fecha GROUP BY v.productos ORDER BY count DESC")
+    @Query("""
+            SELECT v.productos, COUNT(v.productos) as count
+             FROM Ventas v
+              WHERE v.fecha = :fecha
+               GROUP BY v.productos
+                ORDER BY count DESC
+            """)
     List<Producto> obtenerProductosMasVendidos(@Param("fecha") LocalDate fecha);
 
-    @Query("SELECT v.usuarios, COUNT(v.usuarios) as count FROM Ventas v WHERE v.fecha = :fecha GROUP BY v.usuarios ORDER BY count DESC")
+    @Query("""
+            SELECT v.usuarios, COUNT(v.usuarios) as count 
+            FROM Ventas v
+             WHERE v.fecha = :fecha
+              GROUP BY v.usuarios
+               ORDER BY count DESC
+            """)
     List<Usuario> obtenerUsuariosQueMasCompran(@Param("fecha") LocalDate fecha);
 }

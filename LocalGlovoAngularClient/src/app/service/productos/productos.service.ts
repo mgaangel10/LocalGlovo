@@ -5,6 +5,7 @@ import { ComercioDetails } from '../../models/comercio-details';
 import { ProductosDetails } from '../../models/productos-details';
 import { environment } from '../../environments/environment';
 import { AddProducto } from '../../models/add-producto';
+import { AddIngredintes } from '../../models/add-ingredientes';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,22 @@ export class ProductosService {
   eliminarIngredientes(id:string){
     let token = localStorage.getItem('TOKEN');
     return this.http.delete(`${environment.HeadUrl}/administrador/eliminar/${id}`, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
+  addIngredintes(id:string,name:string,imagen:string):Observable<AddIngredintes>{
+    let token = localStorage.getItem('TOKEN');
+    return this.http.post<AddIngredintes>(`${environment.HeadUrl}/administrador/add/ingredientes/${id}`,{
+      
+      "name":`${name}`,
+      "imagen": `${imagen}`
+      
+      
+
+    }, {
       headers: {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`
