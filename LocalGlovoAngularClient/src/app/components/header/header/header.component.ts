@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoginResponse } from '../../../models/login-administrador';
+import { AdministradorService } from '../../../service/administrador/administrador.service';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+ 
 
 }

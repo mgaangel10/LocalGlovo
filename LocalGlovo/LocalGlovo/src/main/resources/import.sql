@@ -66,6 +66,11 @@ INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('f89f898a-70aa-48
 INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9','7b8e6e8d-a202-4927-9bb9-9124a3049c4e');
 INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9','3f33b5a5-bc9a-4b4c-9d6f-0935379d7e61');
 
+INSERT INTO favorito (comercio_id, usuario_id) VALUES ('aee5e900-9dad-11d1-80b4-00c04fd430c9', '5d818565-99f9-4d80-920e-8259c6ecb8e6');
+
+
+
+
 --INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('123e4567-e89b-12d3-a456-426614174000','b714eea5-9b28-4e8c-b189-83d8fc14a834');
 --INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('123e4567-e89b-12d3-a456-426614174000','550e8400-e29b-41d4-a716-446655440000');
 --INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('123e4567-e89b-12d3-a456-426614174000','550e8400-e29b-41d4-a716-446655440000');

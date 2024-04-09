@@ -1,1 +1,14 @@
-<p>add-ingredientes-page works!</p>
+<form [formGroup]="crearComercio" (ngSubmit)="add()">
+    
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="name" formControlName="name" placeholder="Introduce el nombre del producto">
+    </div>
+    
+    <div class="mb-3">
+        <label for="imagen" class="form-label">URL de la imagen</label>
+        <input type="text" class="form-control" id="imagen" formControlName="imagen" placeholder="Introduce la URL de la imagen">
+      </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+  

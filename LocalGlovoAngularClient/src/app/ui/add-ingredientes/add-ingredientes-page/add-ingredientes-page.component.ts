@@ -14,7 +14,7 @@ export class AddIngredientesPageComponent {
   id!: string | null;
   constructor(private productoService:ProductosService,private router:Router, private route: ActivatedRoute){
     this.route.params.subscribe(params => {
-      this.id = params['productoId'];
+      this.id = params['id'];
       
      
     });
@@ -30,7 +30,7 @@ export class AddIngredientesPageComponent {
   add(){
     this.productoService.addIngredintes(this.id!,this.crearComercio.value.name!,this.crearComercio.value.imagen!)
     .subscribe((c:AddIngredintes)=>{
-      
+      this.router.navigate(['/ingredientes-details', this.id]);
     })
   }
 
