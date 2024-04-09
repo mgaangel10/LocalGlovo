@@ -8,6 +8,7 @@ import { PageIngredientesDetailsComponent } from './ui/comercios/page-ingredient
 import { PageCrearProductosComponent } from './ui/productos/page-crear-productos/page-crear-productos.component';
 import { PageUsuariosComponent } from './ui/usuarios/page-usuarios/page-usuarios.component';
 import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-comercio-page.component';
+import { AddIngredientesPageComponent } from './ui/add-ingredientes/add-ingredientes-page/add-ingredientes-page.component';
 
 const routes: Routes = [
   { path: 'home', component: HomePageAdministradorComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'usuarioid/:usuarioId', component: PageUsuariosComponent },
   { path: 'usuarios', component: PageUsuariosComponent },
   { path: 'ingredientes-details/:id', component: PageIngredientesDetailsComponent },
+  { path: 'crear-ingredientes/:id', component: AddIngredientesPageComponent},
   { path: 'crear-productos/:id', component: PageCrearProductosComponent},
   { path: 'listado-comercios', component: ComercioListComponent },
   { path: '**', redirectTo: '/login', pathMatch: 'full' }

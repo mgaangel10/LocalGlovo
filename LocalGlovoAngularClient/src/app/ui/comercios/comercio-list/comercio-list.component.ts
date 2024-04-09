@@ -31,7 +31,7 @@ export class ComercioListComponent implements OnInit {
     });
   }
 
-  // Agrega funciones para navegar a la página siguiente y anterior
+  
   paginaSiguiente() {
     this.paginaActual++;
     this.cargarComercios(this.paginaActual);

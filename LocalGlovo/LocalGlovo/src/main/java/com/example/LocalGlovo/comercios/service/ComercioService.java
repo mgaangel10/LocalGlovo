@@ -98,4 +98,14 @@ public class ComercioService {
         }
 
     }
+
+    public int totalLikes(UUID comercioId){
+        Optional<Comercio> comercio = comercioRepo.findById(comercioId);
+
+        if (comercio.isPresent()){
+            return comercio.get().getFavoritoList().size();
+        }else {
+            throw new RuntimeException("No hay comercios con ese id");
+        }
+    }
 }

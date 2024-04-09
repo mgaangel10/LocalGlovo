@@ -34,8 +34,6 @@ public class CustomDetailUserService implements UserDetailsService {
                 throw (new UsernameNotFoundException("No user with email: " + email));
             }
         }
-                /*
-                .orElseThrow(() -> new UsernameNotFoundException("No user with email: " +  email));
-                */
+
     }
 }
