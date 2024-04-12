@@ -2,6 +2,7 @@ package com.example.LocalGlovo.users.service;
 
 
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
+import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.model.Administrador;
 import com.example.LocalGlovo.users.model.UserRoles;
 import com.example.LocalGlovo.users.model.Usuario;
@@ -9,6 +10,8 @@ import com.example.LocalGlovo.users.repositorio.AdministradorRepo;
 import com.example.LocalGlovo.users.repositorio.UsuarioRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -41,6 +44,7 @@ public class AdministradorService {
                 .lastName(postCrearUserDto.lastName())
                 .password(passwordEncoder.encode(postCrearUserDto.password()))
                 .createdAt(LocalDateTime.now())
+                .fotoUrl(postCrearUserDto.fotoUrl())
                 .birthDate(postCrearUserDto.nacimiento())
                 .roles(EnumSet.of(UserRoles.ADMINISTRADOR))
                 .build();
@@ -71,9 +75,42 @@ public class AdministradorService {
         }
     }
 
+    public Administrador getLoggedAdministrador() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String nombre= ((UserDetails)principal).getUsername();
+            Optional<Administrador> administrador = administradorRepo.findByEmailIgnoreCase(nombre);
+            return administrador.get();
+
+        }
+
+        return null;
+    }
+
     public List<Usuario> listadoUsuarios(){
         return usuarioRepo.findByEnabledTrue();
     }
 
+    public Administrador logOut(UUID uuid){
+        Optional<Administrador> administrador = administradorRepo.findById(uuid);
+        if (administrador.isPresent()){
+            administrador.get().setEnabled(false);
+            return administradorRepo.save(administrador.get());
+        }else{
+            throw new RuntimeException("No se encuentra el administrador por ese id");
+        }
+    }
+
+    public Administrador setearEnabled(PostLogin postCrearUserDto){
+        Optional<Administrador> administrador = administradorRepo.findByEmailIgnoreCase(postCrearUserDto.email());
+
+        if (administrador.isPresent() || administrador.get().isEnabled()){
+            administrador.get().setEnabled(true);
+            return administradorRepo.save(administrador.get());
+        }else {
+            throw new RuntimeException("No se encuentra el administrador");
+        }
+    }
 
 }

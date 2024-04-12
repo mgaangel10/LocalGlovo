@@ -39,8 +39,8 @@ public class ComercioController {
         return ResponseEntity.ok(getListComerciosPage);
     }
     @GetMapping("administrador/buscar/comercio/{nombre}")
-    public ResponseEntity<List<GetListComercios>> buscarPorNombre(@PathVariable String nombre){
-       List<GetListComercios>  comercio = comercioService.findByNombre(nombre);
+    public ResponseEntity<List<Comercio>> buscarPorNombre(@PathVariable String nombre){
+       List<Comercio>  comercio = comercioService.findByNombre(nombre);
         return ResponseEntity.ok(comercio);
     }
 

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output,NgZone,ChangeDetectorRef   } fr
 import { Content, ListadoComercioResponse } from '../../../models/listado-comercio-response';
 import { ComerciosService } from '../../../service/comercios/comercios.service';
 
+
 @Component({
   selector: 'app-comercio-list',
   templateUrl: './comercio-list.component.html',

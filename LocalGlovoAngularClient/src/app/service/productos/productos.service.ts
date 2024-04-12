@@ -6,6 +6,7 @@ import { ProductosDetails } from '../../models/productos-details';
 import { environment } from '../../environments/environment';
 import { AddProducto } from '../../models/add-producto';
 import { AddIngredintes } from '../../models/add-ingredientes';
+import { EditarProducto } from '../../models/editar-productos';
 
 @Injectable({
   providedIn: 'root'
@@ -65,9 +66,22 @@ export class ProductosService {
       "name":`${name}`,
       "imagen": `${imagen}`
       
-      
-
     }, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
+
+  editarProducto(idProducto:string,imagen:string,name:string,precio:number,disponible:boolean):Observable<EditarProducto>{
+    let token = localStorage.getItem('TOKEN');
+    return this.http.put<EditarProducto>(`${environment.HeadUrl}/administrador/editar/producto/${idProducto}`,{
+      "imagen":`${imagen}`,
+      "name":`${name}`,
+      "precio":`${precio}`,
+      "disponible":`${disponible}`,
+    },{
       headers: {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`

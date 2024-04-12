@@ -21,7 +21,7 @@ public class PostRegistroDto  {
     String username;
     LocalDate birthdate;
     String email;
-
+    String fotoUrl;
 
     LocalDateTime creadoen;
 
@@ -32,7 +32,7 @@ public class PostRegistroDto  {
                 .username(usuario.getUsername())
                 .birthdate(usuario.getBirthDate())
                 .email(usuario.getEmail())
-
+                .fotoUrl(usuario.getFotoUrl())
                 .creadoen(usuario.getCreatedAt())
                 .build();
     }
@@ -43,7 +43,7 @@ public class PostRegistroDto  {
                 .username(administrador.getUsername())
                 .birthdate(administrador.getBirthDate())
                 .email(administrador.getEmail())
-
+                .fotoUrl(administrador.getFotoUrl())
                 .creadoen(administrador.getCreatedAt())
                 .build();
     }

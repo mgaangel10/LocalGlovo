@@ -32,6 +32,7 @@ public class ProductoService {
         //producto.setComercio(postProductoDto.comercio());
         Optional<Comercio> comercio = comercioRepo.findById(comercioId);
         comercio.get().getProductos().add(producto);
+        prodcutoRepo.save(producto);
 
 
         return prodcutoRepo.save(producto);
@@ -48,7 +49,7 @@ public class ProductoService {
         }
     }
 
-    public Comercio añadirProductosAComercio(String nombreComercio, List<UUID> idsProductos) {
+   /* public Comercio añadirProductosAComercio(String nombreComercio, List<UUID> idsProductos) {
 
         Comercio comercio = comercioRepo.findByName(nombreComercio);
 
@@ -57,10 +58,11 @@ public class ProductoService {
         Set<Producto> productosComercio = comercio.getProductos();
         productosComercio.addAll(productos);
         comercio.setProductos(productosComercio);
-
+        productos.get(0).setComercio(comercio);
+        prodcutoRepo.save(productos.get(0));
 
        return comercioRepo.save(comercio);
-    }
+    }*/
 
     public Ingredientes finByIdIngredientes(UUID uuid){
         Optional<Ingredientes> ingredientes = ingredientesRepo.findById(uuid);
@@ -153,6 +155,8 @@ public class ProductoService {
         }
 
     }
+
+
 
 
 

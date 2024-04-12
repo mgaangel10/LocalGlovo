@@ -37,7 +37,7 @@ public class ProductoController {
         return ResponseEntity.ok(getListComerciosPage);
     }
 
-    @PostMapping("/administrador/añadir/productos/{nombreComercio}")
+   /* @PostMapping("/administrador/añadir/productos/{nombreComercio}")
     public ResponseEntity<?> añadirProductos(@PathVariable String nombreComercio, @RequestBody List<UUID> idsProductos) {
         try {
             Comercio comercio = productoService.añadirProductosAComercio(nombreComercio, idsProductos);
@@ -45,7 +45,7 @@ public class ProductoController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping("usuario/ingredientes/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable UUID id){
@@ -92,5 +92,7 @@ public class ProductoController {
         Producto producto = productoService.editarProdcuto(productoId,postProductoDto);
         return ResponseEntity.status(201).body(producto);
     }
+
+
 
 }

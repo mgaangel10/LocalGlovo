@@ -30,6 +30,11 @@ public interface ProdcutoRepo extends JpaRepository<Producto, UUID> {
 
     List<Producto> findAllByIngredientesContaining(Ingredientes ingrediente);
 
+    Optional<Producto> findByNameIgnoreCase(String nombre);
+
+
+
+
 
 
 
