@@ -4,7 +4,7 @@
 
     <h2 class="mx-auto"><a class="text-decoration-none text-dark" [routerLink]="['/listado-comercios']">Local Glovo</a>
     </h2>
-    <img *ngIf="administrador.fotoUr l!= null;null" [src]="administrador.fotoUrl " class="me-4"
+    <img *ngIf="administrador.enabled; null" [src]="administrador.fotoUrl " class="me-4"
       style="height: 60px; border-radius: 50px;">
     <button type="submit " (click)="logout()" class="btn btn-dark  "
       style="height: 60px; width: 60px; border-radius: 50px;"><svg xmlns="http://www.w3.org/2000/svg" width="30"

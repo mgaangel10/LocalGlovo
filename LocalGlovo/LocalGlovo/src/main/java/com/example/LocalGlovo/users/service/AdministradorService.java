@@ -2,6 +2,7 @@ package com.example.LocalGlovo.users.service;
 
 
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
+import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.model.Administrador;
 import com.example.LocalGlovo.users.model.UserRoles;
 import com.example.LocalGlovo.users.model.Usuario;
@@ -98,6 +99,17 @@ public class AdministradorService {
             return administradorRepo.save(administrador.get());
         }else{
             throw new RuntimeException("No se encuentra el administrador por ese id");
+        }
+    }
+
+    public Administrador setearEnabled(PostLogin postCrearUserDto){
+        Optional<Administrador> administrador = administradorRepo.findByEmailIgnoreCase(postCrearUserDto.email());
+
+        if (administrador.isPresent() || administrador.get().isEnabled()){
+            administrador.get().setEnabled(true);
+            return administradorRepo.save(administrador.get());
+        }else {
+            throw new RuntimeException("No se encuentra el administrador");
         }
     }
 

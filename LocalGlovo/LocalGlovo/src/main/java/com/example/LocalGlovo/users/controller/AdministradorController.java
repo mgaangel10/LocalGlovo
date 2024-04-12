@@ -101,6 +101,7 @@ public class AdministradorController {
     })
     @PostMapping("auth/login/admin")
     public ResponseEntity<JwtUserResponse> loginadmin(@RequestBody PostLogin postLogin){
+        administradorService.setearEnabled(postLogin);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         postLogin.email(),
@@ -136,6 +137,7 @@ public class AdministradorController {
         Administrador administrador = administradorService.logOut(id);
         return ResponseEntity.status(201).body(administrador);
     }
+
 
 
 }
