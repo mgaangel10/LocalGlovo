@@ -43,6 +43,7 @@ public class AdministradorService {
                 .lastName(postCrearUserDto.lastName())
                 .password(passwordEncoder.encode(postCrearUserDto.password()))
                 .createdAt(LocalDateTime.now())
+                .fotoUrl(postCrearUserDto.fotoUrl())
                 .birthDate(postCrearUserDto.nacimiento())
                 .roles(EnumSet.of(UserRoles.ADMINISTRADOR))
                 .build();
@@ -90,5 +91,14 @@ public class AdministradorService {
         return usuarioRepo.findByEnabledTrue();
     }
 
+    public Administrador logOut(UUID uuid){
+        Optional<Administrador> administrador = administradorRepo.findById(uuid);
+        if (administrador.isPresent()){
+            administrador.get().setEnabled(false);
+            return administradorRepo.save(administrador.get());
+        }else{
+            throw new RuntimeException("No se encuentra el administrador por ese id");
+        }
+    }
 
 }

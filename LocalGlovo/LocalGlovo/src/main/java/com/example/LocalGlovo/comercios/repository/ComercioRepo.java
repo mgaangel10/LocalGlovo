@@ -31,7 +31,7 @@ public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
             """)
     Page<GetListComercios> getListComercios(Pageable pageable);
 
-    List<Comercio> findByName(String nombre);
+    List<Comercio> findByNameIgnoreCase(String nombre);
 
 
     //Comercio findByName(String name);

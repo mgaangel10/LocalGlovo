@@ -131,5 +131,11 @@ public class AdministradorController {
         return ResponseEntity.ok(administrador);
     }
 
+    @PostMapping("administrador/logout/{id}")
+    public ResponseEntity<Administrador> logOut(@PathVariable UUID id){
+        Administrador administrador = administradorService.logOut(id);
+        return ResponseEntity.status(201).body(administrador);
+    }
+
 
 }

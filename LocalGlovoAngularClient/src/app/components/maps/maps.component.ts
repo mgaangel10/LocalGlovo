@@ -8,16 +8,17 @@ import { ListadoComercioResponse, Content } from '../../models/listado-comercio-
   templateUrl: './maps.component.html',
   styleUrl: './maps.component.css'
 })
-export class MapsComponent implements OnInit{
+export class MapsComponent implements OnInit {
 
 
   mapOptions: google.maps.MapOptions = {
-    center: {lat: 40.416775, lng: -3.703790}, // Coordenadas de un punto central para iniciar el mapa
+    center: { lat: 37.267892259937966, lng: -6.062729833230927 },
     zoom: 15
-  };
-  markers: google.maps.MarkerOptions[] = []; // Aquí almacenaremos los marcadores para cada comercio
 
-  constructor(private yourService: ComerciosService) { } // Inyecta tu servicio aquí
+  };
+  markers: google.maps.MarkerOptions[] = [];
+
+  constructor(private yourService: ComerciosService) { }
 
   ngOnInit(): void {
     this.loadComercios();

@@ -1,5 +1,7 @@
 package com.example.LocalGlovo.comercios.service;
 
+import com.example.LocalGlovo.Favoritos.models.Favorito;
+import com.example.LocalGlovo.Favoritos.repository.FavoritoRepo;
 import com.example.LocalGlovo.comercios.Dto.GetListComercios;
 import com.example.LocalGlovo.comercios.Dto.PostCrearComercio;
 import com.example.LocalGlovo.comercios.models.CategoriaComercios;
@@ -20,7 +22,7 @@ import java.util.UUID;
 public class ComercioService {
 
     private final ComercioRepo comercioRepo;
-
+    private final FavoritoRepo favoritoRepo;
 
     public Comercio crearComercio(PostCrearComercio postCrearComercio){
 
@@ -42,7 +44,7 @@ public class ComercioService {
     public List<Comercio> findByNombre(String name){
 
 
-        return comercioRepo.findByName(name);
+        return comercioRepo.findByNameIgnoreCase(name);
 
     }
     public List<GetListComercios> getComerciosPorCategoria(CategoriaComercios categoria) {
@@ -74,6 +76,10 @@ public class ComercioService {
         if (comercio.isEmpty()){
             throw new RuntimeException("no se ha encontrado el comercio");
         }else{
+            List<Favorito> favoritoList = comercio.get().getFavoritoList();
+            favoritoList.forEach(favorito -> {comercio.get().getFavoritoList();
+            favoritoRepo.delete(favorito);});
+
             comercioRepo.delete(comercio.get());
         }
     }

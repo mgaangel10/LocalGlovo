@@ -10,22 +10,22 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private loginService: AdministradorService,private router:Router){};
+  constructor(private loginService: AdministradorService, private router: Router) { };
 
   profileLogin = new FormGroup({
-    email: new FormControl(''), 
-    password: new FormControl('') 
+    email: new FormControl(''),
+    password: new FormControl('')
   })
 
   login() {
-    console.log('Datos enviados al servidor:', this.profileLogin.value); 
-  
+    console.log('Datos enviados al servidor:', this.profileLogin.value);
+
     this.loginService.LoginResponseAdministrador(this.profileLogin.value.email!, this.profileLogin.value.password!)
       .subscribe((l: LoginResponse) => {
         localStorage.setItem('TOKEN', l.token);
         localStorage.setItem('USER_ID', l.id);
-        this.router.navigate(['/home']);
-       
+        this.router.navigate(['/listado-comercios']);
+
 
       });
   }
