@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.productos.model;
 
 import com.example.LocalGlovo.comercios.models.Comercio;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,7 @@ public class Producto {
     private Set<Ingredientes> ingredientes;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Comercio comercio;
 
 

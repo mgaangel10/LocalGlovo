@@ -23,6 +23,7 @@ public class JwtUserResponse extends PostRegistroDto{
         fullname = postRegistroDto.getFullname();
         username=postRegistroDto.getUsername();
         email= postRegistroDto.getEmail();
+        fotoUrl= postRegistroDto.fotoUrl;
         creadoen = postRegistroDto.getCreadoen();
         birthdate=postRegistroDto.getBirthdate();
     }

@@ -53,7 +53,7 @@ export class PageIngredientesDetailsComponent {
   }
   
 
-  navegar(){
-    
+  editar(){
+    this.router.navigate(['/editar-producto',this.id]);
   }
 }

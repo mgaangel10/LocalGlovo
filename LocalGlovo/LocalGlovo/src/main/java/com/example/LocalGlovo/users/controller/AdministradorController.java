@@ -125,6 +125,11 @@ public class AdministradorController {
         List<Usuario> usuarios = administradorService.listadoUsuarios();
         return ResponseEntity.ok(usuarios);
     }
+    @GetMapping("administrador/logueado")
+    public ResponseEntity<Administrador> getLoggedAdministrador() {
+        Administrador administrador = administradorService.getLoggedAdministrador();
+        return ResponseEntity.ok(administrador);
+    }
 
 
 }

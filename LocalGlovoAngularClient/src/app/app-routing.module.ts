@@ -9,6 +9,7 @@ import { PageCrearProductosComponent } from './ui/productos/page-crear-productos
 import { PageUsuariosComponent } from './ui/usuarios/page-usuarios/page-usuarios.component';
 import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-comercio-page.component';
 import { AddIngredientesPageComponent } from './ui/add-ingredientes/add-ingredientes-page/add-ingredientes-page.component';
+import { PageEditarProductoComponent } from './ui/productos/page-editar-producto/page-editar-producto.component';
 
 const routes: Routes = [
   { path: 'home', component: HomePageAdministradorComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'usuarioid/:usuarioId', component: PageUsuariosComponent },
   { path: 'usuarios', component: PageUsuariosComponent },
   { path: 'ingredientes-details/:id', component: PageIngredientesDetailsComponent },
+  { path: 'editar-producto/:id', component: PageEditarProductoComponent },
   { path: 'crear-ingredientes/:id', component: AddIngredientesPageComponent},
   { path: 'crear-productos/:id', component: PageCrearProductosComponent},
   { path: 'listado-comercios', component: ComercioListComponent },

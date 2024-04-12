@@ -33,9 +33,9 @@ export class ComerciosService {
       }
     })
   }
-  getComercioByNombre(nombre:string): Observable<ListadoComercioResponse>{
+  getComercioByNombre(nombre:string): Observable<ComercioDetails>{
     let token = localStorage.getItem('TOKEN');
-    return this.http.get<ListadoComercioResponse>(`${environment.HeadUrl}/administrador/buscar/comercio/${nombre}`, {
+    return this.http.get<ComercioDetails>(`${environment.HeadUrl}/administrador/buscar/comercio/${nombre}`, {
       headers: {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`

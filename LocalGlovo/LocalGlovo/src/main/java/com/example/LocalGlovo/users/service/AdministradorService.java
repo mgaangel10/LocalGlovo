@@ -9,6 +9,8 @@ import com.example.LocalGlovo.users.repositorio.AdministradorRepo;
 import com.example.LocalGlovo.users.repositorio.UsuarioRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -69,6 +71,19 @@ public class AdministradorService {
         }else {
             throw new RuntimeException("Usuario con email: '"+usuarioId+"' no encontrado");
         }
+    }
+
+    public Administrador getLoggedAdministrador() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String nombre= ((UserDetails)principal).getUsername();
+            Optional<Administrador> administrador = administradorRepo.findByEmailIgnoreCase(nombre);
+            return administrador.get();
+
+        }
+
+        return null;
     }
 
     public List<Usuario> listadoUsuarios(){

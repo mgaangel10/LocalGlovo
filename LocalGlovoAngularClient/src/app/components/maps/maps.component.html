@@ -1,0 +1,6 @@
+<div style="display: flex; justify-content: center;">
+    <google-map style="width: 500px; height: 100%;" [options]="mapOptions">
+      <map-marker *ngFor="let marker of markers" [options]="marker"></map-marker>
+    </google-map>
+  </div>
+  

@@ -30,22 +30,9 @@ public interface ComercioRepo extends JpaRepository<Comercio, UUID> {
             from Comercio c
             """)
     Page<GetListComercios> getListComercios(Pageable pageable);
-    @Query("""
-            select new com.example.LocalGlovo.comercios.Dto.GetListComercios(
-            c.id,
-            c.name,
-            c.rating,
-            c.nameDirection,
-            c.imagen,
-            c.latitud,
-            c.longitud,
-            c.categorias
-            )
-            from Comercio c
-            where c.name = ?1
-            """)
-    List<GetListComercios> findByNombreGetListComercio(String nombre);
+
+    List<Comercio> findByName(String nombre);
 
 
-    Comercio findByName(String name);
+    //Comercio findByName(String name);
 }

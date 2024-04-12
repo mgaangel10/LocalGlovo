@@ -5,6 +5,6 @@ export interface LoginResponse {
     fullname: string;
     username: string;
     email:    string;
-    creadoen: string;
+    fotoUrl:  string;
     token:    string;
 }
