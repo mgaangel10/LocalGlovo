@@ -10,8 +10,6 @@ import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 import 'package:local_glovo/ui/pages/register_page.dart';
 import 'package:local_glovo/ui/widget/geocalizacion.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(MyApp());

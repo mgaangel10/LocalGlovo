@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Home page"),
+          automaticallyImplyLeading: false,
         ),
         body: Column(
           children: [
@@ -254,7 +255,7 @@ class _HomePageState extends State<HomePage> {
           return Text(state.errorMensaje);
         } else {
           return Center(
-            child: Text("hola"),
+            child: CircularProgressIndicator(),
           );
         }
       },
