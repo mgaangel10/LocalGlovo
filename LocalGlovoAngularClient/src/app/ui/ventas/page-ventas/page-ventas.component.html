@@ -2,7 +2,24 @@
 <div>
 
 
-    <div class="flex">
+    <div class="w-25 mx-auto">
+        <form class="d-flex" [formGroup]="viewVentas" (ngSubmit)="verVentas()">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="fecha">Fecha</span>
+                <input type="date" class="form-control" placeholder="Fecha" aria-label="fecha"
+                    aria-describedby="basic-addon1" formControlName="fecha">
+            </div>
+            <button type="submit" style="height: 40px;" class="btn btn-primary">Enviar</button>
+        </form>
+
+
+
 
     </div>
+    <div class="bg-primary-subtle text-center" style="width: 200px; height: 200px; border-radius: 100px;">
+        <p>{{ventas.total}}€</p>
+    </div>
+
+
 </div>

@@ -42,9 +42,11 @@ public class VentasService {
             ventas.get(0).setTotal(total);
             ventas.get(0).setUsuarios(usuarios);
             ventas.get(0).setProductos(productos);
+            List<Ventas> ventas1 = ventas.stream().filter(ventas2 -> ventas2.getFecha().isEqual(localDate)).collect(Collectors.toList());
 
 
-            return ventasRepo.save(ventas.get(0));
+             ventasRepo.save(ventas.get(0));
+             return ventas1.get(0);
         }
 
 

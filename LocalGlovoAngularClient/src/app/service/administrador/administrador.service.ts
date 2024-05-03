@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { LoginResponse } from '../../models/login-administrador';
 import { environment } from '../../environments/environment';
 import { AdministradorResponse } from '../../models/Administrador-response';
+import { VentasResponse } from '../../models/ventas-response';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,15 @@ export class AdministradorService {
       'Authorization': `Bearer ${token1}`
     });
     return this.http.post<AdministradorResponse>(`${environment.HeadUrl}/administrador/logout/${id}`, {}, { headers: headers });
+  }
+
+  verVentas(fecha: Date): Observable<VentasResponse> {
+    let token = localStorage.getItem('TOKEN');
+    return this.http.get<VentasResponse>(`${environment.HeadUrl}/administrador/ver/ventas/${fecha}`, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
   }
 }

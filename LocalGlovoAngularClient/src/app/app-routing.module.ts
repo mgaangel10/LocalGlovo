@@ -10,9 +10,11 @@ import { PageUsuariosComponent } from './ui/usuarios/page-usuarios/page-usuarios
 import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-comercio-page.component';
 import { AddIngredientesPageComponent } from './ui/add-ingredientes/add-ingredientes-page/add-ingredientes-page.component';
 import { PageEditarProductoComponent } from './ui/productos/page-editar-producto/page-editar-producto.component';
+import { PageVentasComponent } from './ui/ventas/page-ventas/page-ventas.component';
 
 const routes: Routes = [
   { path: 'home', component: HomePageAdministradorComponent },
+  { path: 'ver-ventas', component: PageVentasComponent },
   { path: 'login', component: LoginComponent },
   { path: 'addComercio', component: AddComercioPageComponent },
   { path: 'comercio-details/:comercioId', component: PageComercioDetailsComponent },
@@ -20,8 +22,8 @@ const routes: Routes = [
   { path: 'usuarios', component: PageUsuariosComponent },
   { path: 'ingredientes-details/:id', component: PageIngredientesDetailsComponent },
   { path: 'editar-producto/:id', component: PageEditarProductoComponent },
-  { path: 'crear-ingredientes/:id', component: AddIngredientesPageComponent},
-  { path: 'crear-productos/:id', component: PageCrearProductosComponent},
+  { path: 'crear-ingredientes/:id', component: AddIngredientesPageComponent },
+  { path: 'crear-productos/:id', component: PageCrearProductosComponent },
   { path: 'listado-comercios', component: ComercioListComponent },
   { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
