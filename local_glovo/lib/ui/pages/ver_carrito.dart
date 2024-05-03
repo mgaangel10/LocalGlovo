@@ -32,6 +32,7 @@ class _VerCarritoState extends State<VerCarrito> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mi carrito'),
+        automaticallyImplyLeading: false,
       ),
       body: BlocProvider.value(
         value: _carritoBloc,

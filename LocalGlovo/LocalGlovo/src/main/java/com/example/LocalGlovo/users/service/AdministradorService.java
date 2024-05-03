@@ -96,6 +96,7 @@ public class AdministradorService {
         Optional<Administrador> administrador = administradorRepo.findById(uuid);
         if (administrador.isPresent()){
             administrador.get().setEnabled(false);
+            administrador.get().setCredentialsNonExpired(false);
             return administradorRepo.save(administrador.get());
         }else{
             throw new RuntimeException("No se encuentra el administrador por ese id");

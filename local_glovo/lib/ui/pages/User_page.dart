@@ -33,7 +33,8 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("user"),
+        title: Text("Profile"),
+        automaticallyImplyLeading: false,
       ),
       body: BlocProvider.value(
         value: _loginBloc,

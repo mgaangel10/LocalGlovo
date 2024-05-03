@@ -23,6 +23,7 @@ import { AddIngredientesPageComponent } from './ui/add-ingredientes/add-ingredie
 import { PageEditarProductoComponent } from './ui/productos/page-editar-producto/page-editar-producto.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapsComponent } from './components/maps/maps.component';
+import { PageVentasComponent } from './ui/ventas/page-ventas/page-ventas.component';
 
 
 
@@ -45,7 +46,8 @@ import { MapsComponent } from './components/maps/maps.component';
         HeaderComponent,
         AddIngredientesPageComponent,
         PageEditarProductoComponent,
-        MapsComponent
+        MapsComponent,
+        PageVentasComponent
     ],
     providers: [],
     bootstrap: [AppComponent],

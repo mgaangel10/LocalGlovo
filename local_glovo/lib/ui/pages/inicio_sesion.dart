@@ -71,198 +71,200 @@ class _InicioSesionState extends State<InicioSesion> {
   }
 
   _buildLoginForm() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        key: _formLogin,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: Icon(
-                  Icons.home,
-                  size: 100,
-                  color: Colors.blue,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formLogin,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Icon(
+                    Icons.home,
+                    size: 100,
+                    color: Colors.blue,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Correo electronico',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextFormField(
-                    controller: userTextController,
-                    decoration: InputDecoration(
-                      hintText: 'example@gmail.com',
-                      suffixIcon: userTextController.text.isNotEmpty
-                          ? Icon(Icons.check_circle, color: Colors.green)
-                          : null,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor introduce el correo electronico';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Contraseña',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  TextFormField(
-                    controller: passTextController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      suffixIcon: passTextController.text.isNotEmpty
-                          ? Icon(Icons.check_circle, color: Colors.green)
-                          : null,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor introduce la contraseña';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 5,
-                            blurRadius: 8,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Text(
-                          'Inicio sesion'.toUpperCase(),
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        onPressed: () {
-                          if (_formLogin.currentState!.validate()) {
-                            _loginBloc.add(DoLoginEvent(
-                              userTextController.text,
-                              passTextController.text,
-                            ));
-                          }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InicioPage(
-                                carritoRepository: widget.carritoRepository,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Correo electronico',
+                      style: TextStyle(fontSize: 16),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 5,
-                            blurRadius: 8,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
+                    TextFormField(
+                      controller: userTextController,
+                      decoration: InputDecoration(
+                        hintText: 'example@gmail.com',
+                        suffixIcon: userTextController.text.isNotEmpty
+                            ? Icon(Icons.check_circle, color: Colors.green)
+                            : null,
                       ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Text(
-                          'Registro'.toUpperCase(),
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        onPressed: () {},
-                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor introduce el correo electronico';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 5,
-                      blurRadius: 8,
-                      offset: Offset(0, 3),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Contraseña',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    TextFormField(
+                      controller: passTextController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        suffixIcon: passTextController.text.isNotEmpty
+                            ? Icon(Icons.check_circle, color: Colors.green)
+                            : null,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor introduce la contraseña';
+                        }
+                        return null;
+                      },
                     ),
                   ],
                 ),
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 5,
+                              blurRadius: 8,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: Text(
+                            'Inicio sesion'.toUpperCase(),
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          onPressed: () {
+                            if (_formLogin.currentState!.validate()) {
+                              _loginBloc.add(DoLoginEvent(
+                                userTextController.text,
+                                passTextController.text,
+                              ));
+                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InicioPage(
+                                  carritoRepository: widget.carritoRepository,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                  icon: Image.network(
-                    'https://th.bing.com/th/id/R.8af6752066ab4e5c10d3b07502b9a560?rik=4IL1%2bSsxAuCETg&pid=ImgRaw&r=0',
-                    height: 18.0,
-                    width: 18.0,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 5,
+                              blurRadius: 8,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: Text(
+                            'Registro'.toUpperCase(),
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
                   ),
-                  label: Text(
-                    'Login with Google'.toUpperCase(),
-                    style: TextStyle(color: Colors.black),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 5,
+                        blurRadius: 8,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
                   ),
-                  onPressed: () {},
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    icon: Image.network(
+                      'https://th.bing.com/th/id/R.8af6752066ab4e5c10d3b07502b9a560?rik=4IL1%2bSsxAuCETg&pid=ImgRaw&r=0',
+                      height: 18.0,
+                      width: 18.0,
+                    ),
+                    label: Text(
+                      'Login with Google'.toUpperCase(),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onPressed: () {},
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
