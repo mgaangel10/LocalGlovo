@@ -1,63 +1,62 @@
 <app-header></app-header>
-<div class="d-flex">
-  <app-home-page-administrador></app-home-page-administrador>
-
-  <div class="container ms-5 mt-5 ">
-    <h4 class="text-center">Listado de comercios</h4>
-    <div class="container ">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="input-group mb-3">
-            <input #searchBox type="text" class="form-control" style="border-radius: 30px;"
-              placeholder="Buscar un comercio">
 
 
-          </div>
+
+<div class="container ms-5 mt-5 mx-auto">
+  <h4 class="text-center">Listado de usuarios</h4>
+  <div class="container ">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <input #searchBox type="text" class="form-control" style="border-radius: 30px;"
+            placeholder="Buscar un comercio">
+
+
         </div>
       </div>
-
-
-
     </div>
 
-    <div class="row">
 
 
-      <div class="row">
-        <div class="col-md-12 ms-5">
-          <div class="row" style="max-height: 600px; overflow-y: auto;">
-            <div class="container">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Foto de Perfil</th>
-                    <th>Correo Electrónico</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Banear</th>
-                  </tr>
-                </thead>
-                <tbody *ngFor="let usuarios of usuario">
-                  <tr>
-                    <td><img [src]="usuarios.fotoUrl" class="img-thumbnail" width="50" height="50"></td>
-                    <td>{{usuarios.email}}</td>
-                    <td>{{usuarios.name}}</td>
-                    <td>{{usuarios.phoneNumber}}</td>
-                    <td><button class="btn btn-danger" (click)="eliminarUsuario()"><svg
-                          xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                          class="bi bi-ban" viewBox="0 0 16 16">
-                          <path
-                            d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
-                        </svg></button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+  </div>
 
+  <div class="row ">
+
+
+    <div class="row w-100">
+      <div class="col-md-12 ms-5">
+        <div class="row" style="max-height: 600px; overflow-y: auto;">
+          <div class="container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Foto de Perfil</th>
+                  <th>Correo Electrónico</th>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>Banear</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let usuarios of usuario">
+                <tr>
+                  <td><img [src]="usuarios.fotoUrl" class="img-thumbnail" width="50" height="50"></td>
+                  <td>{{usuarios.email}}</td>
+                  <td>{{usuarios.name}}</td>
+                  <td>{{usuarios.phoneNumber}}</td>
+                  <td><button class="btn btn-danger" (click)="eliminarUsuario()"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                        <path
+                          d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
+                      </svg></button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+
         </div>
       </div>
-
     </div>
 
   </div>
+
+</div>

@@ -32,11 +32,12 @@ export class AdministradorService {
   }
 
   logOutAdministrador(id: string): Observable<AdministradorResponse> {
-    let token = localStorage.getItem('TOKEN');
+    let token1 = localStorage.getItem('TOKEN');
+    let token = localStorage.removeItem('TOKEN');
     console.log(token);
     const headers = new HttpHeaders({
       'Accept': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token1}`
     });
     return this.http.post<AdministradorResponse>(`${environment.HeadUrl}/administrador/logout/${id}`, {}, { headers: headers });
   }
