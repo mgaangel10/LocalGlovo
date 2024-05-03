@@ -138,6 +138,12 @@ public class AdministradorController {
         return ResponseEntity.status(201).body(administrador);
     }
 
+    @GetMapping("administrador/buscar/usuario/{buscar}")
+    public ResponseEntity<List<Usuario>> buscarUsuario(@PathVariable String buscar){
+        List<Usuario> usuarios = administradorService.buscarUsuario(buscar);
+        return ResponseEntity.ok(usuarios);
+    }
+
 
 
 }

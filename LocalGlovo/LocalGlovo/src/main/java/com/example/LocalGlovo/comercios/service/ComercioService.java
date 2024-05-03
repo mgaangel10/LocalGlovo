@@ -16,6 +16,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,8 +44,11 @@ public class ComercioService {
     }
     public List<Comercio> findByNombre(String name){
 
+List<Comercio> comercios = comercioRepo.findAll();
+        List<Comercio> comercios1 = comercios.stream().filter(c-> c.getName().toLowerCase().contains(name) ||
+                c.getNameDirection().toLowerCase().contains(name) ).collect(Collectors.toList());
 
-        return comercioRepo.findByNameIgnoreCase(name);
+    return comercios1;
 
     }
     public List<GetListComercios> getComerciosPorCategoria(CategoriaComercios categoria) {

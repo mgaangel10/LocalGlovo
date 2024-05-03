@@ -21,6 +21,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -96,7 +97,7 @@ public class AdministradorService {
         Optional<Administrador> administrador = administradorRepo.findById(uuid);
         if (administrador.isPresent()){
             administrador.get().setEnabled(false);
-            administrador.get().setCredentialsNonExpired(false);
+
             return administradorRepo.save(administrador.get());
         }else{
             throw new RuntimeException("No se encuentra el administrador por ese id");
@@ -112,6 +113,15 @@ public class AdministradorService {
         }else {
             throw new RuntimeException("No se encuentra el administrador");
         }
+    }
+
+    public List<Usuario> buscarUsuario(String buscar){
+        List<Usuario> usuarios = usuarioRepo.findAll();
+        List<Usuario> usuarios1 = usuarios.stream().filter(usuario -> usuario.getName().toLowerCase().contains(buscar)||
+                usuario.getEmail().toLowerCase().contains(buscar)||
+                usuario.getLastName().toLowerCase().contains(buscar)||
+                usuario.getPhoneNumber().contains(buscar)).collect(Collectors.toList());
+        return usuarios1;
     }
 
 }
