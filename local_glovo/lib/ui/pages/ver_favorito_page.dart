@@ -144,8 +144,9 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
                                 onPressed: () {
                                   final bloc = context.read<FavoritoBloc>();
                                   bloc.add(DeleteFavoritoItem(
-                                      comercioId:
-                                          state.verFavoritoResponse[0].id!));
+                                      comercioId: state
+                                          .verFavoritoResponse[index].id!));
+                                  bloc.add(VerFavoritoItem());
                                 })
                           ],
                         ),

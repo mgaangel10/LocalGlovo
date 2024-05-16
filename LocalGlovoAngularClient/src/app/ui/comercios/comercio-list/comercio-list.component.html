@@ -6,7 +6,9 @@
 
 <h4 class="text-center">Listado de comercios</h4>
 
-<div class="container ">
+
+<app-maps></app-maps>
+<div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="input-group mb-3">
@@ -28,7 +30,6 @@
 
 
 </div>
-<app-maps></app-maps>
 <div>
   <div class="d-flex justify-content-center mt-5">
     <button type="button" class="" style="border-radius: 10px;" (click)="paginaAnterior()"><svg
@@ -48,7 +49,7 @@
 
 
   <div class="row mx-auto justify-content-center text-center">
-    <div class="col-md-10  mx-auto justify-content-center text-center">
+    <div class="col-md-12  mx-auto justify-content-center text-center ms-3">
       <div class="row" style="max-height: 600px; ">
         <app-comercio-item class="col-3 mt-5" style="position: static;" *ngFor="let m of results" [comercio]="m"
           (comercioClick)="comercioClickLista($event)"></app-comercio-item>

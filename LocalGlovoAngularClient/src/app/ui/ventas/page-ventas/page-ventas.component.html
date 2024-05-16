@@ -21,5 +21,15 @@
         <p>{{ventas.total}}€</p>
     </div>
 
+    <div class="bg-primary-subtle text-center w-50 mx-auto" *ngFor="let venta of productos">
+        <h3>Ultimos productos vendidos: {{venta.name}}</h3>
+        
+    </div>
+
+    <div class="bg-primary-subtle text-center w-50 mx-auto" *ngFor="let u of usuarios">
+        <h3>Ultimos usuarios que han comprado: {{u.name}}</h3>
+        
+    </div>
+
 
 </div>

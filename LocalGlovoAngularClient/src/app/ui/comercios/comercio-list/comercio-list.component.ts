@@ -36,6 +36,7 @@ export class ComercioListComponent implements OnInit {
   paginaSiguiente() {
     this.paginaActual++;
     this.cargarComercios(this.paginaActual);
+    
   }
 
   paginaAnterior() {

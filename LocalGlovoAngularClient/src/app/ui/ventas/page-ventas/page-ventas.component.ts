@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VentasResponse } from '../../../models/ventas-response';
+import { Producto, Usuario, VentasResponse } from '../../../models/ventas-response';
 import { AdministradorService } from '../../../service/administrador/administrador.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -11,7 +11,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class PageVentasComponent implements OnInit {
 
   ventas!: VentasResponse;
-
+  productos: Producto [] = []
+  usuarios: Usuario [] = [];
   constructor(private adminService: AdministradorService) { }
 
   ngOnInit(): void {
@@ -24,6 +25,8 @@ export class PageVentasComponent implements OnInit {
   verVentas() {
     this.adminService.verVentas(this.viewVentas.value.fecha).subscribe(v => {
       this.ventas = v;
+      this.productos = v.productos;
+      this.usuarios = v.usuarios;
     })
   }
 }
