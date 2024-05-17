@@ -44,7 +44,6 @@ public class Producto {
     private Set<Ingredientes> ingredientes;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Comercio comercio;
 
 

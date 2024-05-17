@@ -160,59 +160,38 @@ class _UserPageState extends State<UserPage> {
                   children: <Widget>[
                     Container(),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Column(
                           children: <Widget>[
                             ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => VerFavoritoPage(
-                                              carritoRepository:
-                                                  widget.carritoRepository,
-                                            )),
-                                  );
-                                },
-                                child: Icon(
-                                  Icons.favorite,
-                                )),
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: Icon(Icons.receipt_long_rounded),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: Icon(Icons.edit),
-                            ),
-                          ],
-                        ),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                "ver Favoritos",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                "Ver historial de pedidos",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                "editar perfil",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VerFavoritoPage(
+                                            carritoRepository:
+                                                widget.carritoRepository,
+                                          )),
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
+                                    'Ver Tu lista de favoritos',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Icon(
+                                    Icons.favorite,
+                                  )
+                                ],
                               ),
                             ),
                           ],

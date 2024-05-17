@@ -109,15 +109,10 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                       ListTile(
                         leading: Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Icon(Icons.star, size: 24),
-                            Text("${comercio.rating}")
-                          ],
+                          children: <Widget>[],
                         ),
                         title: Center(child: Text(comercio.name!)),
                         subtitle: Center(child: Text(comercio.nameDirection!)),
-                        trailing: Icon(Icons.favorite,
-                            color: const Color.fromARGB(255, 73, 72, 73)),
                       ),
                     ],
                   ),

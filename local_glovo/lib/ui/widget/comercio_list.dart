@@ -93,11 +93,7 @@ class _ComercioWidgetState extends State<ComercioWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.yellow),
-                        SizedBox(width: 5),
-                        Text(widget.contentElement.rating.toString()),
-                      ],
+                      children: [],
                     ),
                     ElevatedButton(
                         onPressed: () {

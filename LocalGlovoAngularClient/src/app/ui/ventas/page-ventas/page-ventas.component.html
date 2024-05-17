@@ -17,18 +17,58 @@
 
 
     </div>
-    <div class="bg-primary-subtle text-center" style="width: 200px; height: 200px; border-radius: 100px;">
-        <p>{{ventas.total}}€</p>
-    </div>
+    <div class="d-flex mx-auto w-50 bg-primary">
+        <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 20rem; height: 10rem;">
+            <div class="card-body">
+                <h5 class="card-title ">Total ventas hoy:</h5>
+                <h1>{{ventas.total}}€</h1>
 
-    <div class="bg-primary-subtle text-center w-50 mx-auto" *ngFor="let venta of productos">
-        <h3>Ultimos productos vendidos: {{venta.name}}</h3>
-        
-    </div>
+            </div>
+        </div>
 
-    <div class="bg-primary-subtle text-center w-50 mx-auto" *ngFor="let u of usuarios">
-        <h3>Ultimos usuarios que han comprado: {{u.name}}</h3>
-        
+        <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 20rem; height: 100%">
+            <div class="card-body">
+                <h5 class="card-title">Ultimos prodcutos vendidos:</h5>
+                <h2 *ngFor="let venta of productos">{{venta.name}}</h2>
+
+            </div>
+        </div>
+        <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 20rem; height: 100%">
+            <div class="card-body">
+                <h5 class="card-title">Ultimos usuarios que han comprado:</h5>
+                <h2 *ngFor="let venta of usuarios">{{venta.name}}</h2>
+
+            </div>
+        </div>
+
+        <div class="card shadow  mb-5 bg-white " style="width: 20rem; ">
+            <div class=" card-body ">
+                <h5 class=" card-title">Comercios con mas likes</h5>
+                <div style=" width: 13rem; max-height: 15rem; overflow-y: auto;">
+                    <div *ngFor="let c of comercio ">
+                        <div class="card shadow me-5  bg-white rounded" style="width: 11rem; border-radius: 15px;">
+                            <img [src]="c.imagen" class="card-img-top img-fluid  " style="width: 100%; " [alt]="c.name">
+                            <div class="d-flex">
+                                <div class="card-body text-start">
+                                    <h6 class="card-title">{{c.name}}</h6>
+                                </div>
+                                <div class=" text-start mt-3 ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor"
+                                        class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                                    </svg>{{c.favoritoList.length}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
     </div>
 
 

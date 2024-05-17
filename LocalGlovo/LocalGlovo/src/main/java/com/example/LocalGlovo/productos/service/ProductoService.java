@@ -32,9 +32,6 @@ public class ProductoService {
         //producto.setComercio(postProductoDto.comercio());
         Optional<Comercio> comercio = comercioRepo.findById(comercioId);
         comercio.get().getProductos().add(producto);
-        prodcutoRepo.save(producto);
-
-
         return prodcutoRepo.save(producto);
     }
 
