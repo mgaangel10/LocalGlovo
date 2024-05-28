@@ -14,6 +14,7 @@ import { ProductosDetails } from '../../../models/productos-details';
 export class PageEditarProductoComponent implements OnInit{
   producto!:string;
   p!:ProductosDetails;
+  errorMessage: string = '';
   constructor(private productoService:ProductosService, private router:Router, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.producto = params['id'];
@@ -38,12 +39,16 @@ export class PageEditarProductoComponent implements OnInit{
     console.log('Datos enviados al servidor:', this.editarProducto.value); 
   
     this.productoService.editarProducto(this.producto!,this.editarProducto.value.imagen!,this.editarProducto.value.name!,this.editarProducto.value.precio,this.editarProducto.value.disponible!)
-      .subscribe((l: EditarProducto) => {
+      .subscribe({
+       next: (l: EditarProducto) => {
        
         this.router.navigate(['/ingredientes-details',this.producto]);
        
 
-      });
+      },
+    error:(err)=>{
+      this.errorMessage = err;
+    }});
   }
 
  

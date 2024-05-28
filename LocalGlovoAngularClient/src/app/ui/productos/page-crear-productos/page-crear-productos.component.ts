@@ -11,33 +11,38 @@ import { AddProducto } from '../../../models/add-producto';
   styleUrl: './page-crear-productos.component.css'
 })
 export class PageCrearProductosComponent {
-  comercioID!:string;
-  constructor(private productoService:ProductosService, private router:Router, private route: ActivatedRoute) {
+  comercioID!: string;
+  errorMessage: string = '';
+
+  constructor(private productoService: ProductosService, private router: Router, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.comercioID = params['id'];
     });
   }
-  
-  
+
   crearProducto = new FormGroup({
     imagen: new FormControl(''), 
     name: new FormControl(''),
     precio: new FormControl(),
     disponible: new FormControl()   
-  })
+  });
 
   add() {
     console.log('Datos enviados al servidor:', this.crearProducto.value); 
-  
-    this.productoService.addPorducto(this.comercioID!,this.crearProducto.value.imagen!,this.crearProducto.value.name!,this.crearProducto.value.precio,this.crearProducto.value.disponible!)
-      .subscribe((l: AddProducto) => {
-       
-        this.router.navigate(['/comercio-details',this.comercioID]);
-       
 
+    this.productoService.addPorducto(this.comercioID, this.crearProducto.value.imagen!, this.crearProducto.value.name!, this.crearProducto.value.precio, this.crearProducto.value.disponible)
+      .subscribe({
+        next: (producto: AddProducto) => {
+          this.router.navigate(['/comercio-details', this.comercioID]);
+        },
+        error: (err) => {
+          this.errorMessage = err;
+          
+        }
       });
   }
+}
 
   
 
-}
+

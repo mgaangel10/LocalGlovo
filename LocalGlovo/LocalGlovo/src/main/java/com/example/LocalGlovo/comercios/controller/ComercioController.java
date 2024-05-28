@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.comercios.controller;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.comercios.Dto.GetListComercios;
 import com.example.LocalGlovo.comercios.Dto.PostCrearComercio;
 import com.example.LocalGlovo.comercios.models.CategoriaComercios;
@@ -24,8 +25,23 @@ public class ComercioController {
 
     @PostMapping("/administrador/crear/comercio")
     public ResponseEntity<?> crearComercio(@RequestBody PostCrearComercio postCrearComercio){
-        Comercio comercio = comercioService.crearComercio(postCrearComercio);
-        return ResponseEntity.ok(comercio);
+        try {
+            Comercio comercio = comercioService.crearComercio(postCrearComercio);
+            return ResponseEntity.ok(comercio);
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+
+    }
+    @GetMapping("administrador/listado/categorias")
+    public ResponseEntity<List<String>> listadoCategorias(){
+        List<String> categorias = comercioService.listadoDeCategorias();
+        return ResponseEntity.ok(categorias);
+    }
+    @GetMapping("/administrador/listado/googlemaps")
+    public ResponseEntity<List<Comercio>> listadoCoemercioGoogleMaps(){
+        List<Comercio> comercios = comercioService.listadoProyectosGoogleMaps();
+        return ResponseEntity.ok(comercios);
     }
 
     @GetMapping("/usuario/listar/comercios")
@@ -58,6 +74,11 @@ public class ComercioController {
     }
     @GetMapping("usuario/filtrar/comercios/{categoria}")
     public ResponseEntity<List<GetListComercios>> getComerciosPorCategoria(@PathVariable CategoriaComercios categoria) {
+        List<GetListComercios> comercios= comercioService.getComerciosPorCategoria(categoria);
+        return ResponseEntity.ok(comercios);
+    }
+    @GetMapping("administrador/filtrar/comercios/{categoria}")
+    public ResponseEntity<List<GetListComercios>> filtrarPorCategoria(@PathVariable CategoriaComercios categoria){
         List<GetListComercios> comercios= comercioService.getComerciosPorCategoria(categoria);
         return ResponseEntity.ok(comercios);
     }

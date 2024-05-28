@@ -3,6 +3,7 @@ import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { ComerciosService } from '../../service/comercios/comercios.service';
 import { ListadoComercioResponse, Content } from '../../models/listado-comercio-response';
 import { Router } from '@angular/router';
+import { ListadoComercioGoogleMaps } from '../../models/listado-comercio-googlemaps';
 interface ComercioMarker {
   options: google.maps.MarkerOptions;
   comercioId: string;
@@ -28,8 +29,8 @@ export class MapsComponent implements OnInit {
   }
 
   loadComercios(): void {
-    this.comercioService.ListadoDeComercioResponse(0).subscribe((response: ListadoComercioResponse) => {
-      response.content.forEach((comercio: Content) => {
+    this.comercioService.listadoComercioGoogleMaps().subscribe((response: ListadoComercioGoogleMaps[]) => {
+      response.forEach(comercio => {
         const marker: ComercioMarker = {
           options: {
             position: {
@@ -37,14 +38,15 @@ export class MapsComponent implements OnInit {
               lng: comercio.longitud
             },
             title: comercio.name,
-            clickable: true, // Hacer el marcador clickeable
+            clickable: true, 
           },
-          comercioId: comercio.id // Añadir el id del comercio al marcador para usarlo luego
+          comercioId: comercio.id 
         };
         this.markers.push(marker);
       });
     });
   }
+  
 
   onMarkerClick(comercioId: string): void {
     this.router.navigate(['/comercio-details', comercioId]);

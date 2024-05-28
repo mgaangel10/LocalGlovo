@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.users.controller;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.security.jwt.JwtProvider;
 import com.example.LocalGlovo.users.Dto.*;
 import com.example.LocalGlovo.users.model.User;
@@ -60,9 +61,9 @@ public class UsuarioController {
         try {
             Usuario usuario = usuarioService.createWithRole(postCrearUserDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(PostRegistroDto.Usuario(usuario));
-        } catch (ResponseStatusException e) {
+        } catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getReason());
+            throw new GlobalException(e.getMessage());
         }
     }
 
@@ -94,19 +95,25 @@ public class UsuarioController {
     })
     @PostMapping("/auth/login/user")
     public ResponseEntity<JwtUserResponse> loginUser(@RequestBody PostLogin postLogin){
-        usuarioService.setearEnabled(postLogin);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        postLogin.email(),
-                        postLogin.password()
-                )
-        );
+        try{
+            usuarioService.setearEnabled(postLogin);
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            postLogin.email(),
+                            postLogin.password()
+                    )
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtProvider.generateToken(authentication);
-        Usuario usuario = (Usuario) authentication.getPrincipal();
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(JwtUserResponse.ofUsuario(usuario, token));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = jwtProvider.generateToken(authentication);
+            Usuario usuario = (Usuario) authentication.getPrincipal();
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(JwtUserResponse.ofUsuario(usuario, token));
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+
     }
 
     @GetMapping("usuario/ver/detalles/{id}")

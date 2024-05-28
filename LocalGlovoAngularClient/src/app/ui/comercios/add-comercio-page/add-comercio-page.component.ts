@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
   styleUrl: './add-comercio-page.component.css'
 })
 export class AddComercioPageComponent {
-
+  errorMessage: string = '';
+  categorias:string[] =[];
   mapOptions: google.maps.MapOptions = {
     center: { lat: 37.267892259937966, lng: -6.062729833230927 },
     zoom: 15
@@ -27,7 +28,9 @@ export class AddComercioPageComponent {
 
   constructor(private comercioService: ComerciosService, private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listadoCategorias();
+  }
 
   marker: google.maps.Marker | null = null;
   map: google.maps.Map | null = null;
@@ -36,11 +39,11 @@ onMapInit(map: google.maps.Map): void {
   this.map = map;
 }
 onMapClick(event: google.maps.MapMouseEvent): void {
-  console.log('Map clicked!', event);
+  
   if (event.latLng) {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
-    console.log(`Latitud: ${lat}, Longitud: ${lng}`);
+    
     this.crearComercio.controls['latitud'].setValue(lat.toString());
     this.crearComercio.controls['longitud'].setValue(lng.toString());
   }
@@ -58,9 +61,18 @@ onMapClick(event: google.maps.MapMouseEvent): void {
       this.crearComercio.value.nameDirection!,
       this.crearComercio.value.categorias!,
       this.crearComercio.value.imagen!
-    ).subscribe((c: AddComercio) => {
+    ).subscribe({
+      next:(c: AddComercio) => {
       this.router.navigate(['/listado-comercios']);
-    });
+    },error:(err)=>{
+      this.errorMessage = err;
+    }});
+  }
+  listadoCategorias(){
+    this.comercioService.listadoCategorias().subscribe(c=>{
+      this.categorias = c;
+      
+    })
   }
 
 }

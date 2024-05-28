@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.users.controller;
 
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.security.jwt.JwtProvider;
 import com.example.LocalGlovo.users.Dto.JwtUserResponse;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
@@ -68,9 +69,9 @@ public class AdministradorController {
         try {
             Administrador administrador = administradorService.createWithRole(postCrearUserDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(PostRegistroDto.Administrador(administrador));
-        } catch (ResponseStatusException e) {
+        } catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getReason());
+           throw new GlobalException(e.getMessage());
         }
     }
 

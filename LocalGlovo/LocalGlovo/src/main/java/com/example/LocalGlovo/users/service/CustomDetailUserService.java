@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.users.service;
 
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.users.model.Administrador;
 import com.example.LocalGlovo.users.model.Usuario;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class CustomDetailUserService implements UserDetailsService {
             if (administrador.isPresent()) {
                 return administrador.get();
             } else {
-                throw (new UsernameNotFoundException("No user with email: " + email));
+                throw (new GlobalException("No user with email: " + email));
             }
         }
 

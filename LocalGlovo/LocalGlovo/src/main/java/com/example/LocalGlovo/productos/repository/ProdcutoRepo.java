@@ -33,7 +33,8 @@ public interface ProdcutoRepo extends JpaRepository<Producto, UUID> {
     Optional<Producto> findByNameIgnoreCase(String nombre);
 
 
-
+    @Query("SELECT p FROM Producto p JOIN FETCH p.comercio WHERE p.id = ?1 ")
+    Optional<Producto> findProductoWithComercioById( UUID id);
 
 
 

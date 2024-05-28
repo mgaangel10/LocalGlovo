@@ -1,8 +1,8 @@
 <app-header></app-header>
 <div class="d-flex">
-    <div class="   justify-content-start mt-5 me-4" style="width: 600px; height:700px ; border-radius: 15px;">
+    <div class="   justify-content-start mt-5 me-4 card shadow   bg-white rounded" style="width: 600px; height:530px ; border-radius: 15px;">
         <div class="d-flex justify-content-center mt-5">
-            <img [src]="producto.imagen" style="border-radius: 15px; width: 500px; height: 400px;" alt="">
+            <img [src]="producto.imagen" style="border-radius: 15px; width: 500px; height: 300px;" alt="">
         </div>
         <div class="text-center ">
             <h3>{{producto.name}}</h3>
@@ -14,7 +14,7 @@
 
 
         </div>
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center mt-3">
             <button type="button" class="btn btn-danger" style="width: 100px; height: 50px; border-radius: 30px;"
                 (click)="eliminarProducto()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -31,9 +31,9 @@
         </div>
     </div>
 
-    <div class="text-center mt-5  w-50" style="border-radius: 15px;">
+    <div class="text-center mt-5  w-50 shadow  card bg-white rounded" style="border-radius: 15px;">
         <h4>Listado de Ingredientes</h4>
-        <button type="button " class="btn btn-success" style="width: 300px; border-radius: 30px;"
+        <button type="button " class="btn btn-success mx-auto" style="width: 300px; border-radius: 30px;"
             (click)="addIngredientes()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-plus-square-fill me-4" viewBox="0 0 16 16">
                 <path

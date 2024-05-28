@@ -38,4 +38,8 @@ export class PageComercioDetailsComponent implements OnInit {
     this.router.navigate(['/crear-productos',this.id]);
   }
 
+  editarproducto(id:string){
+    this.router.navigate(['/editar-producto', id]);
+  }
+
 }
