@@ -13,7 +13,7 @@
       <div class="col-md-12 ms-5">
         <div class="row" style="max-height: 600px; overflow-y: auto;">
           <div class="container">
-            <table class="table">
+            <table class="table  shadow   bg-white rounded">
               <thead>
                 <tr>
                   <th>Foto de Perfil</th>
@@ -25,11 +25,11 @@
               </thead>
               <tbody *ngFor="let usuarios of usuario">
                 <tr>
-                  <td><img [src]="usuarios.fotoUrl" class="img-thumbnail" width="50" height="50"></td>
+                  <td><img [src]="usuarios.fotoUrl" class="img-thumbnail shadow" width="50" height="50"></td>
                   <td>{{usuarios.email}}</td>
                   <td>{{usuarios.name}}</td>
                   <td>{{usuarios.phoneNumber}}</td>
-                  <td><button class="btn btn-danger" (click)="eliminarUsuario()"><svg xmlns="http://www.w3.org/2000/svg"
+                  <td><button class="btn btn-danger shadow" (click)="eliminarUsuario(usuarios.id)"><svg xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
                         <path
                           d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />

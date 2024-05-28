@@ -37,15 +37,15 @@ public class Producto {
 
     @Column(name = "disponible")
     protected boolean disponible;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Comercio comercio;
 
-    @JsonManagedReference
+
     @Column(name = "ingredientes_id")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ingredientes> ingredientes;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Comercio comercio;
+
 
 
 

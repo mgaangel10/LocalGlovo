@@ -1,5 +1,8 @@
-nav {
-    background-color: rgb(157, 160, 156);
-
-
-}
+.navbar {
+    background-color: #e4e0e0 !important;
+  }
+  .nav-item.active .nav-link {
+    border-bottom: 5px solid #000;
+    border-radius: 29px;
+  }
+    

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output,NgZone,ChangeDetectorRef   } from '@angular/core';
 import { Content, ListadoComercioResponse } from '../../../models/listado-comercio-response';
 import { ComerciosService } from '../../../service/comercios/comercios.service';
+import { ListadoComerciosFiltrados } from '../../../models/listado-filtrado';
 
 
 @Component({
@@ -13,6 +14,9 @@ export class ComercioListComponent implements OnInit {
   results: any[] = [];
   searchTerm: string = '';
   paginaActual: number = 0;
+  categorias:string[]=[];
+  
+  listadoFiltrado:ListadoComerciosFiltrados[]=[];
   @Output() comercioClick = new EventEmitter<String>();
   constructor(private comercioSer: ComerciosService,private ngZone:NgZone,private cdr:ChangeDetectorRef) { }
 
@@ -23,6 +27,8 @@ export class ComercioListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.cargarComercios(this.paginaActual);
+    this.listadoCategorias();
+    
   }
 
   cargarComercios(pagina: number) {
@@ -36,6 +42,7 @@ export class ComercioListComponent implements OnInit {
   paginaSiguiente() {
     this.paginaActual++;
     this.cargarComercios(this.paginaActual);
+    
   }
 
   paginaAnterior() {
@@ -70,6 +77,25 @@ export class ComercioListComponent implements OnInit {
       this.results = [...this.comercioList]; 
     }
   }
+
+  listadoCategorias(){
+    this.comercioSer.listadoCategorias().subscribe(c=>{
+      this.categorias = c;
+      
+    })
+  }
+  cargarTodosLosComercios() {
+    this.cargarComercios(this.paginaActual);
+  }
+  
+
+  filtradoComercio(categoria:string){
+    this.comercioSer.filtrarPorCategoria(categoria).subscribe(c=>{
+      this.listadoFiltrado = c;
+      this.results = this.listadoFiltrado; 
+    })
+  }
+  
   
 
 }

@@ -23,8 +23,8 @@ export class PageUsuariosComponent implements OnInit {
     this.cargarUsuarios();
   }
 
-  eliminarUsuario() {
-    this.usuarioServcie.eliminarUsuario(this.usuario[0].id!).subscribe(u => {
+  eliminarUsuario(id:string) {
+    this.usuarioServcie.eliminarUsuario(id).subscribe(u => {
       this.us = u;
       this.router.navigate(['/usuarios']);
       location.reload();

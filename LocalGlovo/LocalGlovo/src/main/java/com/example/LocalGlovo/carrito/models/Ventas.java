@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.carrito.models;
 
+import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.users.model.Usuario;
 import jakarta.persistence.*;
@@ -39,5 +40,10 @@ public class Ventas {
 
     @Column(name = "fecha")
     private LocalDate fecha;
+
+    @ManyToMany
+    private List<Comercio> comercios;
+
+
 
 }

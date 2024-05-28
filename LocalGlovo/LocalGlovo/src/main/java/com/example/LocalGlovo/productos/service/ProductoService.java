@@ -1,6 +1,8 @@
 package com.example.LocalGlovo.productos.service;
 
 
+import ch.qos.logback.core.joran.conditional.IfAction;
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.comercios.repository.ComercioRepo;
 import com.example.LocalGlovo.productos.Dto.GetListProducto;
@@ -10,9 +12,11 @@ import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.productos.repository.IngredientesRepo;
 import com.example.LocalGlovo.productos.repository.ProdcutoRepo;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.FetchMode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,15 +29,30 @@ public class ProductoService {
     private final IngredientesRepo ingredientesRepo;
     public Producto crearProducto(PostProductoDto postProductoDto,UUID comercioId){
         Producto producto = new Producto();
-        producto.setImagen(postProductoDto.imagen());
-        producto.setName(postProductoDto.name());
-        producto.setPrecio(postProductoDto.precio());
+        if (postProductoDto.precio()<=0&&postProductoDto.name().isEmpty()&&postProductoDto.imagen().isEmpty()){
+            throw new GlobalException("No puedes enviar el formulario vacio");
+        }
+        if (!postProductoDto.imagen().isEmpty()){
+            producto.setImagen(postProductoDto.imagen());
+        }else {
+            throw new GlobalException("El campo imagen debe de contener una imagen");
+        }
+        if (!postProductoDto.name().isEmpty()){
+            producto.setName(postProductoDto.name());
+        }else {
+            throw new GlobalException("El campo nombre no puede estar vacio");
+        }
+
+        if (postProductoDto.precio()>0) {
+            producto.setPrecio(postProductoDto.precio());
+        }else {
+            throw new GlobalException("El precio no puede ser negativo o no puede ser cero");
+        }
+
         producto.setDisponible(postProductoDto.disponible());
         //producto.setComercio(postProductoDto.comercio());
         Optional<Comercio> comercio = comercioRepo.findById(comercioId);
         comercio.get().getProductos().add(producto);
-        prodcutoRepo.save(producto);
-
 
         return prodcutoRepo.save(producto);
     }
@@ -43,7 +62,7 @@ public class ProductoService {
     public Page<GetListProducto> listarProductos(Pageable pageable){
         Page<GetListProducto> getListProductos = prodcutoRepo.getListProducto(pageable);
         if (getListProductos.isEmpty()){
-            throw new RuntimeException("No hay productos");
+            throw new GlobalException("No hay productos");
         }else{
             return prodcutoRepo.getListProducto(pageable);
         }
@@ -67,19 +86,29 @@ public class ProductoService {
     public Ingredientes finByIdIngredientes(UUID uuid){
         Optional<Ingredientes> ingredientes = ingredientesRepo.findById(uuid);
         if (ingredientes.isEmpty()){
-            throw new RuntimeException("No hay ingredientes con ese id");
+            throw new GlobalException("No hay ingredientes con ese id");
         }else{
             return ingredientes.get();
         }
 
     }
 
+
     public Producto buscarPorID(UUID uuid){
         Optional<Producto> productoOptional = prodcutoRepo.findById(uuid);
         if (productoOptional.isEmpty()){
-            throw new RuntimeException("no hay productos con ese id");
+            throw new GlobalException("No se ha encontrado el producto");
         }else{
           return   productoOptional.get();
+        }
+    }
+
+    public Producto buscarPorIdV2(UUID uuid){
+        Optional<Producto> productoOptional = prodcutoRepo.findProductoWithComercioById(uuid);
+        if (productoOptional.isEmpty()){
+            throw new RuntimeException("no hay productos con ese id");
+        }else{
+            return   productoOptional.get();
         }
     }
 
@@ -95,7 +124,7 @@ public class ProductoService {
     public void eliminarProducto(UUID productoId){
         Optional<Producto> producto = prodcutoRepo.findById(productoId);
         if (producto.isEmpty()){
-            throw new RuntimeException("no existe el producto");
+            throw new GlobalException("no existe el producto");
         }else{
             List<Comercio> comercios = comercioRepo.findAll();
             for (Comercio comercio : comercios) {
@@ -109,14 +138,22 @@ public class ProductoService {
 
     public Ingredientes crearIngredientes(Ingredientes ingredientes,UUID productoId){
 
-        Ingredientes ingredientes1 = Ingredientes.builder()
-                .id(ingredientes.getId())
-                .imagen(ingredientes.getImagen())
-                .name(ingredientes.getName())
-                .build();
+        Ingredientes ingredientes1 = new Ingredientes();
+        if (!ingredientes.getImagen().isEmpty()){
+            ingredientes1.setImagen(ingredientes.getImagen());
+        }else {
+            throw new GlobalException("El campo imagen no puede ser nulo");
+        }
+        if (!ingredientes.getName().isEmpty()){
+            ingredientes1.setName(ingredientes.getName());
+        }else {
+            throw new GlobalException("El campo nombre no puede estar vacio");
+        }
 
 
-         Optional<Producto> producto = prodcutoRepo.findById(productoId);
+
+
+        Optional<Producto> producto = prodcutoRepo.findById(productoId);
          producto.get().getIngredientes().add(ingredientes);
 
          prodcutoRepo.save(producto.get());
@@ -127,7 +164,7 @@ public class ProductoService {
         Optional<Ingredientes> ingredienteOptional = ingredientesRepo.findById(ingredienteId);
 
         if (ingredienteOptional.isEmpty()) {
-            throw new RuntimeException("El ingrediente no se encuentra");
+            throw new GlobalException("El ingrediente no se encuentra");
         }
 
         Ingredientes ingrediente = ingredienteOptional.get();
@@ -147,10 +184,27 @@ public class ProductoService {
         if (producto.isEmpty()){
             throw new RuntimeException("no se encuentra el producto");
         }else{
-            producto.get().setName(postProductoDto.name());
-            producto.get().setImagen(postProductoDto.imagen());
+            if (postProductoDto.imagen().isEmpty()&&postProductoDto.name().isEmpty()&&postProductoDto.precio()<=0){
+                throw new GlobalException("Todos los campos son obligatorios");
+            }
+            if (!postProductoDto.name().isEmpty()){
+                producto.get().setName(postProductoDto.name());
+            }else {
+                throw new GlobalException("El campo nombre no puede estar vacio");
+            }
+            if (!postProductoDto.imagen().isEmpty()){
+                producto.get().setImagen(postProductoDto.imagen());
+            }else {
+              throw new GlobalException("El campo imagen no puede estar vacio");
+            }
+
             producto.get().setDisponible(postProductoDto.disponible());
-            producto.get().setPrecio(postProductoDto.precio());
+            if (postProductoDto.precio()>0){
+                producto.get().setPrecio(postProductoDto.precio());
+            }else {
+                throw new GlobalException("No puedes introducir un precio negativo o igual a cero");
+            }
+
             return prodcutoRepo.save(producto.get());
         }
 

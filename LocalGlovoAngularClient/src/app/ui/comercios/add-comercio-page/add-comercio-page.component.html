@@ -1,6 +1,6 @@
 <app-header></app-header>
 <form [formGroup]="crearComercio" (ngSubmit)="add()">
-  <div class="bg-primary-subtle border border-dark-subtle text-center w-50 mx-auto mt-5" style="border-radius: 15px;">
+  <div class="  text-center w-50 mx-auto mt-4 card shadow   bg-white rounded" style="border-radius: 15px;">
     <div class="mb-3 ">
       <label for="name" class="form-label">Nombre</label>
       <input type="text" class="form-control w-50 mx-auto" id="name" formControlName="name"
@@ -16,22 +16,35 @@
       <input type="text" step="0.01" class="form-control w-50 mx-auto" id="longitud" formControlName="longitud"
         placeholder="Introduce la longitud">
     </div>
+    <div class="maps">
+      <google-map [options]="mapOptions" (mapClick)="onMapClick($event)" (mapInitialized)="onMapInit($event)"></google-map>
+
+    </div>
     <div class="mb-3">
       <label for="nameDirection" class="form-label">Nombre de la direccion</label>
       <input type="text" step="0.01" class="form-control w-50 mx-auto" id="nameDirection"
         formControlName="nameDirection" placeholder="Introduce la nameDirection">
     </div>
     <div class="mb-3">
-      <label for="categorias" class="form-label">Categorias</label>
-      <input type="text" step="0.01" class="form-control w-50 mx-auto" id="categorias" formControlName="categorias"
-        placeholder="Introduce la categorias">
+      <select formControlName="categorias" class=" w-50 mx-auto" style="border-radius: 5px;">
+        <option *ngFor="let categoria of categorias" [value]="categoria">{{categoria}}</option>
+    </select>
+    
+    
+    
+    
     </div>
     <div class="mb-3">
       <label for="imagen" class="form-label">URL de la imagen</label>
       <input type="text" class="form-control w-50 mx-auto" id="imagen" formControlName="imagen"
         placeholder="Introduce la URL de la imagen">
     </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
+
+    <button type="submit" class="btn btn-primary w-75 mx-auto">Enviar</button>
   </div>
 
 </form>
+
+<div *ngIf="errorMessage" class="alert alert-danger mt-3 w-75 mx-auto">
+  {{ errorMessage }}
+</div>

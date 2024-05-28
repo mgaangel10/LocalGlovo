@@ -1,12 +1,14 @@
-<div class="div mx-auto mt-4 " style="width: 50%; height: 300px; border-radius: 15px;">
+
+<h1 class="text-center mt-5">Login Administrador</h1>
+<div class="div mx-auto mt-5 card shadow   bg-white rounded" style="width: 40%; height: 300px; border-radius: 15px;">
   <form [formGroup]="profileLogin" (ngSubmit)="login()">
-    <div class="mb-3 mx-auto w-75">
+    <div class="mb-3 mx-auto w-50 mt-5">
       <label for="emailLog" class="form-label">Email address</label>
       <input type="email" class="form-control" id="emailLog" aria-describedby="emailHelp" formControlName="email">
 
 
     </div>
-    <div class="mb-3 mx-auto w-75">
+    <div class="mb-3 mx-auto w-50">
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
     </div>
@@ -16,3 +18,4 @@
 
   </form>
 </div>
+

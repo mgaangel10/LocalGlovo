@@ -91,7 +91,9 @@ class _HomePageState extends State<HomePage> {
                   final detallesCoemercio =
                       ComercioDetailsBloc(comercioRepository);
                   detallesCoemercio.add(ComercioDetailsItem(comercioId: c.id!));
-                  Navigator.push(
+                  Navigator.popUntil(
+                      context, (route) => route.isFirst); // Añade esta línea
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => BlocProvider.value(
@@ -125,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                   final detallesCoemercio =
                       ComercioDetailsBloc(comercioRepository);
                   detallesCoemercio.add(ComercioDetailsItem(comercioId: c.id!));
-                  Navigator.push(
+                  Navigator.pop(
                     context,
                     MaterialPageRoute(
                       builder: (context) => BlocProvider.value(
@@ -160,6 +162,7 @@ class _HomePageState extends State<HomePage> {
                         ComercioDetailsBloc(comercioRepository);
                     detallesCoemercio
                         .add(ComercioDetailsItem(comercioId: c.id!));
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -316,12 +319,9 @@ class _HomePageState extends State<HomePage> {
         } else if (state is ComercioCategoriaSucess) {
           return Container(
             height: 50,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: state.categorias.length,
-              itemBuilder: (context, index) {
-                final c = state.categorias[0];
-                return GestureDetector(
+            child: Column(
+              children: [
+                GestureDetector(
                   onTap: () {
                     _comercioBloc.add(ComercioList());
                   },
@@ -331,8 +331,18 @@ class _HomePageState extends State<HomePage> {
                         _comercioBloc.add(ComercioList());
                       },
                       child: Icon(Icons.arrow_back_ios_new)),
-                );
-              },
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: state.categorias.length,
+                    itemBuilder: (context, index) {
+                      final c = state.categorias[0];
+                      // Resto del código...
+                    },
+                  ),
+                ),
+              ],
             ),
           );
         } else if (state is ComercioError) {

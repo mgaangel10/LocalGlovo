@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { ListadoComercioResponse } from '../../models/listado-comercio-response';
 import { environment } from '../../environments/environment';
 import { ComercioDetails } from '../../models/comercio-details';
 import { AddComercio } from '../../models/add-comercio';
+import { ListadoComercioGoogleMaps } from '../../models/listado-comercio-googlemaps';
+import { ListadoComerciosFiltrados } from '../../models/listado-filtrado';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,21 @@ import { AddComercio } from '../../models/add-comercio';
 export class ComerciosService {
 
   constructor(private http: HttpClient) { }
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      
+      if (error.error && error.error.message) {
+        errorMessage = `Error: ${error.error.message}`;
+      } else {
+        errorMessage = `Server returned code: ${error.status}, error message is: ${error.message}`;
+      }
+    }
+    return throwError(errorMessage);
+  }
 
   ListadoDeComercioResponse(pagina: number): Observable<ListadoComercioResponse> {
     let token = localStorage.getItem('TOKEN');
@@ -21,6 +38,15 @@ export class ComerciosService {
         'Authorization': `Bearer ${token}`
       }
     });
+  }
+  listadoComercioGoogleMaps():Observable<ListadoComercioGoogleMaps[]>{
+    let token = localStorage.getItem('TOKEN');
+    return this.http.get<ListadoComercioGoogleMaps[]>(`${environment.HeadUrl}/administrador/listado/googlemaps`,{
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
   }
   
 
@@ -56,12 +82,32 @@ export class ComerciosService {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    }).pipe(
+      catchError(this.handleError)
+    )
   }
 
   eliminarComercio(id:string){
     let token = localStorage.getItem('TOKEN');
     return this.http.delete(`${environment.HeadUrl}/administrador/eliminar/comercio/${id}`, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
+  listadoCategorias():Observable<string[]>{
+    let token = localStorage.getItem('TOKEN');
+    return this.http.get<string[]>(`${environment.HeadUrl}/administrador/listado/categorias`,{
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+  }
+  filtrarPorCategoria(categoria:string):Observable<ListadoComerciosFiltrados[]>{
+    let token = localStorage.getItem('TOKEN');
+    return this.http.get<ListadoComerciosFiltrados[]>(`${environment.HeadUrl}/administrador/filtrar/comercios/${categoria}`,{
       headers: {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`

@@ -20,6 +20,8 @@ class FavoritoPage extends StatefulWidget {
 class _FavoritoPageState extends State<FavoritoPage> {
   late FavoritoRepository favoritoRepository;
   late FavoritoBloc _favoritoBloc;
+  late FavoritoRepository favoritoRepository1;
+  late FavoritoBloc _favoritoBloc1;
 
   @override
   void initState() {

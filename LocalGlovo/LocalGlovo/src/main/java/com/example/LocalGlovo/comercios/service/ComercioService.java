@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.comercios.service;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.Favoritos.models.Favorito;
 import com.example.LocalGlovo.Favoritos.repository.FavoritoRepo;
 import com.example.LocalGlovo.comercios.Dto.GetListComercios;
@@ -12,10 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +27,28 @@ public class ComercioService {
 
         CategoriaComercios comercios = CategoriaComercios.valueOf(postCrearComercio.categorias().toUpperCase());
         if (comercios == null){
-            throw new RuntimeException("Categoria de comercio no validas");
+            throw new GlobalException("Categoria de comercio no validas");
         }
+
+        if (postCrearComercio.categorias().isEmpty()&&postCrearComercio.latitud()==0&&postCrearComercio.longitud()==0&&postCrearComercio.name().isEmpty()&&postCrearComercio.imagen().isEmpty()&&postCrearComercio.nameDirection().isEmpty()){
+            throw new GlobalException("Todos los campos son obligatorios");
+        }
+        if (postCrearComercio.name().isEmpty()){
+            throw new GlobalException("El campo nombre no puede estar vacio");
+        }
+        if (postCrearComercio.latitud()==0){
+            throw new GlobalException("El campo latitud no puede estar vacio");
+        }
+        if (postCrearComercio.longitud()==0){
+            throw new GlobalException("EL campo longitud no puede estar vacio");
+        }
+        if (postCrearComercio.imagen().isEmpty()){
+            throw new GlobalException("El campo imagen no puede estar vacio");
+        }
+        if (postCrearComercio.nameDirection().isEmpty()){
+            throw new GlobalException("El campo nombre de direccion no puede estar vacio");
+        }
+
         Comercio comercio = Comercio.builder()
                 .name(postCrearComercio.name())
                 .latitud(postCrearComercio.latitud())
@@ -43,9 +62,19 @@ public class ComercioService {
     }
     public List<Comercio> findByNombre(String name){
 
+List<Comercio> comercios = comercioRepo.findAll();
+        List<Comercio> comercios1 = comercios.stream().filter(c-> c.getName().toLowerCase().contains(name) ||
+                c.getNameDirection().toLowerCase().contains(name) ).collect(Collectors.toList());
 
-        return comercioRepo.findByNameIgnoreCase(name);
+    return comercios1;
 
+    }
+    public List<String> listadoDeCategorias(){
+        List<String> categorias = Arrays.stream(CategoriaComercios.values()).map(Enum::name).collect(Collectors.toList());
+        return categorias;
+    }
+    public List<Comercio> listadoProyectosGoogleMaps(){
+        return comercioRepo.findAll();
     }
     public List<GetListComercios> getComerciosPorCategoria(CategoriaComercios categoria) {
         return comercioRepo.findByCategoriasContains(categoria);

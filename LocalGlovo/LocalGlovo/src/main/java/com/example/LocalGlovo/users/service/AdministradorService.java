@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.users.service;
 
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
 import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.model.Administrador;
@@ -21,6 +22,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +39,18 @@ public class AdministradorService {
     public Administrador crearAdministrador(PostCrearUserDto postCrearUserDto , EnumSet<UserRoles> userRoles){
         if (usuarioRepo.existsByEmailIgnoreCase(postCrearUserDto.email())||administradorRepo.existsByEmailIgnoreCase(postCrearUserDto.email())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El email ya ha sido registrado");
+        }
+        if (postCrearUserDto.email().isEmpty()){
+            throw new GlobalException("El campo email no puede estar vacio");
+        }
+        if (postCrearUserDto.name().isEmpty()){
+            throw new GlobalException("El campo nombre no puede estar vacio");
+        }
+        if (postCrearUserDto.lastName().isEmpty()){
+            throw new GlobalException("El campo apellidos no puede estar vacio");
+        }
+        if (postCrearUserDto.password().isEmpty()){
+            throw new GlobalException("El campo contraseña no puede estar vacio");
         }
         Administrador administrador = Administrador.builder()
                 .email(postCrearUserDto.email())
@@ -96,7 +110,7 @@ public class AdministradorService {
         Optional<Administrador> administrador = administradorRepo.findById(uuid);
         if (administrador.isPresent()){
             administrador.get().setEnabled(false);
-            administrador.get().setCredentialsNonExpired(false);
+
             return administradorRepo.save(administrador.get());
         }else{
             throw new RuntimeException("No se encuentra el administrador por ese id");
@@ -112,6 +126,15 @@ public class AdministradorService {
         }else {
             throw new RuntimeException("No se encuentra el administrador");
         }
+    }
+
+    public List<Usuario> buscarUsuario(String buscar){
+        List<Usuario> usuarios = usuarioRepo.findAll();
+        List<Usuario> usuarios1 = usuarios.stream().filter(usuario -> usuario.getName().toLowerCase().contains(buscar)||
+                usuario.getEmail().toLowerCase().contains(buscar)||
+                usuario.getLastName().toLowerCase().contains(buscar)||
+                usuario.getPhoneNumber().contains(buscar)).collect(Collectors.toList());
+        return usuarios1;
     }
 
 }

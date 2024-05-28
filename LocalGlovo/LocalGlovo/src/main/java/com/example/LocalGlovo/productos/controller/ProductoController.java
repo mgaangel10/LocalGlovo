@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.productos.controller;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.comercios.Dto.GetListComercios;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.productos.Dto.GetListProducto;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,8 +29,13 @@ public class ProductoController {
 
     @PostMapping("/administrador/crear/producto/{comercioId}")
     public ResponseEntity<?> crearProducto(@RequestBody PostProductoDto postProductoDto,@PathVariable UUID comercioId){
-        Producto producto = productoService.crearProducto(postProductoDto,comercioId);
-        return ResponseEntity.ok(producto);
+        try {
+            Producto producto = productoService.crearProducto(postProductoDto,comercioId);
+            return ResponseEntity.ok(producto);
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+
     }
 
     @GetMapping("/usuario/listar/productos")
@@ -60,8 +67,13 @@ public class ProductoController {
     }
     @GetMapping("administrador/productos/{id}")
     public ResponseEntity<?> buscarPorIdProductosAmdim(@PathVariable UUID id){
-        Producto producto = productoService.buscarPorID(id);
-        return ResponseEntity.ok(producto);
+        try {
+            Producto producto = productoService.buscarPorID(id);
+            return ResponseEntity.ok(producto);
+        } catch (Exception e) {
+            throw new GlobalException(e.getMessage());
+        }
+
     }
 
    /* @DeleteMapping("usuario/delete/ingredientes/{id}")
@@ -72,25 +84,45 @@ public class ProductoController {
 
     @DeleteMapping("administrador/delete/producto/{productoId}")
     public ResponseEntity<?> EliminarProducto (@PathVariable UUID productoId){
-        productoService.eliminarProducto(productoId);
-        return  ResponseEntity.noContent().build();
+        try {
+            productoService.eliminarProducto(productoId);
+            return  ResponseEntity.noContent().build();
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+
     }
     @PostMapping("administrador/add/ingredientes/{productoId}")
     public ResponseEntity<Ingredientes> crearIngredientes(@RequestBody Ingredientes ingredientes,@PathVariable UUID productoId){
-        Ingredientes ingredientes1 = productoService.crearIngredientes(ingredientes,productoId);
-        return ResponseEntity.status(201).body(ingredientes1);
+        try {
+            Ingredientes ingredientes1 = productoService.crearIngredientes(ingredientes,productoId);
+            return ResponseEntity.status(201).body(ingredientes1);
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+
     }
 
     @DeleteMapping("administrador/eliminar/{ingredientesId}")
     public ResponseEntity<?> eliminarIngredientes(@PathVariable UUID ingredientesId){
-        productoService.eliminarIngrediente(ingredientesId);
-      return ResponseEntity.noContent().build();
+        try{
+            productoService.eliminarIngrediente(ingredientesId);
+            return ResponseEntity.noContent().build();
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+
     }
 
     @PutMapping("administrador/editar/producto/{productoId}")
     public ResponseEntity<Producto> editarProducto(@PathVariable UUID productoId,@RequestBody PostProductoDto postProductoDto){
-        Producto producto = productoService.editarProdcuto(productoId,postProductoDto);
-        return ResponseEntity.status(201).body(producto);
+        try {
+            Producto producto = productoService.editarProdcuto(productoId,postProductoDto);
+            return ResponseEntity.status(201).body(producto);
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+
     }
 
 

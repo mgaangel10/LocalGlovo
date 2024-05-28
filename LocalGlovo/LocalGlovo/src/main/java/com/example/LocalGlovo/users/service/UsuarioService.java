@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.users.service;
 
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.users.Dto.GetUsuario;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
 import com.example.LocalGlovo.users.Dto.PostLogin;
@@ -43,6 +44,18 @@ public class UsuarioService {
         if (usuarioRepo.existsByEmailIgnoreCase(postCrearUserDto.email())||administradorRepo.existsByEmailIgnoreCase(postCrearUserDto.email())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El email ya ha sido registrado");
         }
+        if (postCrearUserDto.email().isEmpty()){
+            throw new GlobalException("El campo email no puede estar vacio");
+        }
+        if (postCrearUserDto.name().isEmpty()){
+            throw new GlobalException("El campo nombre no puede estar vacio");
+        }
+        if (postCrearUserDto.lastName().isEmpty()){
+            throw new GlobalException("El campo apellidos no puede estar vacio");
+        }
+        if (postCrearUserDto.password().isEmpty()){
+            throw new GlobalException("El campo contraseña no puede estar vacio");
+        }
         Usuario usuario = Usuario.builder()
                 .email(postCrearUserDto.email())
                 .name(postCrearUserDto.name())
@@ -73,7 +86,7 @@ public class UsuarioService {
             usuario.get().setEnabled(true);
             return usuarioRepo.save(usuario.get());
         }else {
-            throw new RuntimeException("No se encuentra el usuario");
+            throw new GlobalException("No se encuentra el usuario");
         }
     }
 

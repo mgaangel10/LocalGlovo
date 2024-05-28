@@ -29,4 +29,7 @@ public interface VentasRepo extends JpaRepository<Ventas, UUID> {
                ORDER BY count DESC
             """)
     List<Usuario> obtenerUsuariosQueMasCompran(@Param("fecha") LocalDate fecha);
+
+
+
 }
