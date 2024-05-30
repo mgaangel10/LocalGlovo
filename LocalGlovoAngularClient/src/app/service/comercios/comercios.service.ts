@@ -68,24 +68,32 @@ export class ComerciosService {
       }
     })
   }
-  addComercio(name:string,latitud:string,longitud:string,nameDirection:string,categorias:string,imagen:string):Observable<AddComercio>{
+  addComercio(name: string, latitud: string, longitud: string, nameDirection: string, categorias: string, imagen: File): Observable<AddComercio> {
     let token = localStorage.getItem('TOKEN');
-    return this.http.post<AddComercio>(`${environment.HeadUrl}/administrador/crear/comercio`,{
-      "name": `${name}`,
-      "latitud": `${latitud}`,
-      "longitud": `${longitud}`,
-      "nameDirection": `${nameDirection}`,
-      "categorias": `${categorias}`,
-      "imagen": `${imagen}`
-    },{
-      headers: {
-        accept: 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+
+    // Crear un objeto FormData para enviar el archivo de la imagen
+    let formData = new FormData();
+    formData.append('comercio', JSON.stringify({
+      "name": name,
+      "latitud": latitud,
+      "longitud": longitud,
+      "nameDirection": nameDirection,
+      "categorias": categorias
+    }));
+    formData.append('file', imagen); // Añadir el archivo de la imagen
+
+    return this.http.post<AddComercio>(`${environment.HeadUrl}/administrador/crear/comercio`, formData, {
+        headers: {
+            accept: 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
     }).pipe(
-      catchError(this.handleError)
-    )
-  }
+        catchError(this.handleError)
+    );
+}
+
+
+
 
   eliminarComercio(id:string){
     let token = localStorage.getItem('TOKEN');

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ComerciosService } from '../../../service/comercios/comercios.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AddComercio } from '../../../models/add-comercio';
@@ -26,7 +26,10 @@ export class AddComercioPageComponent {
     imagen: new FormControl('')
   });
 
-  constructor(private comercioService: ComerciosService, private router: Router) { }
+  constructor(private comercioService: ComerciosService, private router: Router) {
+    this.imagen = new ElementRef<HTMLInputElement>(document.createElement('input'));
+}
+
 
   ngOnInit(): void {
     this.listadoCategorias();
@@ -52,22 +55,29 @@ onMapClick(event: google.maps.MapMouseEvent): void {
   
   
 
-  add(): void {
+// Obtener una referencia al campo de entrada de archivos
+@ViewChild('imagen') imagen: ElementRef;
+
+add(): void {
+    // Obtener el archivo del campo de entrada de archivos
+    let imagenFile = this.imagen.nativeElement.files[0];
+
     this.comercioService.addComercio(
-      this.crearComercio.value.name!,
-      this.crearComercio.value.latitud!,
-      this.crearComercio.value.longitud!,
-     
-      this.crearComercio.value.nameDirection!,
-      this.crearComercio.value.categorias!,
-      this.crearComercio.value.imagen!
+        this.crearComercio.value.name!,
+        this.crearComercio.value.latitud!,
+        this.crearComercio.value.longitud!,
+        this.crearComercio.value.nameDirection!,
+        this.crearComercio.value.categorias!,
+        imagenFile // Pasar el archivo de la imagen a tu servicio
     ).subscribe({
-      next:(c: AddComercio) => {
-      this.router.navigate(['/listado-comercios']);
-    },error:(err)=>{
-      this.errorMessage = err;
-    }});
-  }
+        next: (c: AddComercio) => {
+            this.router.navigate(['/listado-comercios']);
+        }, error: (err) => {
+            this.errorMessage = err;
+        }
+    });
+}
+
   listadoCategorias(){
     this.comercioService.listadoCategorias().subscribe(c=>{
       this.categorias = c;

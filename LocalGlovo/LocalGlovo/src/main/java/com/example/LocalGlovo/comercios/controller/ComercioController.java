@@ -6,12 +6,14 @@ import com.example.LocalGlovo.comercios.Dto.PostCrearComercio;
 import com.example.LocalGlovo.comercios.models.CategoriaComercios;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.comercios.service.ComercioService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,15 +26,20 @@ public class ComercioController {
 
 
     @PostMapping("/administrador/crear/comercio")
-    public ResponseEntity<?> crearComercio(@RequestBody PostCrearComercio postCrearComercio){
+    public ResponseEntity<?> crearComercio(@RequestPart("comercio") String comercioJson, @RequestPart("file") MultipartFile file) {
         try {
-            Comercio comercio = comercioService.crearComercio(postCrearComercio);
+            // Convertir la cadena JSON en un objeto PostCrearComercio
+            ObjectMapper objectMapper = new ObjectMapper();
+            PostCrearComercio postCrearComercio = objectMapper.readValue(comercioJson, PostCrearComercio.class);
+
+            Comercio comercio = comercioService.crearComercio(postCrearComercio, file);
             return ResponseEntity.ok(comercio);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new GlobalException(e.getMessage());
         }
-
     }
+
+
     @GetMapping("administrador/listado/categorias")
     public ResponseEntity<List<String>> listadoCategorias(){
         List<String> categorias = comercioService.listadoDeCategorias();

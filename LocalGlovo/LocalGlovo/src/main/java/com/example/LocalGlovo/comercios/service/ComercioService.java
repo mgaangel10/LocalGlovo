@@ -8,10 +8,13 @@ import com.example.LocalGlovo.comercios.Dto.PostCrearComercio;
 import com.example.LocalGlovo.comercios.models.CategoriaComercios;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.comercios.repository.ComercioRepo;
+import com.example.LocalGlovo.files.service.FicheroService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,15 +25,19 @@ public class ComercioService {
 
     private final ComercioRepo comercioRepo;
     private final FavoritoRepo favoritoRepo;
+    @Autowired
+    private  FicheroService ficheroService;
 
-    public Comercio crearComercio(PostCrearComercio postCrearComercio){
+    public Comercio crearComercio(PostCrearComercio postCrearComercio, MultipartFile file) {
+        // Almacenar la imagen y obtener su URI
+        String uri = ficheroService.storeAndReturnUri(file);
 
         CategoriaComercios comercios = CategoriaComercios.valueOf(postCrearComercio.categorias().toUpperCase());
         if (comercios == null){
             throw new GlobalException("Categoria de comercio no validas");
         }
 
-        if (postCrearComercio.categorias().isEmpty()&&postCrearComercio.latitud()==0&&postCrearComercio.longitud()==0&&postCrearComercio.name().isEmpty()&&postCrearComercio.imagen().isEmpty()&&postCrearComercio.nameDirection().isEmpty()){
+        if (postCrearComercio.categorias().isEmpty()&&postCrearComercio.latitud()==0&&postCrearComercio.longitud()==0&&postCrearComercio.name().isEmpty()&&uri.isEmpty()&&postCrearComercio.nameDirection().isEmpty()){
             throw new GlobalException("Todos los campos son obligatorios");
         }
         if (postCrearComercio.name().isEmpty()){
@@ -42,7 +49,7 @@ public class ComercioService {
         if (postCrearComercio.longitud()==0){
             throw new GlobalException("EL campo longitud no puede estar vacio");
         }
-        if (postCrearComercio.imagen().isEmpty()){
+        if (uri.isEmpty()){
             throw new GlobalException("El campo imagen no puede estar vacio");
         }
         if (postCrearComercio.nameDirection().isEmpty()){
@@ -55,11 +62,11 @@ public class ComercioService {
                 .longitud(postCrearComercio.longitud())
                 .nameDirection(postCrearComercio.nameDirection())
                 .categorias(EnumSet.of(comercios))
-                .imagen(postCrearComercio.imagen())
-
+                .imagen(uri) // establecer el campo imagen con la URI de la imagen
                 .build();
         return comercioRepo.save(comercio);
     }
+
     public List<Comercio> findByNombre(String name){
 
 List<Comercio> comercios = comercioRepo.findAll();

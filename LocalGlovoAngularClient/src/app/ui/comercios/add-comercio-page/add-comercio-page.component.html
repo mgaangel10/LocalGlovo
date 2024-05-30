@@ -34,11 +34,12 @@
     
     
     </div>
-    <div class="mb-3">
-      <label for="imagen" class="form-label">URL de la imagen</label>
-      <input type="text" class="form-control w-50 mx-auto" id="imagen" formControlName="imagen"
-        placeholder="Introduce la URL de la imagen">
-    </div>
+   <!-- Añadir un campo de entrada de archivos a tu formulario -->
+<div class="mb-3">
+  <label for="imagen" class="form-label">Imagen</label>
+  <input type="file" class="form-control w-50 mx-auto" id="imagen" #imagen>
+</div>
+
 
     <button type="submit" class="btn btn-primary w-75 mx-auto">Enviar</button>
   </div>
