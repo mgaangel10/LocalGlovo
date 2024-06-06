@@ -2,6 +2,7 @@ package com.example.LocalGlovo.users.service;
 
 
 import com.example.LocalGlovo.Exception.GlobalException;
+import com.example.LocalGlovo.files.service.FicheroService;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
 import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.model.Administrador;
@@ -15,14 +16,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
+
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,12 +33,27 @@ public class AdministradorService {
     private final AdministradorRepo administradorRepo;
     private final PasswordEncoder passwordEncoder;
     private final UsuarioRepo usuarioRepo;
+    private final FicheroService ficheroService;
+    private final EmailService emailService;
     public Optional<Administrador> findById(UUID id){return administradorRepo.findById(id);}
     public Optional<Administrador> findByEmail(String email) {
         return administradorRepo.findFirstByEmail(email);
     }
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    public  String generateRandomString(int length) {
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder(length);
 
-    public Administrador crearAdministrador(PostCrearUserDto postCrearUserDto , EnumSet<UserRoles> userRoles){
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            builder.append(CHARACTERS.charAt(randomIndex));
+        }
+
+        return builder.toString();
+    }
+    public Administrador crearAdministrador(PostCrearUserDto postCrearUserDto , EnumSet<UserRoles> userRoles, MultipartFile file){
+        String newPassword = generateRandomString(8);
+        String filename = ficheroService.storeAndReturnFilename(file);
         if (usuarioRepo.existsByEmailIgnoreCase(postCrearUserDto.email())||administradorRepo.existsByEmailIgnoreCase(postCrearUserDto.email())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El email ya ha sido registrado");
         }
@@ -49,24 +66,23 @@ public class AdministradorService {
         if (postCrearUserDto.lastName().isEmpty()){
             throw new GlobalException("El campo apellidos no puede estar vacio");
         }
-        if (postCrearUserDto.password().isEmpty()){
-            throw new GlobalException("El campo contraseña no puede estar vacio");
-        }
+
         Administrador administrador = Administrador.builder()
                 .email(postCrearUserDto.email())
                 .name(postCrearUserDto.name())
                 .lastName(postCrearUserDto.lastName())
-                .password(passwordEncoder.encode(postCrearUserDto.password()))
+                .password(passwordEncoder.encode(newPassword))
                 .createdAt(LocalDateTime.now())
-                .fotoUrl(postCrearUserDto.fotoUrl())
+                .fotoUrl(filename)
                 .birthDate(postCrearUserDto.nacimiento())
                 .roles(EnumSet.of(UserRoles.ADMINISTRADOR))
                 .build();
+        emailService.registroAdmin(administrador,newPassword);
         return administradorRepo.save(administrador);
     }
 
-    public Administrador createWithRole(PostCrearUserDto postCrearUserDto){
-        return crearAdministrador(postCrearUserDto,EnumSet.of(UserRoles.ADMINISTRADOR));
+    public Administrador createWithRole(PostCrearUserDto postCrearUserDto,MultipartFile file){
+        return crearAdministrador(postCrearUserDto,EnumSet.of(UserRoles.ADMINISTRADOR),file);
     }
     public List<Usuario> usuariosRegistrados(){
         List<Usuario> usuarios = usuarioRepo.findByEnabledFalse();

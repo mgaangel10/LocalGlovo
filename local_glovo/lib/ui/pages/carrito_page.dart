@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_glovo/blocs/bloc/image_bloc.dart';
 import 'package:local_glovo/blocs/carrito/bloc/carrito_bloc.dart';
-import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to_cart.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
-import 'package:local_glovo/repositories/carrito/carrito_repository_impl.dart';
+import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/ui/pages/entrega_page.dart';
+import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to_cart.dart';
+import 'package:local_glovo/models/response/add_producto_to_cart/lineas_carrito.dart';
 
 class CarritoPage extends StatefulWidget {
   final CarritoRepository carritoRepository;
@@ -20,13 +22,16 @@ class CarritoPage extends StatefulWidget {
 class _CarritoPageState extends State<CarritoPage> {
   late CarritoRepository carritoRepository;
   late CarritoBloc _carritoBloc;
+  late List<ImageBloc> _imageBlocs;
 
   @override
   void initState() {
     super.initState();
     carritoRepository = widget.carritoRepository;
     _carritoBloc = CarritoBloc(carritoRepository);
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    _imageBlocs = [];
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _carritoBloc.add(CarritoItem(productoId: widget.productoId));
     });
   }
@@ -34,6 +39,9 @@ class _CarritoPageState extends State<CarritoPage> {
   @override
   void dispose() {
     _carritoBloc.close();
+    for (var bloc in _imageBlocs) {
+      bloc.close();
+    }
     super.dispose();
   }
 
@@ -43,11 +51,17 @@ class _CarritoPageState extends State<CarritoPage> {
       appBar: AppBar(
         title: Text('Mi carrito'),
       ),
-      body: BlocProvider.value(
-        value: _carritoBloc,
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: _carritoBloc),
+        ],
         child: BlocConsumer<CarritoBloc, CarritoState>(
           listener: (context, state) {
-            if (state is CarritoError) {}
+            if (state is CarritoError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Ha ocurrido un error: ${state.error}')),
+              );
+            }
           },
           builder: (context, state) {
             if (state is CarritoLoading) {
@@ -55,6 +69,7 @@ class _CarritoPageState extends State<CarritoPage> {
                 child: CircularProgressIndicator(),
               );
             } else if (state is CarritoSucces) {
+              _initializeImageBlocs(state.carrito.lineasCarrito);
               return _buildCarritoDetails(state);
             } else if (state is CarritoDeleteSucess) {
               return Center(
@@ -75,54 +90,82 @@ class _CarritoPageState extends State<CarritoPage> {
     );
   }
 
+  void _initializeImageBlocs(List<LineasCarrito>? lineasCarrito) {
+    _imageBlocs = List.generate(
+      lineasCarrito?.length ?? 0,
+      (index) => ImageBloc(ComercioRepositoryImpl()),
+    );
+
+    for (int i = 0; i < lineasCarrito!.length; i++) {
+      if (lineasCarrito[i].producto!.imagen != null) {
+        _imageBlocs[i]
+            .add(VerImageItem(fileName: lineasCarrito[i].producto!.imagen!));
+      }
+    }
+  }
+
   Widget _buildCarritoDetails(CarritoSucces state) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        return Stack(
+        return Column(
           children: [
-            ListView.builder(
-              itemCount: state.carrito.lineasCarrito?.length ?? 0,
-              itemBuilder: (context, index) {
-                final lineaCarrito = state.carrito.lineasCarrito![index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  elevation: 5,
-                  child: ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    leading: Image.network(lineaCarrito.producto!.imagen!,
-                        fit: BoxFit.cover),
-                    title: Text(lineaCarrito.producto!.name!,
-                        style: TextStyle(fontSize: 18)),
-                    subtitle: Text(
-                        '${lineaCarrito.producto!.precio.toString()}€',
-                        style: TextStyle(fontSize: 16)),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Material(
-                            elevation: 10.0,
-                            child: TextButton(
-                              onPressed: () {
-                                final bloc = context.read<CarritoBloc>();
-                                bloc.add(CArritoDeleteItem(
-                                  carritoId: state.carrito.id!,
-                                  productoId: lineaCarrito.producto!.id!,
-                                ));
+            Expanded(
+              child: ListView.builder(
+                itemCount: state.carrito.lineasCarrito?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final lineaCarrito = state.carrito.lineasCarrito![index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 5,
+                    child: ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      leading: BlocBuilder<ImageBloc, ImageState>(
+                        bloc: _imageBlocs[index],
+                        builder: (context, state) {
+                          if (state is ImageLoading) {
+                            return CircularProgressIndicator();
+                          } else if (state is VerImageSucces) {
+                            return Image.memory(state.uint8list1,
+                                fit: BoxFit.cover, width: 50, height: 50);
+                          } else if (state is VerImageError) {
+                            return Icon(Icons.error);
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                      title: Text(lineaCarrito.producto!.name!,
+                          style: TextStyle(fontSize: 18)),
+                      subtitle: Text(
+                          '${lineaCarrito.producto!.precio.toString()}€',
+                          style: TextStyle(fontSize: 16)),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Material(
+                              elevation: 10.0,
+                              child: TextButton(
+                                onPressed: () {
+                                  final bloc = context.read<CarritoBloc>();
+                                  bloc.add(CArritoDeleteItem(
+                                    carritoId: state.carrito.id!,
+                                    productoId: lineaCarrito.producto!.id!,
+                                  ));
 
-                                bloc.add(
-                                    CarritoItem(productoId: widget.productoId));
-                              },
-                              child: Text('x${lineaCarrito.cantidad!}',
-                                  style: TextStyle(color: Colors.black)),
+                                  bloc.add(CarritoItem(
+                                      productoId: widget.productoId));
+                                },
+                                child: Text('x${lineaCarrito.cantidad!}',
+                                    style: TextStyle(color: Colors.black)),
+                              ),
                             ),
                           ),
-                        ),
-                        IconButton(
+                          IconButton(
                             iconSize: 30,
                             icon: Icon(Icons.delete),
                             onPressed: () {
@@ -131,58 +174,41 @@ class _CarritoPageState extends State<CarritoPage> {
                                 carritoId: state.carrito.id!,
                                 productoId: lineaCarrito.producto!.id!,
                               ));
-                            })
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-            Stack(
-              children: [
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    width: 366,
-                    height: 200,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      color: const Color.fromARGB(255, 248, 248, 248),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              "Total:",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              state.carrito.total.toString() + "€",
-                              style: TextStyle(fontSize: 20),
-                            ),
+                            },
                           ),
                         ],
                       ),
                     ),
-                  ),
+                  );
+                },
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 200,
+              padding: EdgeInsets.all(16),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    width: 80,
-                    height: 60,
-                    margin: EdgeInsets.only(left: 19, right: 19, bottom: 14),
-                    child: ElevatedButton(
+                color: const Color.fromARGB(255, 248, 248, 248),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Total:",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          state.carrito.total.toString() + "€",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.black),
@@ -209,9 +235,9 @@ class _CarritoPageState extends State<CarritoPage> {
                         ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         );

@@ -69,20 +69,6 @@ class _UserPageState extends State<UserPage> {
         final detalles = state.registerResponse;
         return ListView(
           children: <Widget>[
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35),
-                color: Colors.white,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(35),
-                child: Image(
-                  image: NetworkImage(detalles.fotoUrl!),
-                ),
-              ),
-            ),
             Center(
               child: Card(
                 surfaceTintColor: Colors.white,

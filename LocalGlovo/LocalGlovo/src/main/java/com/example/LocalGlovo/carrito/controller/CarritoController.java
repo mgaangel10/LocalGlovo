@@ -37,7 +37,7 @@ public class CarritoController {
 
     @GetMapping("usuario/buscar/carrito/{uuid}")
     public ResponseEntity<Carrito> buscar(@PathVariable UUID uuid){
-        Optional<Carrito> carrito = carritoService.buscarCarritoPorId(uuid);
+        Optional<Carrito> carrito = carritoService.buscarCarritoPorIdV2(uuid);
         return  ResponseEntity.ok(carrito.get());
     }
     @GetMapping("usuario/all/carrito")

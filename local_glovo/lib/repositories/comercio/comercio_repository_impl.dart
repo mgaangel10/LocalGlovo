@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:http/http.dart';
 import 'package:local_glovo/models/response/comercio_details_response.dart';
@@ -111,6 +112,26 @@ class ComercioRepositoryImpl extends ComercioRepository {
       return content;
     } else {
       throw UnimplementedError('Failed to load comercios categorias');
+    }
+  }
+
+  @override
+  Future<Uint8List> downloadFile(String filename) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+    final response = await _httpClient.get(
+      Uri.parse('http://10.0.2.2:9000/usuario/download/$filename'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return response.bodyBytes;
+    } else {
+      throw Exception('Failed to download file');
     }
   }
 }

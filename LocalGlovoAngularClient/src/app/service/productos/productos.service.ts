@@ -40,22 +40,8 @@ export class ProductosService {
       }
     })
   }
-  addPorducto(idComercio: string, imagen: string, name: string, precio: number, disponible: boolean): Observable<AddProducto> {
-    let token = localStorage.getItem('TOKEN');
-    return this.http.post<AddProducto>(`${environment.HeadUrl}/administrador/crear/producto/${idComercio}`, {
-      imagen: `${imagen}`,
-      name: `${name}`,
-      precio: `${precio}`,
-      disponible: `${disponible}`
-    }, {
-      headers: {
-        accept: 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    }).pipe(
-      catchError(this.handleError)
-    );
-  }
+
+  
 
   eliminarProducto(idProducto:string){
     let token = localStorage.getItem('TOKEN');
@@ -76,19 +62,44 @@ export class ProductosService {
       }
     })
   }
-  addIngredintes(id:string,name:string,imagen:string):Observable<AddIngredintes>{
+  addProducto(idComercio: string, imagen: File, name: string, precio: number, disponible: boolean): Observable<AddProducto> {
     let token = localStorage.getItem('TOKEN');
-    return this.http.post<AddIngredintes>(`${environment.HeadUrl}/administrador/add/ingredientes/${id}`,{
-      
-      "name":`${name}`,
-      "imagen": `${imagen}`
-      
-    }, {
+  
+    
+    let formData = new FormData();
+    formData.append('producto', JSON.stringify({
+      "name": name,
+      "precio": precio,
+      "disponible": disponible
+    }));
+    formData.append('file', imagen); 
+  
+    return this.http.post<AddProducto>(`${environment.HeadUrl}/administrador/crear/producto/${idComercio}`, formData, {
       headers: {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  addIngredintes(id:string,name:string,imagen:File):Observable<AddIngredintes>{
+    let token = localStorage.getItem('TOKEN');
+
+    let formData = new FormData();
+    formData.append('ingrediente',JSON.stringify({
+      "name":name,
+      
+    }));
+    formData.append('file',imagen)
+    return this.http.post<AddIngredintes>(`${environment.HeadUrl}/administrador/add/ingredientes/${id}`,formData, {
+      headers: {
+        accept: 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   editarProducto(idProducto:string,imagen:string,name:string,precio:number,disponible:boolean):Observable<EditarProducto>{
@@ -107,5 +118,11 @@ export class ProductosService {
       catchError(this.handleError)
     )
   }
+
+  verImagen(fileName: string): Observable<Blob> {
+    let token = localStorage.getItem('TOKEN');
+    let url = `${environment.HeadUrl}/administrador/download/${fileName}`;
+    return this.http.get(url, { responseType: 'blob', headers: { 'Authorization': `Bearer ${token}` } });
+}
 
 }
