@@ -45,6 +45,15 @@ public class CarritoService {
             throw new RuntimeException("no se encuentra el carrito ");
         }
     }
+    public Optional<Carrito> buscarCarritoPorIdV2(UUID id){
+        Optional<Carrito> carrito1 = carritoRepository.findById(id);
+        if (carrito1.isPresent()){
+            carrito1.get();
+            return carrito1;
+        }else{
+            throw new RuntimeException("no se encuentra el carrito ");
+        }
+    }
 
     public void agregarProductoAlCarrito(Usuario usuario, Producto producto) {
         Carrito carrito = buscarCarritoActivoDelUsuario(usuario);

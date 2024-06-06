@@ -1,11 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { LoginResponse } from '../../models/login-administrador';
 import { environment } from '../../environments/environment';
 import { AdministradorResponse } from '../../models/Administrador-response';
 import { VentasResponse } from '../../models/ventas-response';
 import { ListadoComercioSinPaginar } from '../../models/listado-comercio-sin-paginar';
+import { AddAdministrador } from '../../models/add-administrador';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,22 @@ import { ListadoComercioSinPaginar } from '../../models/listado-comercio-sin-pag
 export class AdministradorService {
 
   constructor(private http: HttpClient) { }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      
+      if (error.error && error.error.message) {
+        errorMessage = `Error: ${error.error.message}`;
+      } else {
+        errorMessage = `Server returned code: ${error.status}, error message is: ${error.message}`;
+      }
+    }
+    return throwError(errorMessage);
+  }
 
 
   LoginResponseAdministrador(email: string, password: string): Observable<LoginResponse> {
@@ -63,4 +80,23 @@ export class AdministradorService {
       }
     })
   }
+
+
+  AddAdministrador(email:string,fotoUrl: File,name:string,lastName:string, ): Observable<AddAdministrador> {
+    
+
+    
+    let formData = new FormData();
+    formData.append('admin', JSON.stringify({
+     "email":`${email}`,
+     "name":`${name}`,
+     "lastName":`${lastName}`,
+     
+    }));
+    formData.append('file', fotoUrl); 
+
+    return this.http.post<AddAdministrador>(`${environment.HeadUrl}/auth/register/admin`, formData).pipe(
+        catchError(this.handleError)
+    );
+}
 }

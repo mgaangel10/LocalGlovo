@@ -5,6 +5,7 @@ import ch.qos.logback.core.joran.conditional.IfAction;
 import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.comercios.repository.ComercioRepo;
+import com.example.LocalGlovo.files.service.FicheroService;
 import com.example.LocalGlovo.productos.Dto.GetListProducto;
 import com.example.LocalGlovo.productos.Dto.PostProductoDto;
 import com.example.LocalGlovo.productos.model.Ingredientes;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,13 +29,15 @@ public class ProductoService {
     private final ProdcutoRepo prodcutoRepo;
     private final ComercioRepo comercioRepo;
     private final IngredientesRepo ingredientesRepo;
-    public Producto crearProducto(PostProductoDto postProductoDto,UUID comercioId){
+    private final FicheroService ficheroService;
+    public Producto crearProducto(PostProductoDto postProductoDto, UUID comercioId, MultipartFile file){
+        String filename = ficheroService.storeAndReturnFilename(file);
         Producto producto = new Producto();
         if (postProductoDto.precio()<=0&&postProductoDto.name().isEmpty()&&postProductoDto.imagen().isEmpty()){
             throw new GlobalException("No puedes enviar el formulario vacio");
         }
-        if (!postProductoDto.imagen().isEmpty()){
-            producto.setImagen(postProductoDto.imagen());
+        if (!filename.isEmpty()){
+            producto.setImagen(filename);
         }else {
             throw new GlobalException("El campo imagen debe de contener una imagen");
         }
@@ -136,11 +140,11 @@ public class ProductoService {
     }
 
 
-    public Ingredientes crearIngredientes(Ingredientes ingredientes,UUID productoId){
-
+    public Ingredientes crearIngredientes(Ingredientes ingredientes,UUID productoId,MultipartFile file){
+        String filename = ficheroService.storeAndReturnFilename(file);
         Ingredientes ingredientes1 = new Ingredientes();
-        if (!ingredientes.getImagen().isEmpty()){
-            ingredientes1.setImagen(ingredientes.getImagen());
+        if (!filename.isEmpty()){
+            ingredientes1.setImagen(filename);
         }else {
             throw new GlobalException("El campo imagen no puede ser nulo");
         }
@@ -150,16 +154,12 @@ public class ProductoService {
             throw new GlobalException("El campo nombre no puede estar vacio");
         }
 
-
-
-
         Optional<Producto> producto = prodcutoRepo.findById(productoId);
-         producto.get().getIngredientes().add(ingredientes);
+        producto.get().getIngredientes().add(ingredientes1); // Aquí se cambió 'ingredientes' por 'ingredientes1'
 
-         prodcutoRepo.save(producto.get());
-       return ingredientesRepo.save(ingredientes1);
-
+        return ingredientesRepo.save(ingredientes1);
     }
+
     public void eliminarIngrediente(UUID ingredienteId){
         Optional<Ingredientes> ingredienteOptional = ingredientesRepo.findById(ingredienteId);
 

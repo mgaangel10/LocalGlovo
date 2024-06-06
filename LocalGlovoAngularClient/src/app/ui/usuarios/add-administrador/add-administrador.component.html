@@ -1,0 +1,46 @@
+<div *ngIf="errorMessage" class="alert alert-danger text-center w-50 mx-auto" role="alert">
+    {{errorMessage}}
+  </div>
+  <div class="mx-auto w-25" style="border-radius: 15px;">
+
+    <h2 class="text-center mt-4">Dar de alta a un administrador</h2></div>
+<form [formGroup]="profileLogin"  (ngSubmit)="add()">
+    <div class="mx-auto text-center w-50 mt-5" style="border-radius: 15px; height: 460px;">
+
+      
+            <label for="email" class="form-label ">Email</label>
+            <input type="email" class="form-control w-75 mx-auto" id="email" aria-describedby="emailHelp" formControlName="email">
+
+            <div class="mb-3">
+                <label for="fotoUrl" class="form-label">Imagen</label>
+                <input type="file" class="form-control w-50 mx-auto" id="fotoUrl" #fotoUrl>
+              </div>
+            
+        
+            
+         
+          
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" class="form-control w-75 mx-auto" id="name" aria-describedby="name" formControlName="name">
+          
+              
+           
+           
+              <label for="lastName" class="form-label">Apellidos</label>
+              <input type=" text" class="form-control w-75 mx-auto" id="lastName" aria-describedby="lastName" formControlName="lastName">
+
+              
+          
+              
+          
+            
+             
+          
+              
+           
+        
+          <button type="submit" class="btn btn-primary mt-3 w-50">Submit</button>
+    </div>
+    
+  </form>
+  

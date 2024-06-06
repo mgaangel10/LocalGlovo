@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_glovo/blocs/bloc/image_bloc.dart';
+import 'package:local_glovo/models/response/favorito_resonse.dart';
+import 'package:local_glovo/models/response/ver_favorito_response.dart';
+
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/repositories/favorito/favorito_repository.dart';
 import 'package:local_glovo/repositories/favorito/favorito_repository_impl.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
-
 import '../../blocs/favorito/bloc/favorito_bloc.dart';
 
 class VerFavoritoPage extends StatefulWidget {
   final CarritoRepository carritoRepository;
-  const VerFavoritoPage({super.key, required this.carritoRepository});
+  const VerFavoritoPage({Key? key, required this.carritoRepository});
 
   @override
   State<VerFavoritoPage> createState() => _VerFavoritoPageState();
@@ -18,17 +22,28 @@ class VerFavoritoPage extends StatefulWidget {
 class _VerFavoritoPageState extends State<VerFavoritoPage> {
   late FavoritoRepository favoritoRepository;
   late FavoritoBloc _favoritoBloc;
+  late List<ImageBloc> _imageBlocs;
 
   @override
   void initState() {
     super.initState();
     favoritoRepository = FavoritoRepositoryImpl();
     _favoritoBloc = FavoritoBloc(favoritoRepository);
+
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _favoritoBloc.add(
         VerFavoritoItem(),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _favoritoBloc.close();
+    for (var bloc in _imageBlocs) {
+      bloc.close();
+    }
+    super.dispose();
   }
 
   @override
@@ -48,7 +63,9 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
           },
           builder: (context, state) {
             if (state is VerFavoritoSucess) {
-              return _buildVerFavorito();
+              // Inicializa ImageBlocs aquí después de obtener los favoritos
+              _initializeImageBlocs(state.verFavoritoResponse);
+              return _buildVerFavorito(state.verFavoritoResponse);
             } else if (state is FavoritoError) {
               return Text(state.error);
             } else if (state is FavoritoLoading) {
@@ -56,111 +73,124 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
                 child: CircularProgressIndicator(),
               );
             }
-            return Center(child: _buildVerFavorito());
+            return const Center(child: CircularProgressIndicator());
           },
           listener: (BuildContext context, FavoritoState state) {},
         ),
       ),
     );
-    ;
   }
 
-  Widget _buildVerFavorito() {
-    return BlocBuilder<FavoritoBloc, FavoritoState>(builder: (context, state) {
-      if (state is VerFavoritoSucess) {
-        return GridView.builder(
-          scrollDirection: Axis.vertical,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-          ),
-          itemCount: state.verFavoritoResponse.length,
-          itemBuilder: (context, index) {
-            var tarjeta = state.verFavoritoResponse[index];
+  void _initializeImageBlocs(List<VerFavoritoResponse> favoritos) {
+    _imageBlocs = List.generate(
+        favoritos.length, (index) => ImageBloc(ComercioRepositoryImpl()));
 
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ComercioDetailsPage(
-                      comercioID: tarjeta.id!,
-                      carritoRepository: widget.carritoRepository,
+    favoritos.asMap().forEach((index, favorito) {
+      if (favorito.imagen != null) {
+        _imageBlocs[index].add(VerImageItem(fileName: favorito.imagen!));
+      }
+    });
+  }
+
+  Widget _buildVerFavorito(List<VerFavoritoResponse> favoritos) {
+    return GridView.builder(
+      scrollDirection: Axis.vertical,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemCount: favoritos.length,
+      itemBuilder: (context, index) {
+        var comercio = favoritos[index];
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ComercioDetailsPage(
+                  comercioID: comercio.id!,
+                  carritoRepository: widget.carritoRepository,
+                ),
+              ),
+            );
+          },
+          child: Container(
+            margin: EdgeInsets.all(10),
+            child: Card(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shadowColor: Color.fromARGB(255, 0, 0, 0),
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(25)),
+                      child: BlocBuilder<ImageBloc, ImageState>(
+                        bloc: _imageBlocs[index],
+                        builder: (context, state) {
+                          if (state is ImageLoading) {
+                            return CircularProgressIndicator();
+                          } else if (state is VerImageSucces) {
+                            return Image.memory(
+                              state.uint8list1,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            );
+                          } else if (state is VerImageError) {
+                            return Icon(Icons.error);
+                          } else {
+                            return SizedBox.shrink();
+                          }
+                        },
+                      ),
                     ),
                   ),
-                );
-              },
-              child: Container(
-                width: 130,
-                height: 211,
-                child: Card(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  shadowColor: Color.fromARGB(255, 0, 0, 0),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Padding(
+                  Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: Colors.white,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Image(
-                                image: NetworkImage(tarjeta.imagen!),
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          tarjeta.name!,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                SizedBox(width: 5),
-                                Text(tarjeta.rating.toString()),
-                              ],
+                            Expanded(
+                              child: Text(
+                                comercio.name!,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             IconButton(
-                                iconSize: 30,
-                                icon: Icon(Icons.delete),
-                                onPressed: () {
-                                  final bloc = context.read<FavoritoBloc>();
-                                  bloc.add(DeleteFavoritoItem(
-                                      comercioId: state
-                                          .verFavoritoResponse[index].id!));
-                                  bloc.add(VerFavoritoItem());
-                                })
+                              iconSize: 30,
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                final bloc = context.read<FavoritoBloc>();
+                                bloc.add(
+                                  DeleteFavoritoItem(
+                                    comercioId: comercio.id!,
+                                  ),
+                                );
+                                bloc.add(VerFavoritoItem());
+                              },
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
-            );
-          },
+            ),
+          ),
         );
-      } else {
-        return Container();
-      }
-    });
+      },
+    );
   }
 }

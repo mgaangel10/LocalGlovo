@@ -11,6 +11,8 @@ import { AddComercioPageComponent } from './ui/comercios/add-comercio-page/add-c
 import { AddIngredientesPageComponent } from './ui/add-ingredientes/add-ingredientes-page/add-ingredientes-page.component';
 import { PageEditarProductoComponent } from './ui/productos/page-editar-producto/page-editar-producto.component';
 import { PageVentasComponent } from './ui/ventas/page-ventas/page-ventas.component';
+import { EditarComercioComponent } from './ui/comercios/editar-comercio/editar-comercio.component';
+import { AddAdministradorComponent } from './ui/usuarios/add-administrador/add-administrador.component';
 
 const routes: Routes = [
   { path: 'home', component: HomePageAdministradorComponent },
@@ -18,8 +20,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'addComercio', component: AddComercioPageComponent },
   { path: 'comercio-details/:comercioId', component: PageComercioDetailsComponent },
+  { path: 'editar-comercio/:comercioIdEditar', component: EditarComercioComponent },
   { path: 'usuarioid/:usuarioId', component: PageUsuariosComponent },
   { path: 'usuarios', component: PageUsuariosComponent },
+  { path: 'add-admin', component: AddAdministradorComponent },
   { path: 'ingredientes-details/:id', component: PageIngredientesDetailsComponent },
   { path: 'editar-producto/:id', component: PageEditarProductoComponent },
   { path: 'crear-ingredientes/:id', component: AddIngredientesPageComponent },

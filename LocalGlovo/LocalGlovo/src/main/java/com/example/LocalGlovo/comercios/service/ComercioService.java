@@ -29,15 +29,15 @@ public class ComercioService {
     private  FicheroService ficheroService;
 
     public Comercio crearComercio(PostCrearComercio postCrearComercio, MultipartFile file) {
-        // Almacenar la imagen y obtener su URI
-        String uri = ficheroService.storeAndReturnUri(file);
+
+        String filename = ficheroService.storeAndReturnFilename(file);
 
         CategoriaComercios comercios = CategoriaComercios.valueOf(postCrearComercio.categorias().toUpperCase());
         if (comercios == null){
             throw new GlobalException("Categoria de comercio no validas");
         }
 
-        if (postCrearComercio.categorias().isEmpty()&&postCrearComercio.latitud()==0&&postCrearComercio.longitud()==0&&postCrearComercio.name().isEmpty()&&uri.isEmpty()&&postCrearComercio.nameDirection().isEmpty()){
+        if (postCrearComercio.categorias().isEmpty()&&postCrearComercio.latitud()==0&&postCrearComercio.longitud()==0&&postCrearComercio.name().isEmpty()&&filename.isEmpty()&&postCrearComercio.nameDirection().isEmpty()){
             throw new GlobalException("Todos los campos son obligatorios");
         }
         if (postCrearComercio.name().isEmpty()){
@@ -49,7 +49,7 @@ public class ComercioService {
         if (postCrearComercio.longitud()==0){
             throw new GlobalException("EL campo longitud no puede estar vacio");
         }
-        if (uri.isEmpty()){
+        if (filename.isEmpty()){
             throw new GlobalException("El campo imagen no puede estar vacio");
         }
         if (postCrearComercio.nameDirection().isEmpty()){
@@ -62,7 +62,7 @@ public class ComercioService {
                 .longitud(postCrearComercio.longitud())
                 .nameDirection(postCrearComercio.nameDirection())
                 .categorias(EnumSet.of(comercios))
-                .imagen(uri) // establecer el campo imagen con la URI de la imagen
+                .imagen(filename)
                 .build();
         return comercioRepo.save(comercio);
     }
@@ -120,18 +120,34 @@ List<Comercio> comercios = comercioRepo.findAll();
         }
     }
 
-    public Comercio editarComercio(UUID comerciId,PostCrearComercio postCrearComercio){
+    public Comercio editarComercio(UUID comerciId,PostCrearComercio postCrearComercio,MultipartFile file){
+        String filename = ficheroService.storeAndReturnFilename(file);
         Optional<Comercio> comercio = comercioRepo.findById(comerciId);
 
         if (comercio.isEmpty()){
-            throw new RuntimeException("no se encuentra el comercio");
+            throw new GlobalException("no se encuentra el comercio");
         }else{
             CategoriaComercios comercios = CategoriaComercios.valueOf(postCrearComercio.categorias().toUpperCase());
             if (comercios == null){
-                throw new RuntimeException("Categoria de comercio no validas");
+                throw new GlobalException("Categoria de comercio no validas");
+            }
+            if (postCrearComercio.name().isEmpty()){
+                throw new GlobalException("El campo nombre no puede estar vacio");
+            }
+            if (filename.isEmpty()){
+                throw new GlobalException("El campo imagen no puede estar vacio");
+            }
+            if (postCrearComercio.latitud()==0){
+                throw new GlobalException("El campo latitud no puede estar vacio");
+            }
+            if (postCrearComercio.longitud()==0){
+                throw new GlobalException("El campo longitud no puede estar vacio");
+            }
+            if (postCrearComercio.nameDirection().isEmpty()){
+                throw new GlobalException("El campo nombre direccion no puede estar vacio");
             }
            comercio.get().setName(postCrearComercio.name());
-            comercio.get().setImagen(postCrearComercio.imagen());
+            comercio.get().setImagen(filename);
             comercio.get().setLatitud(postCrearComercio.latitud());
             comercio.get().setLongitud(postCrearComercio.longitud());
             comercio.get().setCategorias(EnumSet.of(comercios));

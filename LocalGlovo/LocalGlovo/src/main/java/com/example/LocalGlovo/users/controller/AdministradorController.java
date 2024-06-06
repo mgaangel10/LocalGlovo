@@ -2,6 +2,7 @@ package com.example.LocalGlovo.users.controller;
 
 
 import com.example.LocalGlovo.Exception.GlobalException;
+import com.example.LocalGlovo.comercios.Dto.PostCrearComercio;
 import com.example.LocalGlovo.security.jwt.JwtProvider;
 import com.example.LocalGlovo.users.Dto.JwtUserResponse;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
@@ -11,6 +12,7 @@ import com.example.LocalGlovo.users.model.Administrador;
 import com.example.LocalGlovo.users.model.Usuario;
 import com.example.LocalGlovo.users.service.AdministradorService;
 import com.example.LocalGlovo.users.service.UsuarioService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,6 +30,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -65,9 +68,11 @@ public class AdministradorController {
                     content = @Content)
     })
     @PostMapping("auth/register/admin")
-    public ResponseEntity<?> crearAdministrador(@RequestBody PostCrearUserDto postCrearUserDto) {
+    public ResponseEntity<?> crearAdministrador(@RequestPart("admin") String adminJson, @RequestPart("file") MultipartFile file) {
         try {
-            Administrador administrador = administradorService.createWithRole(postCrearUserDto);
+            ObjectMapper objectMapper = new ObjectMapper();
+            PostCrearUserDto postCrearComercio = objectMapper.readValue(adminJson, PostCrearUserDto.class);
+            Administrador administrador = administradorService.createWithRole(postCrearComercio,file);
             return ResponseEntity.status(HttpStatus.CREATED).body(PostRegistroDto.Administrador(administrador));
         } catch (Exception e) {
 

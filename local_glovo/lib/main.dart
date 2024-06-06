@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_glovo/blocs/bloc/image_bloc.dart';
 import 'package:local_glovo/blocs/carrito/bloc/carrito_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 import 'package:local_glovo/ui/pages/register_page.dart';
+import 'package:local_glovo/ui/widget/comercio_list.dart';
 import 'package:local_glovo/ui/widget/geocalizacion.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,11 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) =>
               ComercioBloc(context.read<ComercioRepositoryImpl>()),
           dispose: (_, ComercioBloc bloc) => bloc.close(),
+        ),
+        Provider<ImageBloc>(
+          create: (BuildContext context) =>
+              ImageBloc(context.read<ComercioRepositoryImpl>()),
+          dispose: (_, ImageBloc bloc) => bloc.close(),
         ),
       ],
       child: MaterialApp(

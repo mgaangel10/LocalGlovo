@@ -28,7 +28,7 @@ public class ComercioController {
     @PostMapping("/administrador/crear/comercio")
     public ResponseEntity<?> crearComercio(@RequestPart("comercio") String comercioJson, @RequestPart("file") MultipartFile file) {
         try {
-            // Convertir la cadena JSON en un objeto PostCrearComercio
+
             ObjectMapper objectMapper = new ObjectMapper();
             PostCrearComercio postCrearComercio = objectMapper.readValue(comercioJson, PostCrearComercio.class);
 
@@ -97,8 +97,14 @@ public class ComercioController {
     }
 
     @PutMapping("administrador/editar/comercio/{comercioId}")
-    public ResponseEntity<Comercio> editarComercio(@PathVariable UUID comercioId,@RequestBody PostCrearComercio postCrearComercio){
-        Comercio comercio = comercioService.editarComercio(comercioId,postCrearComercio);
-        return ResponseEntity.status(201).body(comercio);
+    public ResponseEntity<Comercio> editarComercio(@PathVariable UUID comercioId,@RequestPart("comercio") String comercioJson, @RequestPart("file") MultipartFile file){
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            PostCrearComercio postCrearComercio = objectMapper.readValue(comercioJson, PostCrearComercio.class);
+            Comercio comercio = comercioService.editarComercio(comercioId, postCrearComercio, file);
+            return ResponseEntity.status(201).body(comercio);
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ProductosService } from '../../../service/productos/productos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -17,7 +17,9 @@ export class PageCrearProductosComponent {
   constructor(private productoService: ProductosService, private router: Router, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.comercioID = params['id'];
+      
     });
+    this.imagen = new ElementRef<HTMLInputElement>(document.createElement('input'));
   }
 
   crearProducto = new FormGroup({
@@ -27,20 +29,28 @@ export class PageCrearProductosComponent {
     disponible: new FormControl()   
   });
 
-  add() {
-    console.log('Datos enviados al servidor:', this.crearProducto.value); 
+ // Obtener una referencia al campo de entrada de archivos
+@ViewChild('imagen') imagen: ElementRef;
 
-    this.productoService.addPorducto(this.comercioID, this.crearProducto.value.imagen!, this.crearProducto.value.name!, this.crearProducto.value.precio, this.crearProducto.value.disponible)
-      .subscribe({
-        next: (producto: AddProducto) => {
-          this.router.navigate(['/comercio-details', this.comercioID]);
-        },
-        error: (err) => {
-          this.errorMessage = err;
-          
-        }
-      });
-  }
+add(): void {
+  // Obtener el archivo del campo de entrada de archivos
+  let imagenFile = this.imagen.nativeElement.files[0];
+
+  this.productoService.addProducto(
+    this.comercioID!,
+    imagenFile, // Pasar el archivo de la imagen a tu servicio
+    this.crearProducto.value.name!,
+    this.crearProducto.value.precio!,
+    this.crearProducto.value.disponible!
+  ).subscribe({
+    next: (p: AddProducto) => {
+      this.router.navigate(['/comercio-details', this.comercioID]);
+    }, error: (err) => {
+      this.errorMessage = err;
+    }
+  });
+}
+
 }
 
   

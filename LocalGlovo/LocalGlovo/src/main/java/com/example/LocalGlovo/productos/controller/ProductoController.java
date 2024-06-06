@@ -2,12 +2,14 @@ package com.example.LocalGlovo.productos.controller;
 
 import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.comercios.Dto.GetListComercios;
+import com.example.LocalGlovo.comercios.Dto.PostCrearComercio;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.productos.Dto.GetListProducto;
 import com.example.LocalGlovo.productos.Dto.PostProductoDto;
 import com.example.LocalGlovo.productos.model.Ingredientes;
 import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.productos.service.ProductoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -28,9 +31,11 @@ public class ProductoController {
 
 
     @PostMapping("/administrador/crear/producto/{comercioId}")
-    public ResponseEntity<?> crearProducto(@RequestBody PostProductoDto postProductoDto,@PathVariable UUID comercioId){
+    public ResponseEntity<?> crearProducto(@RequestPart("producto") String comercioJson, @RequestPart("file") MultipartFile file,@PathVariable UUID comercioId){
         try {
-            Producto producto = productoService.crearProducto(postProductoDto,comercioId);
+            ObjectMapper objectMapper = new ObjectMapper();
+            PostProductoDto postCrearComercio = objectMapper.readValue(comercioJson, PostProductoDto.class);
+            Producto producto = productoService.crearProducto(postCrearComercio,comercioId,file);
             return ResponseEntity.ok(producto);
         }catch (Exception e){
             throw new GlobalException(e.getMessage());
@@ -93,9 +98,11 @@ public class ProductoController {
 
     }
     @PostMapping("administrador/add/ingredientes/{productoId}")
-    public ResponseEntity<Ingredientes> crearIngredientes(@RequestBody Ingredientes ingredientes,@PathVariable UUID productoId){
+    public ResponseEntity<Ingredientes> crearIngredientes(@RequestPart("ingrediente") String ingredientejson, @RequestPart("file") MultipartFile file,@PathVariable UUID productoId){
         try {
-            Ingredientes ingredientes1 = productoService.crearIngredientes(ingredientes,productoId);
+            ObjectMapper objectMapper = new ObjectMapper();
+            Ingredientes postIngredientes = objectMapper.readValue(ingredientejson, Ingredientes.class);
+            Ingredientes ingredientes1 = productoService.crearIngredientes(postIngredientes,productoId,file);
             return ResponseEntity.status(201).body(ingredientes1);
         }catch (Exception e){
             throw new GlobalException(e.getMessage());

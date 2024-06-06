@@ -7,6 +7,7 @@ import { ComercioDetails } from '../../models/comercio-details';
 import { AddComercio } from '../../models/add-comercio';
 import { ListadoComercioGoogleMaps } from '../../models/listado-comercio-googlemaps';
 import { ListadoComerciosFiltrados } from '../../models/listado-filtrado';
+import { EditarComercioREsponse } from '../../models/editar-comercio';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +93,30 @@ export class ComerciosService {
     );
 }
 
+editarComercio(idComercio:string,name: string, latitud: string, longitud: string, nameDirection: string, categorias: string, imagen: File): Observable<EditarComercioREsponse> {
+  let token = localStorage.getItem('TOKEN');
+
+  // Crear un objeto FormData para enviar el archivo de la imagen
+  let formData = new FormData();
+  formData.append('comercio', JSON.stringify({
+    "name": name,
+    "latitud": latitud,
+    "longitud": longitud,
+    "nameDirection": nameDirection,
+    "categorias": categorias
+  }));
+  formData.append('file', imagen); // Añadir el archivo de la imagen
+
+  return this.http.put<EditarComercioREsponse>(`${environment.HeadUrl}/administrador/editar/comercio/${idComercio}`, formData, {
+      headers: {
+          accept: 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+  }).pipe(
+      catchError(this.handleError)
+  );
+}
+
 
 
 
@@ -122,6 +147,18 @@ export class ComerciosService {
       }
     })
   }
+  verImagen(fileName: string): Observable<Blob> {
+    let token = localStorage.getItem('TOKEN');
+    let url = `${environment.HeadUrl}/administrador/download/${fileName}`;
+    return this.http.get(url, { responseType: 'blob', headers: { 'Authorization': `Bearer ${token}` } });
+}
+obtenerTodasLasImagenes(): Observable<string[]> {
+  let token = localStorage.getItem('TOKEN');
+  let url = `${environment.HeadUrl}/administrador/all/files`;
+  return this.http.get<string[]>(url, { headers: { 'Authorization': `Bearer ${token}` } });
+}
+
+
 
 
 

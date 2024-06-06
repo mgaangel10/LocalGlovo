@@ -94,7 +94,7 @@ public class SecurityConfig {
                         antMatcher("/auth/register/user"),
                         antMatcher("/auth/login/admin"),
                         antMatcher("/auth/login/user"),
-                        antMatcher("/uploads/**") 
+                        antMatcher("/uploads/**")
                 ));
     }
 
