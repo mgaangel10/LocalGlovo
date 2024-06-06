@@ -1,6 +1,9 @@
+version: '3.8'
+
 services:
 
-  pg:
+  # PostgreSQL para DEV
+  pg-dev:
     image: postgres:16-alpine
     environment:
       - POSTGRES_DB=test
@@ -18,20 +21,24 @@ services:
       - pgdata:/var/lib/postgresql/data
     profiles: ['dev']
 
-
-  pg-integration-test:
+  # PostgreSQL para PROD
+  pg-prod:
     image: postgres:16-alpine
     environment:
-      - POSTGRES_DB=test
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=produccion
+      - POSTGRES_USER=usuario
+      - POSTGRES_PASSWORD=contraseña
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U usuario"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    restart: on-failure
     ports:
-      - "55432:5432"
-    profiles: ['integration']
-    tmpfs:
-      - /var/lib/postgresql/data
-
-
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    profiles: ['prod']
 
   pgadmin:
     image: dpage/pgadmin4
