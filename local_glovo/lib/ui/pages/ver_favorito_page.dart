@@ -63,7 +63,6 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
           },
           builder: (context, state) {
             if (state is VerFavoritoSucess) {
-              // Inicializa ImageBlocs aquí después de obtener los favoritos
               _initializeImageBlocs(state.verFavoritoResponse);
               return _buildVerFavorito(state.verFavoritoResponse);
             } else if (state is FavoritoError) {

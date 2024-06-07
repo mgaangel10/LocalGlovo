@@ -70,7 +70,6 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
           },
           builder: (context, state) {
             if (state is ComercioDetailsSucces) {
-              // Inicializa ImageBlocs aquí después de obtener los productos
               _initializeImageBlocs(state.comercio);
               return _buildComercioDetails(state.comercio);
             } else if (state is ComercioDetailsError) {
@@ -93,12 +92,10 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
     _imageBlocs =
         List.generate(totalImages, (index) => ImageBloc(comercioRepository));
 
-    // Add the event for comercio image
     if (comercio.imagen != null) {
       _imageBlocs[0].add(VerImageItem(fileName: comercio.imagen!));
     }
 
-    // Add the events for each product image
     comercio.productos?.asMap().forEach((index, producto) {
       if (producto.imagen != null) {
         _imageBlocs[index + 1].add(VerImageItem(fileName: producto.imagen!));
@@ -192,7 +189,7 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                         child: Container(
                           margin: EdgeInsets.only(right: 8.0),
                           child: BlocBuilder<ImageBloc, ImageState>(
-                            bloc: _imageBlocs[index + 1], // Imagen del producto
+                            bloc: _imageBlocs[index + 1],
                             builder: (context, state) {
                               if (state is ImageLoading) {
                                 return CircularProgressIndicator();
@@ -219,10 +216,8 @@ class _ComercioDetailsPageState extends State<ComercioDetailsPage> {
                         child: Text(
                           "${comercio.productos?[index].precio}€",
                           style: TextStyle(
-                            fontSize:
-                                20, // Ajusta este valor según tus necesidades
-                            fontWeight:
-                                FontWeight.bold, // Opcional, para negrita
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
