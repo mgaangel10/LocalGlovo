@@ -17,42 +17,43 @@ export class PageCrearProductosComponent {
   constructor(private productoService: ProductosService, private router: Router, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.comercioID = params['id'];
-      
+
     });
     this.imagen = new ElementRef<HTMLInputElement>(document.createElement('input'));
   }
 
   crearProducto = new FormGroup({
-    imagen: new FormControl(''), 
+    imagen: new FormControl(''),
     name: new FormControl(''),
     precio: new FormControl(),
-    disponible: new FormControl()   
+    disponible: new FormControl()
   });
 
- // Obtener una referencia al campo de entrada de archivos
-@ViewChild('imagen') imagen: ElementRef;
 
-add(): void {
-  // Obtener el archivo del campo de entrada de archivos
-  let imagenFile = this.imagen.nativeElement.files[0];
+  @ViewChild('imagen') imagen: ElementRef;
 
-  this.productoService.addProducto(
-    this.comercioID!,
-    imagenFile, // Pasar el archivo de la imagen a tu servicio
-    this.crearProducto.value.name!,
-    this.crearProducto.value.precio!,
-    this.crearProducto.value.disponible!
-  ).subscribe({
-    next: (p: AddProducto) => {
-      this.router.navigate(['/comercio-details', this.comercioID]);
-    }, error: (err) => {
-      this.errorMessage = err;
-    }
-  });
+  add(): void {
+
+    let imagenFile = this.imagen.nativeElement.files[0];
+
+    this.productoService.addProducto(
+      this.comercioID!,
+      imagenFile,
+      this.crearProducto.value.name!,
+      this.crearProducto.value.precio!,
+      this.crearProducto.value.disponible!
+    ).subscribe({
+      next: (p: AddProducto) => {
+        this.router.navigate(['/comercio-details', this.comercioID]);
+        console.log(p);
+      }, error: (err) => {
+        this.errorMessage = err;
+      }
+    });
+  }
+
 }
 
-}
 
-  
 
 

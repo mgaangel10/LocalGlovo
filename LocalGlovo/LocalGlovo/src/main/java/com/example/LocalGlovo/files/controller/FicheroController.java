@@ -33,7 +33,7 @@ public class FicheroController {
 
 
 
-    @PostMapping("/upload/files")
+    @PostMapping("administrador/upload/files")
     public ResponseEntity<?> upload(@RequestPart("files") MultipartFile[] files) {
 
         //FileResponse response = uploadFile(file);
