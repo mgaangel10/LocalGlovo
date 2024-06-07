@@ -21,7 +21,6 @@ class ComercioBloc extends Bloc<ComercioEvent, ComercioState> {
     final SharedPreferences preferences = await _prefs;
     try {
       final comercioList = await comercioRepository.listarComercios();
-      preferences.setString('carritoId', comercioList[0].id!);
       preferences.setString('comercioId', comercioList[0].id!);
       emit(ComercioSuccess(comercioList));
     } catch (e) {

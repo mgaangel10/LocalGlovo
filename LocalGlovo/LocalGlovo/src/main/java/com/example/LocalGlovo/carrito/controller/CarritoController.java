@@ -32,9 +32,6 @@ public class CarritoController {
         return ResponseEntity.status(201).body(carrito);
     }
 
-
-
-
     @GetMapping("usuario/buscar/carrito/{uuid}")
     public ResponseEntity<Carrito> buscar(@PathVariable UUID uuid){
         Optional<Carrito> carrito = carritoService.buscarCarritoPorIdV2(uuid);
