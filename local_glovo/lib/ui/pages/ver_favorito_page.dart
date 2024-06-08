@@ -50,7 +50,7 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ver Tu lista de favoritos"),
+        title: Text("Tu lista de favoritos"),
       ),
       body: BlocProvider.value(
         value: _favoritoBloc,

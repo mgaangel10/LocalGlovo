@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.carrito.controller;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.carrito.Dto.GetCarritoDto;
 import com.example.LocalGlovo.carrito.Dto.LineaCarritoDto;
 import com.example.LocalGlovo.carrito.models.Carrito;
@@ -34,8 +35,12 @@ public class CarritoController {
 
     @GetMapping("usuario/buscar/carrito/{uuid}")
     public ResponseEntity<Carrito> buscar(@PathVariable UUID uuid){
-        Optional<Carrito> carrito = carritoService.buscarCarritoPorIdV2(uuid);
-        return  ResponseEntity.ok(carrito.get());
+        try {
+            Optional<Carrito> carrito = carritoService.buscarCarritoPorIdV2(uuid);
+            return ResponseEntity.ok(carrito.get());
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
     }
     @GetMapping("usuario/all/carrito")
     public ResponseEntity<List<GetCarritoDto>> allCarrito(){

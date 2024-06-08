@@ -19,7 +19,9 @@ final class CArritoDeleteItem extends CarritoEvent {
 }
 
 final class VerCarritoItem extends CarritoEvent {
-  VerCarritoItem();
+  final BuildContext context;
+  final CarritoRepository carritoRepository;
+  VerCarritoItem(this.context, this.carritoRepository);
 }
 
 final class CarritoTerminadoItem extends CarritoEvent {

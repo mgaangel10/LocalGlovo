@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.carrito.service;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.carrito.Dto.GetCarritoDto;
 import com.example.LocalGlovo.carrito.models.Carrito;
 import com.example.LocalGlovo.carrito.models.Estado;
@@ -47,11 +48,11 @@ public class CarritoService {
     }
     public Optional<Carrito> buscarCarritoPorIdV2(UUID id){
         Optional<Carrito> carrito1 = carritoRepository.findById(id);
-        if (carrito1.isPresent()){
+        if (carrito1.isPresent()&& carrito1.get().getEstado()==Estado.ACTIVO){
             carrito1.get();
             return carrito1;
         }else{
-            throw new RuntimeException("no se encuentra el carrito ");
+            throw new GlobalException("tu carrito esta vacio... ");
         }
     }
 
