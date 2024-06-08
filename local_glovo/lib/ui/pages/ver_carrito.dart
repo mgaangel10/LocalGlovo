@@ -6,6 +6,7 @@ import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
+import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/entrega_page.dart';
 
 class VerCarrito extends StatefulWidget {
@@ -77,10 +78,6 @@ class _VerCarritoState extends State<VerCarrito> {
             } else if (state is VerCarritoSucess) {
               _initializeImageBlocs(state.carrito);
               return _buildCarritoDetails(state);
-            } else if (state is CarritoDeleteSucess) {
-              return Center(
-                child: Text('Producto eliminado correctamente'),
-              );
             } else if (state is CarritoError) {
               return Center();
             } else {
@@ -137,22 +134,29 @@ class _VerCarritoState extends State<VerCarrito> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Material(
-                          elevation: 10.0,
-                          child: TextButton(
-                            onPressed: () {
-                              final bloc = context.read<CarritoBloc>();
-                              bloc.add(CArritoDeleteItem(
-                                carritoId: state.carrito.id!,
+                      IconButton(
+                        iconSize: 30,
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CarritoPage(
+                                carritoRepository: widget.carritoRepository,
                                 productoId: lineaCarrito.producto!.id!,
-                              ));
-                            },
-                            child: Text('x${lineaCarrito.cantidad!}',
-                                style: TextStyle(color: Colors.black)),
-                          ),
-                        ),
+                              ),
+                            ),
+                          );
+                          setState(() {});
+                        },
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text('x${lineaCarrito.cantidad!}',
+                          style: TextStyle(color: Colors.black, fontSize: 18)),
+                      SizedBox(
+                        width: 20,
                       ),
                       IconButton(
                           iconSize: 30,
