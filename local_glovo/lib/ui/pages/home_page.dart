@@ -53,10 +53,6 @@ class _HomePageState extends State<HomePage> {
     return BlocProvider.value(
       value: _comercioBloc,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Home page"),
-          automaticallyImplyLeading: false,
-        ),
         body: Column(
           children: [
             // _buildSearchBar(),
@@ -91,8 +87,7 @@ class _HomePageState extends State<HomePage> {
                   final detallesCoemercio =
                       ComercioDetailsBloc(comercioRepository);
                   detallesCoemercio.add(ComercioDetailsItem(comercioId: c.id!));
-                  Navigator.popUntil(
-                      context, (route) => route.isFirst); // Añade esta línea
+                  Navigator.popUntil(context, (route) => route.isFirst);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

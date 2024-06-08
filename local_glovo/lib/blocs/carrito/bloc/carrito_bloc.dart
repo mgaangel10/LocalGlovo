@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to_cart.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:meta/meta.dart';
@@ -67,7 +68,8 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState> {
     emit(CarritoLoading());
     final SharedPreferences preferences = await _prefs;
     try {
-      final verCarrito = await carritoRepository.verCarritoid();
+      final verCarrito = await carritoRepository.verCarritoid(
+          event.context, event.carritoRepository);
       emit(VerCarritoSucess(verCarrito));
     } catch (e) {
       emit(CarritoError(e.toString()));

@@ -7,6 +7,8 @@ import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart'
 import 'package:local_glovo/ui/pages/entrega_page.dart';
 import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to_cart.dart';
 import 'package:local_glovo/models/response/add_producto_to_cart/lineas_carrito.dart';
+import 'package:local_glovo/ui/pages/inicio_page.dart';
+import 'package:local_glovo/ui/pages/ver_carrito.dart';
 
 class CarritoPage extends StatefulWidget {
   final CarritoRepository carritoRepository;
@@ -145,37 +147,40 @@ class _CarritoPageState extends State<CarritoPage> {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Material(
-                              elevation: 10.0,
-                              child: TextButton(
-                                onPressed: () {
-                                  final bloc = context.read<CarritoBloc>();
-                                  bloc.add(CArritoDeleteItem(
-                                    carritoId: state.carrito.id!,
-                                    productoId: lineaCarrito.producto!.id!,
-                                  ));
-
-                                  bloc.add(CarritoItem(
-                                      productoId: widget.productoId));
-                                },
-                                child: Text('x${lineaCarrito.cantidad!}',
-                                    style: TextStyle(color: Colors.black)),
-                              ),
-                            ),
-                          ),
+                          // Botón de "Añadir cantidad"
                           IconButton(
                             iconSize: 30,
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
+                            icon: Icon(Icons.add),
+                            onPressed: () async {
                               final bloc = context.read<CarritoBloc>();
-                              bloc.add(CArritoDeleteItem(
-                                carritoId: state.carrito.id!,
+                              bloc.add(CarritoItem(
                                 productoId: lineaCarrito.producto!.id!,
                               ));
+                              // Actualiza el estado del widget para forzar un rebuild
+                              setState(() {});
                             },
                           ),
+
+                          SizedBox(
+                            width: 20,
+                          ),
+                          // Texto que muestra la cantidad actual
+                          Text('x${lineaCarrito.cantidad!}',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18)),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          IconButton(
+                              iconSize: 30,
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                final bloc = context.read<CarritoBloc>();
+                                bloc.add(CArritoDeleteItem(
+                                  carritoId: state.carrito.id!,
+                                  productoId: lineaCarrito.producto!.id!,
+                                ));
+                              })
                         ],
                       ),
                     ),

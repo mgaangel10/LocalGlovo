@@ -6,6 +6,7 @@ import 'package:local_glovo/models/response/add_producto_to_cart/add_producto_to
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
+import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/entrega_page.dart';
 
 class VerCarrito extends StatefulWidget {
@@ -21,7 +22,6 @@ class _VerCarritoState extends State<VerCarrito> {
   late CarritoBloc _carritoBloc;
   late ComercioRepository comercioRepository;
   late List<ImageBloc> _imageBlocs;
-
   @override
   void initState() {
     super.initState();
@@ -29,7 +29,7 @@ class _VerCarritoState extends State<VerCarrito> {
     comercioRepository = ComercioRepositoryImpl();
     _carritoBloc = CarritoBloc(carritoRepository);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _carritoBloc.add(VerCarritoItem());
+      _carritoBloc.add(VerCarritoItem(context, carritoRepository));
     });
   }
 
@@ -66,9 +66,8 @@ class _VerCarritoState extends State<VerCarrito> {
         child: BlocConsumer<CarritoBloc, CarritoState>(
           listener: (context, state) {
             if (state is CarritoError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Ha ocurrido un error: ${state.error}')),
-              );
+            } else if (state is CarritoDeleteSucess) {
+              _carritoBloc.add(VerCarritoItem(context, carritoRepository));
             }
           },
           builder: (context, state) {
@@ -79,18 +78,10 @@ class _VerCarritoState extends State<VerCarrito> {
             } else if (state is VerCarritoSucess) {
               _initializeImageBlocs(state.carrito);
               return _buildCarritoDetails(state);
-            } else if (state is CarritoDeleteSucess) {
-              return Center(
-                child: Text('Producto eliminado correctamente'),
-              );
             } else if (state is CarritoError) {
-              return Center(
-                child: Text('Tu carrito esta vacio...'),
-              );
+              return Center();
             } else {
-              return Center(
-                child: Text('Estado desconocido'),
-              );
+              return Center();
             }
           },
         ),
@@ -143,26 +134,29 @@ class _VerCarritoState extends State<VerCarrito> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Material(
-                          elevation: 10.0,
-                          child: TextButton(
-                            onPressed: () {
-                              final bloc = context.read<CarritoBloc>();
-                              bloc.add(CArritoDeleteItem(
-                                carritoId: state.carrito.id!,
+                      IconButton(
+                        iconSize: 30,
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CarritoPage(
+                                carritoRepository: widget.carritoRepository,
                                 productoId: lineaCarrito.producto!.id!,
-                              ));
-
-                              bloc.add(CarritoItem(
-                                  productoId: state.carrito.lineasCarrito![0]
-                                      .producto!.id!));
-                            },
-                            child: Text('x${lineaCarrito.cantidad!}',
-                                style: TextStyle(color: Colors.black)),
-                          ),
-                        ),
+                              ),
+                            ),
+                          );
+                          setState(() {});
+                        },
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text('x${lineaCarrito.cantidad!}',
+                          style: TextStyle(color: Colors.black, fontSize: 18)),
+                      SizedBox(
+                        width: 20,
                       ),
                       IconButton(
                           iconSize: 30,
@@ -208,19 +202,27 @@ class _VerCarritoState extends State<VerCarrito> {
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled))
+                          return Colors
+                              .grey; // Color cuando el botón está deshabilitado
+                        return Colors.black; // Color por defecto
+                      },
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EntregaPage(
-                          carritoId: state.carrito.id!,
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: state.carrito.total! > 0
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EntregaPage(
+                                carritoId: state.carrito.id!,
+                              ),
+                            ),
+                          );
+                        }
+                      : null, // Si el total del carrito es 0 o menos, el botón estará deshabilitado
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

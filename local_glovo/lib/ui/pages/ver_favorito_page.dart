@@ -50,7 +50,7 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ver Tu lista de favoritos"),
+        title: Text("Tu lista de favoritos"),
       ),
       body: BlocProvider.value(
         value: _favoritoBloc,
@@ -63,7 +63,6 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
           },
           builder: (context, state) {
             if (state is VerFavoritoSucess) {
-              // Inicializa ImageBlocs aquí después de obtener los favoritos
               _initializeImageBlocs(state.verFavoritoResponse);
               return _buildVerFavorito(state.verFavoritoResponse);
             } else if (state is FavoritoError) {
