@@ -84,6 +84,7 @@ class Content {
   double? latitud;
   double? longitud;
   String? categorias;
+  bool? likes;
 
   Content(
       {this.id,
@@ -93,7 +94,8 @@ class Content {
       this.imagen,
       this.latitud,
       this.longitud,
-      this.categorias});
+      this.categorias,
+      this.likes});
 
   Content.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -104,6 +106,7 @@ class Content {
     latitud = json['latitud'];
     longitud = json['longitud'];
     categorias = json['categorias'];
+    likes = json['likes']; // Añade 'likes' aquí
   }
 
   Map<String, dynamic> toJson() {
@@ -116,6 +119,7 @@ class Content {
     data['latitud'] = this.latitud;
     data['longitud'] = this.longitud;
     data['categorias'] = this.categorias;
+    data['likes'] = this.likes; // Añade 'likes' aquí
     return data;
   }
 }

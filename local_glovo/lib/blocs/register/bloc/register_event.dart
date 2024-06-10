@@ -6,9 +6,9 @@ sealed class RegisterEvent {}
 class DoRegisterEvent extends RegisterEvent {
   final String email;
   final String name;
-  final String lastname;
+  final String lastName;
   final String paswsword;
-  final String birthDate;
+  final String phoneNumber;
   DoRegisterEvent(
-      this.email, this.name, this.lastname, this.paswsword, this.birthDate);
+      this.email, this.name, this.lastName, this.paswsword, this.phoneNumber);
 }

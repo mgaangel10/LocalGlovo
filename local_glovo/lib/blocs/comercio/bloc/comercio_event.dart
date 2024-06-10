@@ -20,3 +20,8 @@ class ComercioCategoriasItem extends ComercioEvent {
   final String categorias;
   ComercioCategoriasItem({required this.categorias});
 }
+
+class ComercioFetchMore extends ComercioEvent {
+  final int page;
+  ComercioFetchMore({required this.page});
+}

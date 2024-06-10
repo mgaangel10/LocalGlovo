@@ -83,6 +83,10 @@ List<Comercio> comercios = comercioRepo.findAll();
     public List<Comercio> listadoProyectosGoogleMaps(){
         return comercioRepo.findAll();
     }
+
+    public List<GetListComercios> listadoComerciosAll(){
+        return comercioRepo.getListComercios();
+    }
     public List<GetListComercios> getComerciosPorCategoria(CategoriaComercios categoria) {
         return comercioRepo.findByCategoriasContains(categoria);
     }

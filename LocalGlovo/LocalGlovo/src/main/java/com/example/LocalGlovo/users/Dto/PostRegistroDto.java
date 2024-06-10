@@ -20,6 +20,7 @@ public class PostRegistroDto  {
     String fullname;
     String username;
     LocalDate birthdate;
+    String phoneNumber;
     String email;
     String fotoUrl;
 
@@ -32,7 +33,7 @@ public class PostRegistroDto  {
                 .username(usuario.getUsername())
                 .birthdate(usuario.getBirthDate())
                 .email(usuario.getEmail())
-                .fotoUrl(usuario.getFotoUrl())
+                .phoneNumber(usuario.getPhoneNumber())
                 .creadoen(usuario.getCreatedAt())
                 .build();
     }

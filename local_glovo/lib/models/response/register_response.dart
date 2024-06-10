@@ -6,6 +6,7 @@ class RegisterResponse {
   String? username;
   dynamic birthdate;
   String? email;
+  String? fotoUrl;
   DateTime? creadoen;
 
   RegisterResponse({
@@ -14,6 +15,7 @@ class RegisterResponse {
     this.username,
     this.birthdate,
     this.email,
+    this.fotoUrl,
     this.creadoen,
   });
 
@@ -24,6 +26,7 @@ class RegisterResponse {
       username: data['username'] as String?,
       birthdate: data['birthdate'] as dynamic,
       email: data['email'] as String?,
+      fotoUrl: data['fotoUrl'] as String?,
       creadoen: data['creadoen'] == null
           ? null
           : DateTime.parse(data['creadoen'] as String),
@@ -36,6 +39,7 @@ class RegisterResponse {
         'username': username,
         'birthdate': birthdate,
         'email': email,
+        'fotoUrl': fotoUrl,
         'creadoen': creadoen?.toIso8601String(),
       };
 
