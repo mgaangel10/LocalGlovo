@@ -50,7 +50,7 @@ public class UsuarioService {
         if (postCrearUserDto.name().isEmpty()){
             throw new GlobalException("El campo nombre no puede estar vacio");
         }
-        if (postCrearUserDto.lastName().isEmpty()){
+        if (postCrearUserDto.lastName() != null && postCrearUserDto.lastName().isEmpty()){
             throw new GlobalException("El campo apellidos no puede estar vacio");
         }
         if (postCrearUserDto.password().isEmpty()){
@@ -62,6 +62,8 @@ public class UsuarioService {
                 .lastName(postCrearUserDto.lastName())
                 .password(passwordEncoder.encode(postCrearUserDto.password()))
                 .createdAt(LocalDateTime.now())
+                .username(postCrearUserDto.name()+postCrearUserDto.lastName())
+                .phoneNumber(postCrearUserDto.phoneNumber())
                 .birthDate(postCrearUserDto.nacimiento())
                 .roles(EnumSet.of(UserRoles.USER))
                 .enabled(false)

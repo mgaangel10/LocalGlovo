@@ -34,7 +34,7 @@ public class FavoritoService {
                .usuario(usuario.get())
 
                .build();
-
+        comercio.get().setLikes(true);
        favoritoRepo.save(favorito);
        Optional<Comercio> comercio1 = comercio;
 

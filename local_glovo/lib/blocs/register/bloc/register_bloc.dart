@@ -24,11 +24,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       final RegisterDto registerDto = RegisterDto(
         email: event.email,
         name: event.name,
-        lastname: event.lastname,
+        lastName: event.lastName,
         password: event.paswsword,
-        birthDate: event.birthDate,
+        phoneNumber: event.phoneNumber,
       );
       final response = await authRepository.register(registerDto);
+      print('usuarioId guardado: ${RegisterDto}');
+      print('usuarioId guardado: ${response}');
       emit(DoRegisterSuccess(response));
       return;
     } on Exception catch (e) {

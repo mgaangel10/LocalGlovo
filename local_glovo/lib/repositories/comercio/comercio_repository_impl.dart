@@ -26,6 +26,7 @@ class ComercioRepositoryImpl extends ComercioRepository {
       final responseBody =
           ComercioResponse.fromJson(json.decode(response.body));
       final content = responseBody.content!;
+
       return content;
     } else {
       throw UnimplementedError('Failed to load comercios');

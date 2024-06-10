@@ -5,7 +5,9 @@ import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/favorito_page.dart';
+import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 import 'package:local_glovo/ui/pages/ver_favorito_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPage extends StatefulWidget {
   final CarritoRepository carritoRepository;
@@ -146,6 +148,32 @@ class _UserPageState extends State<UserPage> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () async {
+                        // Aquí puedes poner la lógica para cerrar la sesión
+                        await removeToken();
+                        // Redirige al usuario a la página de inicio de sesión
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InicioSesion(
+                              carritoRepository: widget.carritoRepository,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Cerrar Sesión',
+                          ),
+                          SizedBox(width: 10),
+                          Icon(Icons.logout)
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -156,5 +184,10 @@ class _UserPageState extends State<UserPage> {
         return Container();
       }
     });
+  }
+
+  Future<void> removeToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
   }
 }
