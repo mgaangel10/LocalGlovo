@@ -20,7 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final nameTextController = TextEditingController();
   final lastnameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
-  final birthDateTextController = TextEditingController();
+  final phoneNumber = TextEditingController();
+
   late AuthRepository authRepository;
   late RegisterBloc _registerBloc;
 
@@ -37,7 +38,8 @@ class _RegisterPageState extends State<RegisterPage> {
     nameTextController.dispose();
     lastnameTextController.dispose();
     passwordTextController.dispose();
-    birthDateTextController.dispose();
+    phoneNumber.dispose();
+
     _registerBloc.close();
     super.dispose();
   }
@@ -201,20 +203,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 20,
                     ),
                     Text(
-                      'Fecha de nacimiento',
+                      'Numero de telefono',
                       style: TextStyle(fontSize: 16),
                     ),
                     TextFormField(
-                      controller: birthDateTextController,
+                      controller: phoneNumber,
                       decoration: InputDecoration(
-                        hintText: 'DD/MM/YYYY',
-                        suffixIcon: birthDateTextController.text.isNotEmpty
+                        hintText: 'Itruce su numero de telefono',
+                        suffixIcon: nameTextController.text.isNotEmpty
                             ? Icon(Icons.check_circle, color: Colors.green)
                             : null,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor introduce tu fecha de nacimiento';
+                          return 'Porfavor introduce su numero de telfono';
                         }
                         return null;
                       },
@@ -257,12 +259,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: () {
                             if (_formRegister.currentState!.validate()) {
                               _registerBloc.add(DoRegisterEvent(
-                                emailTextController.text,
-                                nameTextController.text,
-                                lastnameTextController.text,
-                                passwordTextController.text,
-                                birthDateTextController.text,
-                              ));
+                                  emailTextController.text,
+                                  nameTextController.text,
+                                  lastnameTextController.text,
+                                  passwordTextController.text,
+                                  phoneNumber.text));
                             }
                           },
                         ),
@@ -326,24 +327,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         offset: Offset(0, 3),
                       ),
                     ],
-                  ),
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    icon: Image.network(
-                      'https://th.bing.com/th/id/R.8af6752066ab4e5c10d3b07502b9a560?rik=4IL1%2bSsxAuCETg&pid=ImgRaw&r=0',
-                      height: 18.0,
-                      width: 18.0,
-                    ),
-                    label: Text(
-                      'Registro con Google'.toUpperCase(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    onPressed: () {},
                   ),
                 ),
               ),

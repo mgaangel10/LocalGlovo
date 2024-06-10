@@ -14,6 +14,7 @@ class ComercioBloc extends Bloc<ComercioEvent, ComercioState> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   ComercioBloc(this.comercioRepository) : super(ComercioInitial()) {
     on<ComercioList>(_onComercioList);
+    on<ComercioFetchMore>(_onComercioFetchMore);
     on<ComercioCategoriasItem>(_onComercioCategoriasFetch);
   }
 
@@ -37,6 +38,18 @@ class ComercioBloc extends Bloc<ComercioEvent, ComercioState> {
           await comercioRepository.filtrarCategorias(event.categorias);
       print(comercioResponse);
       emit(ComercioCategoriaSucess(comercioResponse));
+    } catch (e) {
+      emit(ComercioError(e.toString()));
+    }
+  }
+
+  void _onComercioFetchMore(
+      ComercioFetchMore event, Emitter<ComercioState> emit) async {
+    try {
+      final newComercios = await comercioRepository.listarComercios();
+      final updatedComercios = List<Content>.from(state.list)
+        ..addAll(newComercios);
+      emit(ComercioSuccess(updatedComercios));
     } catch (e) {
       emit(ComercioError(e.toString()));
     }

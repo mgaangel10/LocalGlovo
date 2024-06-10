@@ -45,6 +45,7 @@ class AuthRepositoryImpl extends AuthRepository {
       },
       body: registerDto.toJson(),
     );
+    print('usuarioId guardado: ${response.body}');
     if (response.statusCode == 201) {
       return RegisterResponse.fromJson(response.body);
     } else {

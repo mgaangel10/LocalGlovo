@@ -42,6 +42,9 @@ public class Comercio {
     @Column(name = "name_direction")
     protected String nameDirection;
 
+
+    protected boolean likes;
+
     @Column(name = "categorias")
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
