@@ -102,21 +102,24 @@ export class ProductosService {
     );
   }
 
-  editarProducto(idProducto:string,imagen:string,name:string,precio:number,disponible:boolean):Observable<EditarProducto>{
+  editarProducto(idProducto:string,imagen: File,name:string,precio:number,disponible:boolean):Observable<EditarProducto>{
     let token = localStorage.getItem('TOKEN');
-    return this.http.put<EditarProducto>(`${environment.HeadUrl}/administrador/editar/producto/${idProducto}`,{
-      "imagen":`${imagen}`,
-      "name":`${name}`,
-      "precio":`${precio}`,
-      "disponible":`${disponible}`,
-    },{
+    let formData = new FormData();
+    formData.append('producto', JSON.stringify({
+      "name": name,
+      "precio": precio,
+      "disponible": disponible
+    }));
+    formData.append('file', imagen); 
+  
+    return this.http.put<EditarProducto>(`${environment.HeadUrl}/administrador/editar/producto/${idProducto}`, formData, {
       headers: {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`
       }
     }).pipe(
       catchError(this.handleError)
-    )
+    );
   }
 
   verImagen(fileName: string): Observable<Blob> {

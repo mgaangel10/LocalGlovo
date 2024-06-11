@@ -3,12 +3,18 @@ package com.example.LocalGlovo.comercios.service;
 import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.Favoritos.models.Favorito;
 import com.example.LocalGlovo.Favoritos.repository.FavoritoRepo;
+import com.example.LocalGlovo.carrito.models.Carrito;
+import com.example.LocalGlovo.carrito.models.LineaCarrito;
+import com.example.LocalGlovo.carrito.models.Ventas;
+import com.example.LocalGlovo.carrito.repository.CarritoRepo;
+import com.example.LocalGlovo.carrito.repository.VentasRepo;
 import com.example.LocalGlovo.comercios.Dto.GetListComercios;
 import com.example.LocalGlovo.comercios.Dto.PostCrearComercio;
 import com.example.LocalGlovo.comercios.models.CategoriaComercios;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.comercios.repository.ComercioRepo;
 import com.example.LocalGlovo.files.service.FicheroService;
+import com.example.LocalGlovo.productos.model.Producto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +31,8 @@ public class ComercioService {
 
     private final ComercioRepo comercioRepo;
     private final FavoritoRepo favoritoRepo;
+    private final VentasRepo ventasRepo;
+    private final CarritoRepo carritoRepo;
     @Autowired
     private  FicheroService ficheroService;
 
@@ -70,8 +78,8 @@ public class ComercioService {
     public List<Comercio> findByNombre(String name){
 
 List<Comercio> comercios = comercioRepo.findAll();
-        List<Comercio> comercios1 = comercios.stream().filter(c-> c.getName().toLowerCase().contains(name) ||
-                c.getNameDirection().toLowerCase().contains(name) ).collect(Collectors.toList());
+        List<Comercio> comercios1 = comercios.stream().filter(c-> c.getName().toLowerCase().contains(name.toLowerCase()) ||
+                c.getNameDirection().toLowerCase().contains(name.toLowerCase()) ).collect(Collectors.toList());
 
     return comercios1;
 
@@ -110,19 +118,45 @@ List<Comercio> comercios = comercioRepo.findAll();
         }
     }
 
-    public void elimarComercio(UUID comercioId){
+    public void eliminarComercio(UUID comercioId){
         Optional<Comercio> comercio = comercioRepo.findById(comercioId);
 
         if (comercio.isEmpty()){
-            throw new RuntimeException("no se ha encontrado el comercio");
-        }else{
-            List<Favorito> favoritoList = comercio.get().getFavoritoList();
-            favoritoList.forEach(favorito -> {comercio.get().getFavoritoList();
-            favoritoRepo.delete(favorito);});
+            throw new RuntimeException("No se ha encontrado el comercio");
+        } else {
+            // Para cada producto del comercio
+            for (Producto producto : comercio.get().getProductos()) {
+                // Encuentra todos los carritos
+                List<Carrito> carritos = carritoRepo.findAll();
 
+                // Para cada carrito
+                for (Carrito carrito : carritos) {
+                    // Elimina las lineas de carrito asociadas a este producto
+                    carrito.getLineasCarrito().removeIf(linea -> linea.getProducto().equals(producto));
+                }
+
+                // Encuentra todas las ventas que contienen este producto
+                List<Ventas> ventas = ventasRepo.findByProductosContaining(producto);
+
+                // Para cada venta
+                for (Ventas venta : ventas) {
+                    // Elimina este producto de la venta
+                    venta.getProductos().remove(producto);
+                }
+            }
+
+            // Elimina las ventas por comercio
+            ventasRepo.deleteByComercios(comercio.get());
+
+            // Elimina los favoritos del comercio
+            List<Favorito> favoritoList = comercio.get().getFavoritoList();
+            favoritoList.forEach(favorito -> favoritoRepo.delete(favorito));
+
+            // Finalmente, elimina el Comercio
             comercioRepo.delete(comercio.get());
         }
     }
+
 
     public Comercio editarComercio(UUID comerciId,PostCrearComercio postCrearComercio,MultipartFile file){
         String filename = ficheroService.storeAndReturnFilename(file);

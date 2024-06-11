@@ -92,7 +92,7 @@ public class ComercioController {
 
     @DeleteMapping("administrador/eliminar/comercio/{comercioId}")
     public ResponseEntity<?> eliminarComercio(@PathVariable UUID comercioId){
-        comercioService.elimarComercio(comercioId);
+        comercioService.eliminarComercio(comercioId);
         return ResponseEntity.noContent().build();
     }
 
