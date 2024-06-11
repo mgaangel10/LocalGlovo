@@ -29,16 +29,16 @@ export class PageCrearProductosComponent {
     disponible: new FormControl()   
   });
 
- // Obtener una referencia al campo de entrada de archivos
+ 
 @ViewChild('imagen') imagen: ElementRef;
 
 add(): void {
-  // Obtener el archivo del campo de entrada de archivos
+  
   let imagenFile = this.imagen.nativeElement.files[0];
 
   this.productoService.addProducto(
     this.comercioID!,
-    imagenFile, // Pasar el archivo de la imagen a tu servicio
+    imagenFile, 
     this.crearProducto.value.name!,
     this.crearProducto.value.precio!,
     this.crearProducto.value.disponible!

@@ -25,14 +25,14 @@ export class UsuarioService {
     })
   }
 
-  eliminarUsuario(id: string): Observable<QuitarCuentaUsuario> {
+  eliminarUsuario(id: string) {
     let token = localStorage.getItem('TOKEN');
     console.log(token);
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post<QuitarCuentaUsuario>(`${environment.HeadUrl}/administrador/quitar/cuenta/usuario/${id}`, {}, { headers: headers });
+    return this.http.delete(`${environment.HeadUrl}/administrador/quitar/cuenta/usuario/${id}`, { headers: headers });
   }
 
   buscarUsuario(buscar: string): Observable<ListadoUsarios[]> {

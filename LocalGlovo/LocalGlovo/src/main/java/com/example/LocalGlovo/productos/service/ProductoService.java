@@ -3,6 +3,10 @@ package com.example.LocalGlovo.productos.service;
 
 import ch.qos.logback.core.joran.conditional.IfAction;
 import com.example.LocalGlovo.Exception.GlobalException;
+import com.example.LocalGlovo.carrito.models.Carrito;
+import com.example.LocalGlovo.carrito.models.Ventas;
+import com.example.LocalGlovo.carrito.repository.CarritoRepo;
+import com.example.LocalGlovo.carrito.repository.VentasRepo;
 import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.comercios.repository.ComercioRepo;
 import com.example.LocalGlovo.files.service.FicheroService;
@@ -30,6 +34,8 @@ public class ProductoService {
     private final ComercioRepo comercioRepo;
     private final IngredientesRepo ingredientesRepo;
     private final FicheroService ficheroService;
+    private final CarritoRepo carritoRepo;
+    private final VentasRepo ventasRepo;
     public Producto crearProducto(PostProductoDto postProductoDto, UUID comercioId, MultipartFile file){
         String filename = ficheroService.storeAndReturnFilename(file);
         Producto producto = new Producto();
@@ -130,6 +136,23 @@ public class ProductoService {
         if (producto.isEmpty()){
             throw new GlobalException("no existe el producto");
         }else{
+            List<Ventas> ventas = ventasRepo.findByProductosContaining(producto.get());
+
+            // Para cada venta
+            for (Ventas venta : ventas) {
+                // Elimina este producto de la venta
+                venta.getProductos().remove(producto.get());
+            }
+            List<Carrito> carritos = carritoRepo.findAll();
+
+            // Para cada carrito
+            for (Carrito carrito : carritos) {
+                // Elimina las lineas de carrito asociadas a este producto
+                carrito.getLineasCarrito().removeIf(linea -> linea.getProducto().equals(producto.get()));
+            }
+
+            // Finalmente, elimina el Producto
+
             List<Comercio> comercios = comercioRepo.findAll();
             for (Comercio comercio : comercios) {
                 comercio.getProductos().remove(producto.get());
@@ -177,14 +200,14 @@ public class ProductoService {
         ingredientesRepo.delete(ingrediente);
     }
 
-    public Producto editarProdcuto(UUID porductoId,PostProductoDto postProductoDto){
-
+    public Producto editarProdcuto(UUID porductoId,PostProductoDto postProductoDto,MultipartFile file){
+        String filename = ficheroService.storeAndReturnFilename(file);
         Optional<Producto> producto = prodcutoRepo.findById(porductoId);
 
         if (producto.isEmpty()){
             throw new RuntimeException("no se encuentra el producto");
         }else{
-            if (postProductoDto.imagen().isEmpty()&&postProductoDto.name().isEmpty()&&postProductoDto.precio()<=0){
+            if (filename.isEmpty()&&postProductoDto.name().isEmpty()&&postProductoDto.precio()<=0){
                 throw new GlobalException("Todos los campos son obligatorios");
             }
             if (!postProductoDto.name().isEmpty()){
@@ -192,8 +215,8 @@ public class ProductoService {
             }else {
                 throw new GlobalException("El campo nombre no puede estar vacio");
             }
-            if (!postProductoDto.imagen().isEmpty()){
-                producto.get().setImagen(postProductoDto.imagen());
+            if (!filename.isEmpty()){
+                producto.get().setImagen(filename);
             }else {
               throw new GlobalException("El campo imagen no puede estar vacio");
             }

@@ -21,7 +21,7 @@ export class PageIngredientesDetailsComponent {
   producto!: ProductosDetails;
   ingredientes: Ingrediente[] = [];
   imagenUrl: SafeUrl = '';
-  imagenIngrediente: SafeUrl[] = []; // Añadido para almacenar las imágenes de los ingredientes
+  imagenIngrediente: SafeUrl[] = []; 
 
   constructor(private productoService: ProductosService, private sanitizer:DomSanitizer,private route: ActivatedRoute, private router: Router, private location: Location) {
     this.route.params.subscribe(params => {
@@ -38,7 +38,7 @@ export class PageIngredientesDetailsComponent {
         this.producto = p;
         this.ingredientes = p.ingredientes;
         this.verImagenDelProducto(this.producto.imagen);
-        this.ingredientes.forEach(i => this.verImagenDelIngrediente(i.imagen)); // Añadido para cargar las imágenes de los ingredientes
+        this.ingredientes.forEach(i => this.verImagenDelIngrediente(i.imagen)); 
       })
     }
   }
@@ -46,12 +46,20 @@ export class PageIngredientesDetailsComponent {
 
   eliminarProducto() {
     this.productoService.eliminarProducto(this.id!).subscribe(p => {
-      this.location.back();
+      this.router.navigate(['/comercio-datils', this.comercioId]);
     })
   }
-  eliminarIngredientes() {
-    this.productoService.eliminarIngredientes(this.producto.ingredientes[0].id!).subscribe(i => {
-      this.router.navigate(['/ingredientes-details', this.id]);
+  eliminarIngredientes(idIng:string) {
+    this.productoService.eliminarIngredientes(idIng).subscribe(i => {
+      this.id = this.route.snapshot.paramMap.get('id');
+      if (this.id != null) {
+        this.productoService.getProductosById(this.id).subscribe(p => {
+          this.producto = p;
+          this.ingredientes = p.ingredientes;
+          this.verImagenDelProducto(this.producto.imagen);
+          this.ingredientes.forEach(i => this.verImagenDelIngrediente(i.imagen)); 
+        })
+      }
 
     })
   }
@@ -73,7 +81,7 @@ export class PageIngredientesDetailsComponent {
     });
 }
 verImagenDelIngrediente(imagen: string) {
-  if (imagen) { // Verifica si 'imagen' tiene un valor válido
+  if (imagen) { 
     this.productoService.verImagen(imagen).subscribe(r => {
       let urlCreator = window.URL;
       this.imagenIngrediente.push(this.sanitizer.bypassSecurityTrustUrl(

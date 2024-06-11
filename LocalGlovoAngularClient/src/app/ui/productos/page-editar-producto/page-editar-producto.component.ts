@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddProducto } from '../../../models/add-producto';
@@ -19,7 +19,9 @@ export class PageEditarProductoComponent implements OnInit{
     this.route.params.subscribe(params => {
       this.producto = params['id'];
     });
+    this.imagen = new ElementRef<HTMLInputElement>(document.createElement('input'));
   }
+  
   ngOnInit() {
     this.productoService.getProductosById(this.producto).subscribe(producto => {
       this.p = producto;
@@ -34,21 +36,24 @@ export class PageEditarProductoComponent implements OnInit{
     precio: new FormControl(),
     disponible: new FormControl()   
   })
-
-  add() {
-    console.log('Datos enviados al servidor:', this.editarProducto.value); 
+  @ViewChild('imagen') imagen: ElementRef;
+  add(): void {
   
-    this.productoService.editarProducto(this.producto!,this.editarProducto.value.imagen!,this.editarProducto.value.name!,this.editarProducto.value.precio,this.editarProducto.value.disponible!)
-      .subscribe({
-       next: (l: EditarProducto) => {
-       
-        this.router.navigate(['/ingredientes-details',this.producto]);
-       
-
-      },
-    error:(err)=>{
-      this.errorMessage = err;
-    }});
+    let imagenFile = this.imagen.nativeElement.files[0];
+  
+    this.productoService.editarProducto(
+      this.producto,
+      imagenFile, 
+      this.editarProducto.value.name!,
+      this.editarProducto.value.precio!,
+      this.editarProducto.value.disponible!
+    ).subscribe({
+      next: (p: EditarProducto) => {
+        this.router.navigate(['/ingredientes-details', this.producto]);
+      }, error: (err) => {
+        this.errorMessage = err;
+      }
+    });
   }
 
  
