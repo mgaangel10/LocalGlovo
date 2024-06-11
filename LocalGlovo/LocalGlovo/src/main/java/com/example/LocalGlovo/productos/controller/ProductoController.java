@@ -122,9 +122,11 @@ public class ProductoController {
     }
 
     @PutMapping("administrador/editar/producto/{productoId}")
-    public ResponseEntity<Producto> editarProducto(@PathVariable UUID productoId,@RequestBody PostProductoDto postProductoDto){
+    public ResponseEntity<Producto> editarProducto(@PathVariable UUID productoId,@RequestPart("producto") String comercioJson, @RequestPart("file") MultipartFile file){
         try {
-            Producto producto = productoService.editarProdcuto(productoId,postProductoDto);
+            ObjectMapper objectMapper = new ObjectMapper();
+            PostProductoDto postCrearComercio = objectMapper.readValue(comercioJson, PostProductoDto.class);
+            Producto producto = productoService.editarProdcuto(productoId,postCrearComercio,file);
             return ResponseEntity.status(201).body(producto);
         }catch (Exception e){
             throw new GlobalException(e.getMessage());

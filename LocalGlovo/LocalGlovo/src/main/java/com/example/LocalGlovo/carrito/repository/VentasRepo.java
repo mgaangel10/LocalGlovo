@@ -1,6 +1,7 @@
 package com.example.LocalGlovo.carrito.repository;
 
 import com.example.LocalGlovo.carrito.models.Ventas;
+import com.example.LocalGlovo.comercios.models.Comercio;
 import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.users.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +31,8 @@ public interface VentasRepo extends JpaRepository<Ventas, UUID> {
             """)
     List<Usuario> obtenerUsuariosQueMasCompran(@Param("fecha") LocalDate fecha);
 
-
+    void deleteByComercios(Comercio comercio);
+    List<Ventas> findByProductosContaining(Producto producto);
+    List<Ventas> findByUsuariosContaining(Usuario usuario);
 
 }

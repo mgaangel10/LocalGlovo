@@ -15,6 +15,7 @@ export class ComercioListComponent implements OnInit {
   searchTerm: string = '';
   paginaActual: number = 0;
   categorias:string[]=[];
+  totalPages: number = 0; // Agregamos la propiedad totalPages
   
   listadoFiltrado:ListadoComerciosFiltrados[]=[];
   @Output() comercioClick = new EventEmitter<String>();
@@ -35,6 +36,7 @@ export class ComercioListComponent implements OnInit {
     this.comercioSer.ListadoDeComercioResponse(pagina).subscribe((response: ListadoComercioResponse) => {
       this.comercioList = response.content;
       this.results = [...this.comercioList];
+      this.totalPages = response.totalPages; // Actualizamos totalPages con el valor de la respuesta
     });
   }
 

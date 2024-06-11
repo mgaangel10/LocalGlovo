@@ -2,7 +2,14 @@ package com.example.LocalGlovo.users.service;
 
 
 import com.example.LocalGlovo.Exception.GlobalException;
+import com.example.LocalGlovo.Favoritos.models.Favorito;
+import com.example.LocalGlovo.Favoritos.repository.FavoritoRepo;
+import com.example.LocalGlovo.carrito.models.Carrito;
+import com.example.LocalGlovo.carrito.models.Ventas;
+import com.example.LocalGlovo.carrito.repository.CarritoRepo;
+import com.example.LocalGlovo.carrito.repository.VentasRepo;
 import com.example.LocalGlovo.files.service.FicheroService;
+import com.example.LocalGlovo.users.Dto.JwtUserResponse;
 import com.example.LocalGlovo.users.Dto.PostCrearUserDto;
 import com.example.LocalGlovo.users.Dto.PostLogin;
 import com.example.LocalGlovo.users.model.Administrador;
@@ -35,6 +42,9 @@ public class AdministradorService {
     private final UsuarioRepo usuarioRepo;
     private final FicheroService ficheroService;
     private final EmailService emailService;
+    private final FavoritoRepo favoritoRepo;
+    private final VentasRepo ventasRepo;
+    private final CarritoRepo carritoRepo;
     public Optional<Administrador> findById(UUID id){return administradorRepo.findById(id);}
     public Optional<Administrador> findByEmail(String email) {
         return administradorRepo.findFirstByEmail(email);
@@ -94,12 +104,28 @@ public class AdministradorService {
 
     }
 
-    public Usuario setearEneable (UUID usuarioId){
+    public void setearEneable (UUID usuarioId){
         Optional<Usuario> usuario = usuarioRepo.findById(usuarioId);
         if (usuario.isPresent()){
-            Usuario usuario1 = usuario.get();
-            usuario1.setEnabled(false);
-         return    usuarioRepo.save(usuario1);
+
+
+            List<Carrito> carritos = carritoRepo.findByUsuario(usuario.get());
+            for (Carrito c:carritos                 ) {
+                carritoRepo.delete(c);
+            }
+
+            List<Favorito> favoritoList = usuario.get().getFavoritos();
+            favoritoList.forEach(favorito -> favoritoRepo.delete(favorito));
+            List<Ventas> ventas = ventasRepo.findByUsuariosContaining(usuario.get());
+
+
+            for (Ventas venta : ventas) {
+
+                venta.getUsuarios().remove(usuario.get());
+            }
+            usuarioRepo.delete(usuario.get());
+
+
         }else {
             throw new RuntimeException("Usuario con email: '"+usuarioId+"' no encontrado");
         }
