@@ -37,7 +37,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<RegisterResponse> register(RegisterDto registerDto) async {
+  Future<RegisterResponse> register(
+    RegisterDto registerDto,
+  ) async {
     final response = await _httpClient.post(
       Uri.parse('http://10.0.2.2:9000/auth/register/user'),
       headers: <String, String>{
@@ -49,7 +51,8 @@ class AuthRepositoryImpl extends AuthRepository {
     if (response.statusCode == 201) {
       return RegisterResponse.fromJson(response.body);
     } else {
-      throw Exception('Fail to register');
+      var errorResponse = jsonDecode(response.body);
+      throw Exception(errorResponse['${response.body}']);
     }
   }
 

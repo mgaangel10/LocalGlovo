@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is DoRegisterSuccess) {
               return const Text("Registro exitoso");
             } else if (state is DoRegisterError) {
-              return const Text("Error de registro");
+              return Center(child: _buildRegisterForm());
             } else if (state is DoRegisterLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -130,6 +130,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor introduce tu nombre';
                         }
+                        if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
+                          return 'El campo nombre solo puede contener letras';
+                        }
                         return null;
                       },
                     ),
@@ -167,12 +170,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         hintText: 'example@gmail.com',
                         suffixIcon: emailTextController.text.isNotEmpty
-                            ? Icon(Icons.check_circle, color: Colors.green)
+                            ? Icon(Icons.cancel,
+                                color: Color.fromARGB(255, 250, 0, 0))
                             : null,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor introduce el correo electrónico';
+                        }
+                        if (DoRegisterError ==
+                            "El email ya ha sido registrado") {
+                          return "hola";
                         }
                         return null;
                       },
