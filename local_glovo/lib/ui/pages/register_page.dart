@@ -4,6 +4,8 @@ import 'package:local_glovo/blocs/register/bloc/register_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/ui/pages/Email_existente_error.dart';
+import 'package:local_glovo/ui/pages/error_page.dart';
 import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -61,7 +63,11 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is DoRegisterSuccess) {
               return const Text("Registro exitoso");
             } else if (state is DoRegisterError) {
-              return const Text("Error de registro");
+              return Center(
+                  child: ErrorEmailExistente(
+                carritoRepository: widget.carritoRepository,
+                errorMessage: state.errorMessage,
+              ));
             } else if (state is DoRegisterLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -130,6 +136,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor introduce tu nombre';
                         }
+                        if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
+                          return 'El campo nombre solo puede contener letras';
+                        }
                         return null;
                       },
                     ),
@@ -167,12 +176,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         hintText: 'example@gmail.com',
                         suffixIcon: emailTextController.text.isNotEmpty
-                            ? Icon(Icons.check_circle, color: Colors.green)
+                            ? Icon(Icons.cancel,
+                                color: Color.fromARGB(255, 250, 0, 0))
                             : null,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor introduce el correo electrónico';
+                        }
+                        if (DoRegisterError ==
+                            "El email ya ha sido registrado") {
+                          return "hola";
                         }
                         return null;
                       },

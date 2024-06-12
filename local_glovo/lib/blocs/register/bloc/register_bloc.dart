@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:local_glovo/models/dto/register_dto.dart';
 import 'package:local_glovo/models/response/register_response.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
+import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +14,7 @@ part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthRepository authRepository;
+
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   RegisterBloc(this.authRepository) : super(RegisterInitial()) {
     on<DoRegisterEvent>(_doRegister);

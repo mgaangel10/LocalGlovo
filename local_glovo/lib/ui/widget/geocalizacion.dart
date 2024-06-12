@@ -22,7 +22,7 @@ class _ListadoComerciosState extends State<ListadoComercios> {
   void initState() {
     super.initState();
     comercioRepository = ComercioRepositoryImpl();
-    list = comercioRepository.listarComercios();
+    list = comercioRepository.listarComercios(0);
   }
 
   @override

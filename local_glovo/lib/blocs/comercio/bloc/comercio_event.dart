@@ -8,7 +8,8 @@ sealed class ComercioEvent {
 final class ComercioFetchEvents extends ComercioEvent {}
 
 class ComercioList extends ComercioEvent {
-  ComercioList();
+  final int page;
+  ComercioList({required this.page});
 }
 
 class ComercioDetalles extends ComercioEvent {

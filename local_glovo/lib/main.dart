@@ -24,6 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<ComercioRepositoryImpl>(
+          create: (_) => ComercioRepositoryImpl(),
+        ),
         Provider<ComercioBloc>(
           create: (BuildContext context) =>
               ComercioBloc(context.read<ComercioRepositoryImpl>()),
