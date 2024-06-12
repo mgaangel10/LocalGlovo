@@ -35,7 +35,7 @@ export class PageVentasComponent  {
         ));
       });
     } else {
-      console.log('La imagen del comercio es null o undefined');
+      
     }
   }
   

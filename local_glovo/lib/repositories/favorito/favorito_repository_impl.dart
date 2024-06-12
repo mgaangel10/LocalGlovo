@@ -92,8 +92,7 @@ class FavoritoRepositoryImpl extends FavoritoRepository {
     } else {
       print('Request failed with status: ${response.statusCode}.');
       print('Response body: ${response.body}');
-      throw Exception(
-          'Failed to load detalles comercios. Status code: ${response.statusCode}');
+      throw Exception('Ha ocurrido un error al quitar el like');
     }
   }
 }

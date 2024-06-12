@@ -68,7 +68,9 @@ export class AdministradorService {
         accept: 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    }).pipe(
+      catchError(this.handleError)
+  );
   }
 
   comercioConMasLikes(): Observable<ListadoComercioSinPaginar[]> {

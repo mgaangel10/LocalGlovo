@@ -25,7 +25,7 @@
 
     </div>
   </div>
-
+  
 
 
 
@@ -62,8 +62,10 @@
 
 <div class="row ">
 
-
-  <div class="row mx-auto justify-content-center text-center">
+  <div *ngIf="results.length === 0" class="alert alert-info w-50 mx-auto text-center">
+    No hay resultados
+  </div>
+  <div class="row mx-auto justify-content-center text-center " >
     <div class="col-md-12  mx-auto justify-content-center text-center ms-3">
       <div class="row" style="max-height: 600px; ">
         <app-comercio-item class="col-3 mt-5" style="position: static;" *ngFor="let m of results" [comercio]="m"

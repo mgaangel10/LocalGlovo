@@ -71,7 +71,7 @@ verImagenDelProducto(imagen: string) {
     this.router.navigate(['/ingredientes-details', producto.id]);
   }
   addProducto() {
-    this.router.navigate(['/crear-productos',this.id]);
+    this.router.navigate(['/crear-productos',this.comercioId]);
   }
 
   editarproducto(id:string){

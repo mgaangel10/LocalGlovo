@@ -41,6 +41,7 @@ export class PageUsuariosComponent implements OnInit {
 
   buscarUsuario(buscar: string) {
     this.usuarioServcie.buscarUsuario(buscar).subscribe((r: any) => {
+      console.log(r); // Añade esta línea
       if (Array.isArray(r)) {
         this.resultados = r;
       } else {
@@ -48,6 +49,7 @@ export class PageUsuariosComponent implements OnInit {
       }
       this.cdr.detectChanges();
     })
+    
   }
 
   onKeyUp(event: any) {

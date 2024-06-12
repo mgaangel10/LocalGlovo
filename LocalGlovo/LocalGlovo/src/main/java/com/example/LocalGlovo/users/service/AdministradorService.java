@@ -107,29 +107,27 @@ public class AdministradorService {
     public void setearEneable (UUID usuarioId){
         Optional<Usuario> usuario = usuarioRepo.findById(usuarioId);
         if (usuario.isPresent()){
-
-
             List<Carrito> carritos = carritoRepo.findByUsuario(usuario.get());
-            for (Carrito c:carritos                 ) {
-                carritoRepo.delete(c);
+            for (Carrito c:carritos) {
+                c.setUsuario(null); // Desvincula el usuario del carrito
+                carritoRepo.save(c); // Guarda el carrito actualizado
             }
 
             List<Favorito> favoritoList = usuario.get().getFavoritos();
             favoritoList.forEach(favorito -> favoritoRepo.delete(favorito));
             List<Ventas> ventas = ventasRepo.findByUsuariosContaining(usuario.get());
 
-
             for (Ventas venta : ventas) {
-
                 venta.getUsuarios().remove(usuario.get());
+                ventasRepo.save(venta); // Guarda la venta actualizada
             }
-            usuarioRepo.delete(usuario.get());
 
-
+            usuarioRepo.delete(usuario.get()); // Guarda el usuario actualizado en lugar de eliminarlo
         }else {
             throw new RuntimeException("Usuario con email: '"+usuarioId+"' no encontrado");
         }
     }
+
 
     public Administrador getLoggedAdministrador() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
