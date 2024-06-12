@@ -4,7 +4,7 @@ import 'package:local_glovo/models/response/comercio_details_response.dart';
 import 'package:local_glovo/models/response/comercio_response.dart';
 
 abstract class ComercioRepository {
-  Future<List<Content>> listarComercios();
+  Future<List<Content>> listarComercios(int page);
   Future<ComercioDetailsResponse> comercioDetalles(String id);
   Future<Productos> viewIngredientes(String id);
   Future<List<Content>> filtrarCategorias(String categorias);

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
 import 'package:local_glovo/ui/pages/inicio_page.dart';
+import 'package:local_glovo/ui/pages/register_page.dart';
 
-class ErrorPage extends StatelessWidget {
+class ErrorEmailExistente extends StatelessWidget {
   final CarritoRepository carritoRepository;
   final String errorMessage;
 
-  ErrorPage({required this.carritoRepository, required this.errorMessage});
+  ErrorEmailExistente(
+      {required this.carritoRepository, required this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class ErrorPage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => InicioPage(
+                    builder: (context) => RegisterPage(
                       carritoRepository: carritoRepository,
                     ),
                   ),

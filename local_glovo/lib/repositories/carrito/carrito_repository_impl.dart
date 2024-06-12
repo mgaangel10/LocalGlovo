@@ -119,7 +119,6 @@ class CarritoRepositoryImpl extends CarritoRepository {
         throw Exception('Tu carrito esta vacio');
       }
     } catch (e) {
-      // Si ocurre un error, navega a una página de error personalizada
       Navigator.push(
           context,
           MaterialPageRoute(
