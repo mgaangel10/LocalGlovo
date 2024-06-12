@@ -115,7 +115,28 @@ public class UsuarioController {
         }
 
     }
-
+    @Operation(summary = "Ver detalles de un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha mostrado los detalles del usuario",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = PostCrearUserDto.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                                {
+                                                           "username": "e3ccd792-2ceb-44ad-97df-6a660d67e01c",
+                                                                                                    "name": "aa ",
+                                                                                                    "lastName": "perez",
+                                                                                                    "phoneNumber": "5435456",
+                                                                                                   
+                                                    },
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "Not Found",
+                    content = @Content)
+    })
     @GetMapping("usuario/ver/detalles/{id}")
     public ResponseEntity<GetUsuario> verDetallesUsuario(@PathVariable UUID id){
         GetUsuario usuario1 = usuarioService.getUsuario(id);

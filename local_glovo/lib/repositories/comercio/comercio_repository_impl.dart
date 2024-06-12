@@ -11,11 +11,11 @@ class ComercioRepositoryImpl extends ComercioRepository {
   final Client _httpClient = Client();
 
   @override
-  Future<List<Content>> listarComercios() async {
+  Future<List<Content>> listarComercios(int page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
     final response = await _httpClient.get(
-      Uri.parse('http://10.0.2.2:9000/usuario/listar/comercios'),
+      Uri.parse('http://10.0.2.2:9000/usuario/listar/comercios?page=$page'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'accept': 'application/json',

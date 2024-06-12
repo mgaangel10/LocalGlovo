@@ -4,6 +4,8 @@ import 'package:local_glovo/blocs/register/bloc/register_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/ui/pages/Email_existente_error.dart';
+import 'package:local_glovo/ui/pages/error_page.dart';
 import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -20,7 +22,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final nameTextController = TextEditingController();
   final lastnameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
-  final birthDateTextController = TextEditingController();
+  final phoneNumber = TextEditingController();
+
   late AuthRepository authRepository;
   late RegisterBloc _registerBloc;
 
@@ -37,7 +40,8 @@ class _RegisterPageState extends State<RegisterPage> {
     nameTextController.dispose();
     lastnameTextController.dispose();
     passwordTextController.dispose();
-    birthDateTextController.dispose();
+    phoneNumber.dispose();
+
     _registerBloc.close();
     super.dispose();
   }
@@ -59,7 +63,11 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is DoRegisterSuccess) {
               return const Text("Registro exitoso");
             } else if (state is DoRegisterError) {
-              return const Text("Error de registro");
+              return Center(
+                  child: ErrorEmailExistente(
+                carritoRepository: widget.carritoRepository,
+                errorMessage: state.errorMessage,
+              ));
             } else if (state is DoRegisterLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -128,6 +136,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.isEmpty) {
                           return 'Por favor introduce tu nombre';
                         }
+                        if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
+                          return 'El campo nombre solo puede contener letras';
+                        }
                         return null;
                       },
                     ),
@@ -165,12 +176,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         hintText: 'example@gmail.com',
                         suffixIcon: emailTextController.text.isNotEmpty
-                            ? Icon(Icons.check_circle, color: Colors.green)
+                            ? Icon(Icons.cancel,
+                                color: Color.fromARGB(255, 250, 0, 0))
                             : null,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor introduce el correo electrónico';
+                        }
+                        if (DoRegisterError ==
+                            "El email ya ha sido registrado") {
+                          return "hola";
                         }
                         return null;
                       },
@@ -201,20 +217,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 20,
                     ),
                     Text(
-                      'Fecha de nacimiento',
+                      'Numero de telefono',
                       style: TextStyle(fontSize: 16),
                     ),
                     TextFormField(
-                      controller: birthDateTextController,
+                      controller: phoneNumber,
                       decoration: InputDecoration(
-                        hintText: 'DD/MM/YYYY',
-                        suffixIcon: birthDateTextController.text.isNotEmpty
+                        hintText: 'Itruce su numero de telefono',
+                        suffixIcon: nameTextController.text.isNotEmpty
                             ? Icon(Icons.check_circle, color: Colors.green)
                             : null,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor introduce tu fecha de nacimiento';
+                          return 'Porfavor introduce su numero de telfono';
                         }
                         return null;
                       },
@@ -257,12 +273,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: () {
                             if (_formRegister.currentState!.validate()) {
                               _registerBloc.add(DoRegisterEvent(
-                                emailTextController.text,
-                                nameTextController.text,
-                                lastnameTextController.text,
-                                passwordTextController.text,
-                                birthDateTextController.text,
-                              ));
+                                  emailTextController.text,
+                                  nameTextController.text,
+                                  lastnameTextController.text,
+                                  passwordTextController.text,
+                                  phoneNumber.text));
                             }
                           },
                         ),
@@ -326,24 +341,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         offset: Offset(0, 3),
                       ),
                     ],
-                  ),
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    icon: Image.network(
-                      'https://th.bing.com/th/id/R.8af6752066ab4e5c10d3b07502b9a560?rik=4IL1%2bSsxAuCETg&pid=ImgRaw&r=0',
-                      height: 18.0,
-                      width: 18.0,
-                    ),
-                    label: Text(
-                      'Registro con Google'.toUpperCase(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    onPressed: () {},
                   ),
                 ),
               ),

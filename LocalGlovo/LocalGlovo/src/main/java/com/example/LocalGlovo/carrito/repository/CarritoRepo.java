@@ -3,6 +3,8 @@ package com.example.LocalGlovo.carrito.repository;
 import com.example.LocalGlovo.carrito.Dto.GetCarritoDto;
 import com.example.LocalGlovo.carrito.models.Carrito;
 import com.example.LocalGlovo.carrito.models.Estado;
+import com.example.LocalGlovo.carrito.models.LineaCarrito;
+import com.example.LocalGlovo.productos.model.Producto;
 import com.example.LocalGlovo.users.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,4 +31,7 @@ public interface CarritoRepo extends JpaRepository<Carrito, UUID> {
             from Carrito c
             """)
     List<GetCarritoDto> getListCarrito();
+    List<Carrito> findByUsuario (Usuario usuario);
+
+
 }

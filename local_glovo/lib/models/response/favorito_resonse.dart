@@ -9,6 +9,7 @@ class FavoritoResponse {
   List<String>? categorias;
   List<Productos>? productos;
   List<FavoritoList>? favoritoList;
+  bool? likes;
 
   FavoritoResponse(
       {this.id,
@@ -20,7 +21,8 @@ class FavoritoResponse {
       this.nameDirection,
       this.categorias,
       this.productos,
-      this.favoritoList});
+      this.favoritoList,
+      this.likes});
 
   FavoritoResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -44,6 +46,7 @@ class FavoritoResponse {
         favoritoList!.add(new FavoritoList.fromJson(v));
       });
     }
+    likes = json['likes'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +65,7 @@ class FavoritoResponse {
     if (this.favoritoList != null) {
       data['favoritoList'] = this.favoritoList!.map((v) => v.toJson()).toList();
     }
+    data['likes'] = this.likes;
     return data;
   }
 }

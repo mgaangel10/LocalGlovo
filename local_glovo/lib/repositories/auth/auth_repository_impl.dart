@@ -24,20 +24,20 @@ class AuthRepositoryImpl extends AuthRepository {
     );
     if (response.statusCode == 201) {
       LoginResponse loginResponse = LoginResponse.fromJson(response.body);
-      String? token = loginResponse
-          .token; // Asegúrate de reemplazar 'token' con el nombre correcto del campo
-
+      String? token = loginResponse.token;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token!);
 
       return loginResponse;
     } else {
-      throw Exception('Fail to login');
+      throw Exception('El email y/o contraseña no son correctos');
     }
   }
 
   @override
-  Future<RegisterResponse> register(RegisterDto registerDto) async {
+  Future<RegisterResponse> register(
+    RegisterDto registerDto,
+  ) async {
     final response = await _httpClient.post(
       Uri.parse('http://10.0.2.2:9000/auth/register/user'),
       headers: <String, String>{
@@ -45,10 +45,12 @@ class AuthRepositoryImpl extends AuthRepository {
       },
       body: registerDto.toJson(),
     );
+    print('usuarioId guardado: ${response.body}');
     if (response.statusCode == 201) {
       return RegisterResponse.fromJson(response.body);
     } else {
-      throw Exception('Fail to register');
+      var errorResponse = jsonDecode(response.body);
+      throw Exception('${errorResponse['message']}');
     }
   }
 

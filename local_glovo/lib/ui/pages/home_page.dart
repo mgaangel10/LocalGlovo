@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
 import 'package:local_glovo/blocs/comercio/bloc/comercio_details_bloc.dart';
@@ -7,6 +8,8 @@ import 'package:local_glovo/models/response/comercio_response.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
+import 'package:local_glovo/repositories/favorito/favorito_repository.dart';
+import 'package:local_glovo/repositories/favorito/favorito_repository_impl.dart';
 import 'package:local_glovo/ui/pages/User_page.dart';
 import 'package:local_glovo/ui/pages/carrito_page.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
@@ -24,6 +27,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late FavoritoRepository favoritoRepository;
+
+  late FavoritoBloc _favoritoBloc;
+
+  void addToFavorites(String comercioId) {
+    _favoritoBloc.add(
+      AddFavoritoItem(comercioId: comercioId),
+    );
+  }
+
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -33,20 +46,54 @@ class _HomePageState extends State<HomePage> {
 
   late ComercioRepository comercioRepository;
   late ComercioBloc _comercioBloc;
+  final ScrollController _scrollController = ScrollController();
+  int _currentPage = 0;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    favoritoRepository = FavoritoRepositoryImpl();
+    _favoritoBloc = FavoritoBloc(favoritoRepository);
     comercioRepository = ComercioRepositoryImpl();
-    _comercioBloc = ComercioBloc(comercioRepository)..add(ComercioList());
+    _comercioBloc = ComercioBloc(comercioRepository)
+      ..add(ComercioList(page: _selectedIndex));
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == 0 && !_isLoading) {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          _loadPreviousPage();
+        });
+      } else if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          !_isLoading) {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          _loadMore();
+        });
+      }
+    });
   }
 
-  static List<Widget> _widgetOptions(CarritoRepository carritoRepository) => [
-        HomePage(carritoRepository: carritoRepository),
-        UserPage(
-          carritoRepository: carritoRepository,
-        )
-      ];
+  Future<void> _loadPreviousPage() async {
+    setState(() {
+      _isLoading = true;
+    });
+    _currentPage--;
+    context.read<ComercioBloc>().add(ComercioFetchMore(page: _currentPage));
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _loadMore() async {
+    setState(() {
+      _isLoading = true;
+    });
+    _currentPage++;
+    _comercioBloc.add(ComercioFetchMore(page: _currentPage));
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +121,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         if (state is ComercioSuccess) {
           return GridView.builder(
+            controller: _scrollController,
             scrollDirection: Axis.horizontal,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
@@ -109,6 +157,7 @@ class _HomePageState extends State<HomePage> {
           );
         } else if (state is ComercioCategoriaSucess) {
           return GridView.builder(
+            controller: _scrollController,
             scrollDirection: Axis.horizontal,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
@@ -143,6 +192,7 @@ class _HomePageState extends State<HomePage> {
           );
         } else if (state is AddfavoritoSucess) {
           return GridView.builder(
+            controller: _scrollController,
             scrollDirection: Axis.horizontal,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
@@ -318,12 +368,12 @@ class _HomePageState extends State<HomePage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _comercioBloc.add(ComercioList());
+                    _comercioBloc.add(ComercioList(page: _selectedIndex));
                   },
                   child: ElevatedButton(
                       onPressed: () {
                         final comercioRepo = ComercioRepositoryImpl();
-                        _comercioBloc.add(ComercioList());
+                        _comercioBloc.add(ComercioList(page: _selectedIndex));
                       },
                       child: Icon(Icons.arrow_back_ios_new)),
                 ),

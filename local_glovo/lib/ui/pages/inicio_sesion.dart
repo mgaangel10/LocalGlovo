@@ -5,8 +5,11 @@ import 'package:local_glovo/blocs/login/bloc/login_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/ui/pages/Email_existente_error.dart';
+import 'package:local_glovo/ui/pages/error_page.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
 import 'package:local_glovo/ui/pages/inicio_page.dart';
+import 'package:local_glovo/ui/pages/register_page.dart';
 
 class InicioSesion extends StatefulWidget {
   final CarritoRepository carritoRepository;
@@ -56,7 +59,11 @@ class _InicioSesionState extends State<InicioSesion> {
             if (state is DoLoginSucces) {
               return const Text("login succes");
             } else if (state is DoLoginError) {
-              return const Text("login error");
+              return Center(
+                  child: ErrorEmailExistente(
+                carritoRepository: widget.carritoRepository,
+                errorMessage: state.errorMensaje,
+              ));
             } else if (state is DoLoginLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -64,7 +71,18 @@ class _InicioSesionState extends State<InicioSesion> {
             }
             return Center(child: _buildLoginForm());
           },
-          listener: (BuildContext conext, LoginState state) {},
+          listener: (BuildContext conext, LoginState state) {
+            if (state is DoLoginSucces) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InicioPage(
+                    carritoRepository: widget.carritoRepository,
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );
@@ -181,14 +199,6 @@ class _InicioSesionState extends State<InicioSesion> {
                                 passTextController.text,
                               ));
                             }
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InicioPage(
-                                  carritoRepository: widget.carritoRepository,
-                                ),
-                              ),
-                            );
                           },
                         ),
                       ),
@@ -220,7 +230,16 @@ class _InicioSesionState extends State<InicioSesion> {
                             'Registro'.toUpperCase(),
                             style: TextStyle(color: Colors.black),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegisterPage(
+                                  carritoRepository: widget.carritoRepository,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -242,24 +261,6 @@ class _InicioSesionState extends State<InicioSesion> {
                         offset: Offset(0, 3),
                       ),
                     ],
-                  ),
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    icon: Image.network(
-                      'https://th.bing.com/th/id/R.8af6752066ab4e5c10d3b07502b9a560?rik=4IL1%2bSsxAuCETg&pid=ImgRaw&r=0',
-                      height: 18.0,
-                      width: 18.0,
-                    ),
-                    label: Text(
-                      'Login with Google'.toUpperCase(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    onPressed: () {},
                   ),
                 ),
               ),

@@ -11,41 +11,54 @@ INSERT INTO usuario (id, name,last_name, username, email, password,phone_number,
 INSERT INTO usuario_roles ( roles,usuario_id) VALUES (0,'8e221cbb-7edd-4943-b643-fcb2f34deb19');
 INSERT INTO administrador (id, name,last_name, username, email, password,phone_number,ACCOUNT_NON_EXPIRED,ACCOUNT_NON_LOCKED,CREDENTIALS_NON_EXPIRED,enabled,foto_url) VALUES ('a23c61eb-4a5a-4cdd-beea-44234583ff4c', 'Angel','perez', 'ToRechulon', 'angel@gmail.com', '{bcrypt}$2a$10$05HASeZdtwl8NS/nWbNMJOU07tiGZ9Z/mVE2Z.FKhsyjkCK7yuLqa',383838,true,true,true,true,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQciKN1y59CDYMq-IALg7OUijN7hIiM8hdzKw&usqp=CAU');
 INSERT INTO administrador_roles ( roles,administrador_id) VALUES (1,'a23c61eb-4a5a-4cdd-beea-44234583ff4c');
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen)VALUES ('f89f898a-70aa-48d5-8088-3f3c892d7bae', 'Las Lozas', 37.2700843067059, -6.063028856447782, 4.8, 'La puebla del rio','fotoPruebaComercio_755114.jpeg');
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen)VALUES ('123e4567-e89b-12d3-a456-426614174000', 'Felipon', 37.27203372064043, -6.066180282066359, 4.8, 'La puebla del rio','fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen,likes)VALUES ('f89f898a-70aa-48d5-8088-3f3c892d7bae', 'Las Lozas', 37.2700843067059, -6.063028856447782, 4.8, 'La puebla del rio','fotoPruebaComercio_755114.jpeg',false);
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction,imagen,likes)VALUES ('123e4567-e89b-12d3-a456-426614174000', 'Felipon', 37.27203372064043, -6.066180282066359, 4.8, 'La puebla del rio','fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id,categorias)VALUES('f89f898a-70aa-48d5-8088-3f3c892d7bae','FARMACIA');
 INSERT INTO comercio_categorias(comercio_id,categorias)VALUES('123e4567-e89b-12d3-a456-426614174000','CARNECERIA');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('7bb2e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda Bendicion', 37.272149626637564, -6.06192884623146, 4.5, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('7bb2e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda Bendicion', 37.272149626637564, -6.06192884623146, 4.5, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('7bb2e900-9dad-11d1-80b4-00c04fd430c9', 'TIENDAROPA');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('8cc3e900-9dad-11d1-80b4-00c04fd430c9', 'Bar Osso', 37.272804495539006, -6.062129797459527, 4.2, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('8cc3e900-9dad-11d1-80b4-00c04fd430c9', 'Bar Osso', 37.272804495539006, -6.062129797459527, 4.2, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('8cc3e900-9dad-11d1-80b4-00c04fd430c9', 'BAR');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('9dd4e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda G Fashion', 37.2708028410246, -6.06328770833118, 4.1, 'Sevilla', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('9dd4e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda G Fashion', 37.2708028410246, -6.06328770833118, 4.1, 'Sevilla', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('9dd4e900-9dad-11d1-80b4-00c04fd430c9', 'TIENDAROPA');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('aee5e900-9dad-11d1-80b4-00c04fd430c9', 'Supermercado', 37.268698190432744, -6.065863976966079, 4.6, 'Coria del Rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('aee5e900-9dad-11d1-80b4-00c04fd430c9', 'Supermercado', 37.268698190432744, -6.065863976966079, 4.6, 'Coria del Rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9', 'TIENDACOMESTIBLES');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('bee6e900-9dad-11d1-80b4-00c04fd430c9', 'Carnicería', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('bee6e900-9dad-11d1-80b4-00c04fd430c9', 'Carnicería', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('bee6e900-9dad-11d1-80b4-00c04fd430c9', 'CARNECERIA');
 
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('550e8400-e29b-41d4-a716-446655440000', 'Carnicería', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'fotoPruebaComercio_755114.jpeg',false);
+INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('550e8400-e29b-41d4-a716-446655440000', 'CARNECERIA');
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('cee7e900-9dad-11d1-80b4-00c04fd430c9', 'Pet shop', 37.2662548259502, -6.064503731577847, 4.9, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('6ba7b810-9dad-11d1-80b4-00c04fd430c8', 'Carnicería', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'fotoPruebaComercio_755114.jpeg',false);
+INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('6ba7b810-9dad-11d1-80b4-00c04fd430c8', 'CARNECERIA');
+
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('6ba7b811-9dad-11d1-80b4-00c04fd430c9', 'Carnicería', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'fotoPruebaComercio_755114.jpeg',false);
+INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('6ba7b811-9dad-11d1-80b4-00c04fd430c9', 'CARNECERIA');
+
+
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('6ba7b812-9dad-11d1-80b4-00c04fd430c0', 'Carnicería', 37.26693788942789, -6.063505949827319, 4.7, 'Palomares del rio', 'fotoPruebaComercio_755114.jpeg',false);
+INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('6ba7b812-9dad-11d1-80b4-00c04fd430c0', 'CARNECERIA');
+
+
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('cee7e900-9dad-11d1-80b4-00c04fd430c9', 'Pet shop', 37.2662548259502, -6.064503731577847, 4.9, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('cee7e900-9dad-11d1-80b4-00c04fd430c9', 'FARMACIA');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('dee8e900-9dad-11d1-80b4-00c04fd430c9', 'Restaurante', 37.26473838920224, -6.066084591003926, 4.3, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('dee8e900-9dad-11d1-80b4-00c04fd430c9', 'Restaurante', 37.26473838920224, -6.066084591003926, 4.3, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('dee8e900-9dad-11d1-80b4-00c04fd430c9', 'RESTAURANTE');
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('efe9e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda SportMax', 37.26461146346672, -6.0604388183971745, 4.2, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('efe9e900-9dad-11d1-80b4-00c04fd430c9', 'Tienda SportMax', 37.26461146346672, -6.0604388183971745, 4.2, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('efe9e900-9dad-11d1-80b4-00c04fd430c9', 'BAR');
 
 
@@ -63,7 +76,7 @@ INSERT INTO producto_ingredientes(ingredientes_id,producto_id) VALUES ('9dcc75d8
 
 
 
-INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen) VALUES ('ffeae900-9dad-11d1-80b4-00c04fd430c9', 'Cafetería ', 37.26320511204529, -6.063870937788194, 4.6, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg');
+INSERT INTO comercio (id, name, latitud, longitud, rating, name_direction, imagen,likes) VALUES ('ffeae900-9dad-11d1-80b4-00c04fd430c9', 'Cafetería ', 37.26320511204529, -6.063870937788194, 4.6, 'La puebla del rio', 'fotoPruebaComercio_755114.jpeg',false);
 INSERT INTO comercio_productos(comercio_id,productos_id)VALUES('aee5e900-9dad-11d1-80b4-00c04fd430c9','b714eea5-9b28-4e8c-b189-83d8fc14a834');
 INSERT INTO comercio_categorias(comercio_id, categorias) VALUES('ffeae900-9dad-11d1-80b4-00c04fd430c9', 'BAR');
 

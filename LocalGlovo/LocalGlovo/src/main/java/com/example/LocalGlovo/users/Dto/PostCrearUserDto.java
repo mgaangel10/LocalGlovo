@@ -10,5 +10,6 @@ public record PostCrearUserDto(String email,
                                String lastName,
                                String password,
                                String fotoUrl,
+                               String phoneNumber,
                                LocalDate nacimiento) {
 }

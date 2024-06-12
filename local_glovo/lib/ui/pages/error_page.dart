@@ -34,7 +34,6 @@ class ErrorPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                // Navega a la página HomePage
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

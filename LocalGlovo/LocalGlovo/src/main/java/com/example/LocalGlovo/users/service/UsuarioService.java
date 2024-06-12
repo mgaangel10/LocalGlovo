@@ -42,16 +42,19 @@ public class UsuarioService {
 
     public  Usuario crearUsuario(PostCrearUserDto postCrearUserDto, EnumSet<UserRoles> userRoles){
         if (usuarioRepo.existsByEmailIgnoreCase(postCrearUserDto.email())||administradorRepo.existsByEmailIgnoreCase(postCrearUserDto.email())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El email ya ha sido registrado");
+            throw new GlobalException("El email ya ha sido registrado");
         }
         if (postCrearUserDto.email().isEmpty()){
             throw new GlobalException("El campo email no puede estar vacio");
         }
-        if (postCrearUserDto.name().isEmpty()){
+        if (postCrearUserDto.name().isEmpty()&&!postCrearUserDto.name().matches("[a-zA-Z]+")){
             throw new GlobalException("El campo nombre no puede estar vacio");
         }
-        if (postCrearUserDto.lastName().isEmpty()){
-            throw new GlobalException("El campo apellidos no puede estar vacio");
+        if (postCrearUserDto.lastName() != null && (!postCrearUserDto.lastName().matches("[a-zA-Z]+") || postCrearUserDto.lastName().isEmpty())){
+            throw new GlobalException("El campo apellidos solo puede contener letras y no puede estar vacio");
+        }
+        if (!postCrearUserDto.phoneNumber().matches("[0-9]+")){
+            throw new GlobalException("El campo número de teléfono solo puede contener números");
         }
         if (postCrearUserDto.password().isEmpty()){
             throw new GlobalException("El campo contraseña no puede estar vacio");
@@ -62,6 +65,8 @@ public class UsuarioService {
                 .lastName(postCrearUserDto.lastName())
                 .password(passwordEncoder.encode(postCrearUserDto.password()))
                 .createdAt(LocalDateTime.now())
+                .username(postCrearUserDto.name()+postCrearUserDto.lastName())
+                .phoneNumber(postCrearUserDto.phoneNumber())
                 .birthDate(postCrearUserDto.nacimiento())
                 .roles(EnumSet.of(UserRoles.USER))
                 .enabled(false)
