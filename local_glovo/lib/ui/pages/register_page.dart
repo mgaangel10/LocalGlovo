@@ -4,6 +4,8 @@ import 'package:local_glovo/blocs/register/bloc/register_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/ui/pages/Email_existente_error.dart';
+import 'package:local_glovo/ui/pages/error_page.dart';
 import 'package:local_glovo/ui/pages/inicio_sesion.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -61,7 +63,11 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is DoRegisterSuccess) {
               return const Text("Registro exitoso");
             } else if (state is DoRegisterError) {
-              return Center(child: _buildRegisterForm());
+              return Center(
+                  child: ErrorEmailExistente(
+                carritoRepository: widget.carritoRepository,
+                errorMessage: state.errorMessage,
+              ));
             } else if (state is DoRegisterLoading) {
               return const Center(
                 child: CircularProgressIndicator(),

@@ -24,15 +24,13 @@ class AuthRepositoryImpl extends AuthRepository {
     );
     if (response.statusCode == 201) {
       LoginResponse loginResponse = LoginResponse.fromJson(response.body);
-      String? token = loginResponse
-          .token; // Asegúrate de reemplazar 'token' con el nombre correcto del campo
-
+      String? token = loginResponse.token;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token!);
 
       return loginResponse;
     } else {
-      throw Exception('Fail to login');
+      throw Exception('El email y/o contraseña no son correctos');
     }
   }
 
@@ -52,7 +50,7 @@ class AuthRepositoryImpl extends AuthRepository {
       return RegisterResponse.fromJson(response.body);
     } else {
       var errorResponse = jsonDecode(response.body);
-      throw Exception(errorResponse['${response.body}']);
+      throw Exception('${errorResponse['message']}');
     }
   }
 

@@ -5,6 +5,8 @@ import 'package:local_glovo/blocs/login/bloc/login_bloc.dart';
 import 'package:local_glovo/repositories/auth/auth_repository.dart';
 import 'package:local_glovo/repositories/auth/auth_repository_impl.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
+import 'package:local_glovo/ui/pages/Email_existente_error.dart';
+import 'package:local_glovo/ui/pages/error_page.dart';
 import 'package:local_glovo/ui/pages/home_page.dart';
 import 'package:local_glovo/ui/pages/inicio_page.dart';
 import 'package:local_glovo/ui/pages/register_page.dart';
@@ -57,7 +59,11 @@ class _InicioSesionState extends State<InicioSesion> {
             if (state is DoLoginSucces) {
               return const Text("login succes");
             } else if (state is DoLoginError) {
-              return const Text("login error");
+              return Center(
+                  child: ErrorEmailExistente(
+                carritoRepository: widget.carritoRepository,
+                errorMessage: state.errorMensaje,
+              ));
             } else if (state is DoLoginLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -65,7 +71,18 @@ class _InicioSesionState extends State<InicioSesion> {
             }
             return Center(child: _buildLoginForm());
           },
-          listener: (BuildContext conext, LoginState state) {},
+          listener: (BuildContext conext, LoginState state) {
+            if (state is DoLoginSucces) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InicioPage(
+                    carritoRepository: widget.carritoRepository,
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );
@@ -182,14 +199,6 @@ class _InicioSesionState extends State<InicioSesion> {
                                 passTextController.text,
                               ));
                             }
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InicioPage(
-                                  carritoRepository: widget.carritoRepository,
-                                ),
-                              ),
-                            );
                           },
                         ),
                       ),

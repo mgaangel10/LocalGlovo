@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_glovo/blocs/bloc/image_bloc.dart';
+import 'package:local_glovo/blocs/comercio/bloc/comercio_bloc.dart';
 import 'package:local_glovo/models/response/comercio_response.dart';
 import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository.dart';
@@ -27,6 +29,9 @@ class _ComercioWidgetState extends State<ComercioWidget> {
   late FavoritoRepository favoritoRepository;
   late ComercioRepository comercioRepository;
   late FavoritoBloc _favoritoBloc;
+  final ScrollController _scrollController = ScrollController();
+  int _currentPage = 0;
+  bool _isLoading = false;
 
   void addToFavorites(String comercioId) {
     _favoritoBloc.add(
@@ -35,11 +40,52 @@ class _ComercioWidgetState extends State<ComercioWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _currentPage = 0; // Reiniciar el contador de página
     favoritoRepository = FavoritoRepositoryImpl();
     comercioRepository = ComercioRepositoryImpl();
     _favoritoBloc = FavoritoBloc(favoritoRepository);
 
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == 0 && !_isLoading) {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          _loadPreviousPage();
+        });
+      } else if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          !_isLoading) {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          _loadMore();
+        });
+      }
+    });
+  }
+
+  Future<void> _loadPreviousPage() async {
+    setState(() {
+      _isLoading = true;
+    });
+    _currentPage--;
+    context.read<ComercioBloc>().add(ComercioFetchMore(page: _currentPage));
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _loadMore() async {
+    setState(() {
+      _isLoading = true;
+    });
+    _currentPage++;
+    context.read<ComercioBloc>().add(ComercioFetchMore(page: _currentPage));
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ImageBloc(comercioRepository)
         ..add(VerImageItem(fileName: widget.contentElement.imagen!)),
