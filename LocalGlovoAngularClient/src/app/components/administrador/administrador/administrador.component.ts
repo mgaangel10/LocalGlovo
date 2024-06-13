@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginResponse } from '../../../models/login-administrador';
 import { AdministradorService } from '../../../service/administrador/administrador.service';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms'; // Importa FormControl en lugar de FormGroup
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-administrador',

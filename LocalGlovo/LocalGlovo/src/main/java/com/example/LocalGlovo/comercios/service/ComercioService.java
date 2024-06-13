@@ -124,35 +124,28 @@ List<Comercio> comercios = comercioRepo.findAll();
         if (comercio.isEmpty()){
             throw new RuntimeException("No se ha encontrado el comercio");
         } else {
-            // Para cada producto del comercio
-            for (Producto producto : comercio.get().getProductos()) {
-                // Encuentra todos los carritos
-                List<Carrito> carritos = carritoRepo.findAll();
 
-                // Para cada carrito
+            for (Producto producto : comercio.get().getProductos()) {
+
+                List<Carrito> carritos = carritoRepo.findAll();
                 for (Carrito carrito : carritos) {
-                    // Elimina las lineas de carrito asociadas a este producto
+
                     carrito.getLineasCarrito().removeIf(linea -> linea.getProducto().equals(producto));
                 }
 
-                // Encuentra todas las ventas que contienen este producto
                 List<Ventas> ventas = ventasRepo.findByProductosContaining(producto);
-
-                // Para cada venta
                 for (Ventas venta : ventas) {
-                    // Elimina este producto de la venta
+
                     venta.getProductos().remove(producto);
                 }
             }
 
-            // Elimina las ventas por comercio
-            ventasRepo.deleteByComercios(comercio.get());
 
-            // Elimina los favoritos del comercio
+            ventasRepo.deleteByComercios(comercio.get());
             List<Favorito> favoritoList = comercio.get().getFavoritoList();
             favoritoList.forEach(favorito -> favoritoRepo.delete(favorito));
 
-            // Finalmente, elimina el Comercio
+
             comercioRepo.delete(comercio.get());
         }
     }

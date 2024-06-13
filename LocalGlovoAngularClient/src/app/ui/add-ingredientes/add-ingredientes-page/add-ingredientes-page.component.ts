@@ -29,17 +29,17 @@ export class AddIngredientesPageComponent {
 
   })
 
-   // Obtener una referencia al campo de entrada de archivos
+   
 @ViewChild('imagen') imagen: ElementRef;
 
 add(): void {
-  // Obtener el archivo del campo de entrada de archivos
+
   let imagenFile = this.imagen.nativeElement.files[0];
 
   this.productoService.addIngredintes(
     this.id!,
     this.crearComercio.value.name!,
-    imagenFile, // Pasar el archivo de la imagen a tu servicio
+    imagenFile, 
     
     
     

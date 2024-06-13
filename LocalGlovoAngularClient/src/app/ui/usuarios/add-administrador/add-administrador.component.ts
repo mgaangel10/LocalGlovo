@@ -24,11 +24,11 @@ export class AddAdministradorComponent {
   })
 
 
-  // Obtener una referencia al campo de entrada de archivos
+  
 @ViewChild('fotoUrl') imagen: ElementRef;
 
 add(): void {
-    // Obtener el archivo del campo de entrada de archivos
+    
     let imagenFile = this.imagen.nativeElement.files[0];
 
     this.admin.AddAdministrador(

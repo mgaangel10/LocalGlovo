@@ -72,7 +72,7 @@ export class ComerciosService {
   addComercio(name: string, latitud: string, longitud: string, nameDirection: string, categorias: string, imagen: File): Observable<AddComercio> {
     let token = localStorage.getItem('TOKEN');
 
-    // Crear un objeto FormData para enviar el archivo de la imagen
+    
     let formData = new FormData();
     formData.append('comercio', JSON.stringify({
       "name": name,
@@ -81,7 +81,7 @@ export class ComerciosService {
       "nameDirection": nameDirection,
       "categorias": categorias
     }));
-    formData.append('file', imagen); // Añadir el archivo de la imagen
+    formData.append('file', imagen); 
 
     return this.http.post<AddComercio>(`${environment.HeadUrl}/administrador/crear/comercio`, formData, {
         headers: {
@@ -96,7 +96,7 @@ export class ComerciosService {
 editarComercio(idComercio:string,name: string, latitud: string, longitud: string, nameDirection: string, categorias: string, imagen: File): Observable<EditarComercioREsponse> {
   let token = localStorage.getItem('TOKEN');
 
-  // Crear un objeto FormData para enviar el archivo de la imagen
+  
   let formData = new FormData();
   formData.append('comercio', JSON.stringify({
     "name": name,
@@ -105,7 +105,7 @@ editarComercio(idComercio:string,name: string, latitud: string, longitud: string
     "nameDirection": nameDirection,
     "categorias": categorias
   }));
-  formData.append('file', imagen); // Añadir el archivo de la imagen
+  formData.append('file', imagen); 
 
   return this.http.put<EditarComercioREsponse>(`${environment.HeadUrl}/administrador/editar/comercio/${idComercio}`, formData, {
       headers: {

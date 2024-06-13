@@ -41,7 +41,7 @@ export class PageUsuariosComponent implements OnInit {
 
   buscarUsuario(buscar: string) {
     this.usuarioServcie.buscarUsuario(buscar).subscribe((r: any) => {
-      console.log(r); // Añade esta línea
+      console.log(r); 
       if (Array.isArray(r)) {
         this.resultados = r;
       } else {

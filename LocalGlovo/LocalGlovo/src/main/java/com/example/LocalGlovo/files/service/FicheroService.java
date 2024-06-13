@@ -117,7 +117,7 @@ public class FicheroService {
         }
     }
 
-    // En FicheroService
+
     public List<Resource> loadAllImages() {
         List<Comercio> comercios = comercioRepo.findAll();
         return comercios.stream()
