@@ -69,7 +69,9 @@ puedes usar el usuario:pedro@gmail.com
 y contraseña: 1234
 ##Para poder inciar sesion como administrador en angular
 puedes usar el usuario: angel@gmail.com
-y la contraseña:1234 
+y la contraseña:1234
+recuerda que en angular si quieres dar de alta a un nuevo administrador debes de poner un email que exista
+ya que te enviara un correo con la contraseña para poder iniciar sesion con esa nueva cuenta
 ## Personas Desarrolladoras del Proyecto
 - Miguel Ángel Pérez Álvarez
 
