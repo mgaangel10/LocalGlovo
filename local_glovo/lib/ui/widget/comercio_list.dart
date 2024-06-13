@@ -42,7 +42,7 @@ class _ComercioWidgetState extends State<ComercioWidget> {
   @override
   void initState() {
     super.initState();
-    _currentPage = 0; // Reiniciar el contador de página
+    _currentPage = 0;
     favoritoRepository = FavoritoRepositoryImpl();
     comercioRepository = ComercioRepositoryImpl();
     _favoritoBloc = FavoritoBloc(favoritoRepository);

@@ -205,9 +205,8 @@ class _VerCarritoState extends State<VerCarrito> {
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
                         if (states.contains(MaterialState.disabled))
-                          return Colors
-                              .grey; // Color cuando el botón está deshabilitado
-                        return Colors.black; // Color por defecto
+                          return Colors.grey;
+                        return Colors.black;
                       },
                     ),
                   ),
@@ -222,7 +221,7 @@ class _VerCarritoState extends State<VerCarrito> {
                             ),
                           );
                         }
-                      : null, // Si el total del carrito es 0 o menos, el botón estará deshabilitado
+                      : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

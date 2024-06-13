@@ -383,7 +383,6 @@ class _HomePageState extends State<HomePage> {
                     itemCount: state.categorias.length,
                     itemBuilder: (context, index) {
                       final c = state.categorias[0];
-                      // Resto del código...
                     },
                   ),
                 ),
