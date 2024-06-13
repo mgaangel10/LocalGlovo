@@ -17,7 +17,7 @@ public class EmailService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Registro exitoso!");
-        mailMessage.setText("Para iniciar sesion como admin visita esta pagina. Esta es tu contraseña:"+contra);
+        mailMessage.setText("Para iniciar sesion como Administrador copie esta contraseña. Esta es tu contraseña:"+contra);
 
         mailSender.send(mailMessage);
     }

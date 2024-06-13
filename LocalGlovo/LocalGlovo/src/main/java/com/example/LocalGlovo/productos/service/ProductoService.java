@@ -138,20 +138,15 @@ public class ProductoService {
         }else{
             List<Ventas> ventas = ventasRepo.findByProductosContaining(producto.get());
 
-            // Para cada venta
             for (Ventas venta : ventas) {
-                // Elimina este producto de la venta
+
                 venta.getProductos().remove(producto.get());
             }
             List<Carrito> carritos = carritoRepo.findAll();
-
-            // Para cada carrito
             for (Carrito carrito : carritos) {
-                // Elimina las lineas de carrito asociadas a este producto
+
                 carrito.getLineasCarrito().removeIf(linea -> linea.getProducto().equals(producto.get()));
             }
-
-            // Finalmente, elimina el Producto
 
             List<Comercio> comercios = comercioRepo.findAll();
             for (Comercio comercio : comercios) {
@@ -178,7 +173,7 @@ public class ProductoService {
         }
 
         Optional<Producto> producto = prodcutoRepo.findById(productoId);
-        producto.get().getIngredientes().add(ingredientes1); // Aquí se cambió 'ingredientes' por 'ingredientes1'
+        producto.get().getIngredientes().add(ingredientes1);
 
         return ingredientesRepo.save(ingredientes1);
     }

@@ -109,8 +109,8 @@ public class AdministradorService {
         if (usuario.isPresent()){
             List<Carrito> carritos = carritoRepo.findByUsuario(usuario.get());
             for (Carrito c:carritos) {
-                c.setUsuario(null); // Desvincula el usuario del carrito
-                carritoRepo.save(c); // Guarda el carrito actualizado
+                c.setUsuario(null);
+                carritoRepo.save(c);
             }
 
             List<Favorito> favoritoList = usuario.get().getFavoritos();
@@ -119,10 +119,10 @@ public class AdministradorService {
 
             for (Ventas venta : ventas) {
                 venta.getUsuarios().remove(usuario.get());
-                ventasRepo.save(venta); // Guarda la venta actualizada
+                ventasRepo.save(venta);
             }
 
-            usuarioRepo.delete(usuario.get()); // Guarda el usuario actualizado en lugar de eliminarlo
+            usuarioRepo.delete(usuario.get());
         }else {
             throw new RuntimeException("Usuario con email: '"+usuarioId+"' no encontrado");
         }

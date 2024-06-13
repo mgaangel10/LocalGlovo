@@ -151,9 +151,8 @@ class _UserPageState extends State<UserPage> {
                     SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () async {
-                        // Aquí puedes poner la lógica para cerrar la sesión
                         await removeToken();
-                        // Redirige al usuario a la página de inicio de sesión
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
