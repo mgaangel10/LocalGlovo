@@ -58,12 +58,18 @@ Para desplegar la aplicación Flutter, sigue estos pasos:
 Para desplegar la API de Spring Boot, sigue estos pasos:
 1. Ejecuta `mvn clean` para limpiar el proyecto.
 2. Ejecuta `mvn install` para instalar las dependencias necesarias.
-3. Ejecuta `mvn spring-boot:run` para iniciar la aplicación.
+3. Ejecuta `mvn spring-boot:run -Dspring-boot.run.profiles=dev` para iniciar la aplicación en modo desarrollo.
+4. Ejecuta `mvn spring-boot:run -Dspring-boot.run.profiles=prod` para iniciar la aplicacion en modo producción.
 
 ## Tecnologías Utilizadas
 - Flutter para la interfaz de usuario
 - Spring Boot para la API
-
+##Para poder iniciar sesion sin registrate en flutter
+puedes usar el usuario:pedro@gmail.com
+y contraseña: 1234
+##Para poder inciar sesion como administrador en angular
+puedes usar el usuario: angel@gmail.com
+y la contraseña:1234 
 ## Personas Desarrolladoras del Proyecto
 - Miguel Ángel Pérez Álvarez
 
