@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div *ngIf="errorMessage" class="alert alert-danger text-center w-50 mx-auto" role="alert">
     {{errorMessage}}
   </div>
@@ -5,7 +6,7 @@
 
     <h2 class="text-center mt-4">Dar de alta a un administrador</h2></div>
 <form [formGroup]="profileLogin"  (ngSubmit)="add()">
-    <div class="mx-auto text-center w-50 mt-5" style="border-radius: 15px; height: 460px;">
+    <div class="text-center w-50 mx-auto mt-4 card shadow   bg-white rounded" style="border-radius: 15px; height: 460px;">
 
       
             <label for="email" class="form-label ">Email</label>
@@ -39,7 +40,7 @@
               
            
         
-          <button type="submit" class="btn btn-primary mt-3 w-50">Submit</button>
+          <button type="submit" class="btn btn-primary mt-3 w-50 mx-auto">Submit</button>
     </div>
     
   </form>

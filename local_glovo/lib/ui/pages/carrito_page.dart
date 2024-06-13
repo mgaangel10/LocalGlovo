@@ -147,7 +147,6 @@ class _CarritoPageState extends State<CarritoPage> {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          // Botón de "Añadir cantidad"
                           IconButton(
                             iconSize: 30,
                             icon: Icon(Icons.add),
@@ -156,15 +155,13 @@ class _CarritoPageState extends State<CarritoPage> {
                               bloc.add(CarritoItem(
                                 productoId: lineaCarrito.producto!.id!,
                               ));
-                              // Actualiza el estado del widget para forzar un rebuild
+
                               setState(() {});
                             },
                           ),
-
                           SizedBox(
                             width: 20,
                           ),
-                          // Texto que muestra la cantidad actual
                           Text('x${lineaCarrito.cantidad!}',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 18)),

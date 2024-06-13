@@ -65,7 +65,9 @@ verImagenDelProducto(imagen: string) {
       this.router.navigate(['/listado-comercios']);
     })
   }
-
+  editarComercio(idComercio:string){
+    this.router.navigate(['/editar-comercio', idComercio]);
+  }
   
   verIngredientes(producto: Producto) {
     this.router.navigate(['/ingredientes-details', producto.id]);
