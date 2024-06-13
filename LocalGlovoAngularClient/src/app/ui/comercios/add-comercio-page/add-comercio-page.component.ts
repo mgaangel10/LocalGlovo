@@ -55,11 +55,11 @@ onMapClick(event: google.maps.MapMouseEvent): void {
   
   
 
-// Obtener una referencia al campo de entrada de archivos
+
 @ViewChild('imagen') imagen: ElementRef;
 
 add(): void {
-    // Obtener el archivo del campo de entrada de archivos
+    
     let imagenFile = this.imagen.nativeElement.files[0];
 
     this.comercioService.addComercio(
@@ -68,7 +68,7 @@ add(): void {
         this.crearComercio.value.longitud!,
         this.crearComercio.value.nameDirection!,
         this.crearComercio.value.categorias!,
-        imagenFile // Pasar el archivo de la imagen a tu servicio
+        imagenFile 
     ).subscribe({
         next: (c: AddComercio) => {
             this.router.navigate(['/listado-comercios']);

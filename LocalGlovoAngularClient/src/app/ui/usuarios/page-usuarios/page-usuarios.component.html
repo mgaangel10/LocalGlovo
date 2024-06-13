@@ -5,7 +5,30 @@
 <div class="container ms-5 mt-5 mx-auto">
   <h4 class="text-center">Listado de usuarios</h4>
 
-
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <input #searchBox type="text" class="form-control" style="border-radius: 30px;" placeholder="Buscar un usuario"
+            (keyup)="onKeyUp($event)">
+          <div class="mt-1 ms-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-search" viewBox="0 0 16 16">
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg></div>
+  
+  
+        </div>
+  
+      </div>
+    </div>
+  
+  
+    <div *ngIf="resultados.length === 0" class="alert alert-info w-50 mx-auto text-center">
+      No hay resultados
+    </div>
+  
+  </div>
   <div class="row ">
 
 
@@ -13,21 +36,22 @@
       <div class="col-md-12 ms-5">
         <div class="row" style="max-height: 600px; overflow-y: auto;">
           <div class="container">
-            <table class="table  shadow   bg-white rounded">
+            <table class="table  shadow   bg-white rounded" *ngIf="resultados.length > 0">
               <thead>
                 <tr>
                   
                   <th>Correo Electrónico</th>
                   <th>Nombre</th>
+                  <th>Appelidos</th>
                   <th>Teléfono</th>
-                  <th>Banear</th>
+                  <th>Eliminar</th>
                 </tr>
               </thead>
-              <tbody *ngFor="let usuarios of usuario">
+              <tbody *ngFor="let usuarios of resultados">
                 <tr>
-                  
                   <td>{{usuarios.email}}</td>
                   <td>{{usuarios.name}}</td>
+                  <td>{{usuarios.lastName}}</td>
                   <td>{{usuarios.phoneNumber}}</td>
                   <td><button class="btn btn-danger shadow" (click)="eliminarUsuario(usuarios.id)"><svg xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
@@ -36,6 +60,7 @@
                       </svg></button></td>
                 </tr>
               </tbody>
+              
             </table>
           </div>
 

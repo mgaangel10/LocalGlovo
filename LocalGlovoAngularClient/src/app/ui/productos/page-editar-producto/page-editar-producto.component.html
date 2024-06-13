@@ -1,9 +1,9 @@
 <app-header></app-header>
 <div class="mx-auto w-50 card shadow   bg-white rounded mt-5">
   <form [formGroup]="editarProducto" (ngSubmit)="add()">
-    <div class="mb-3">
+    <div class="mb-3 w-50 mx-auto">
       <label for="imagen" class="form-label">Imagen</label>
-      <input type="file" class="form-control w-50 mx-auto" id="imagen" #imagen>
+      <input type="file" class="form-control w-100 mx-auto" id="imagen" #imagen>
     </div>
     <div class="mb-3 w-50 mx-auto">
       <label for="name" class="form-label">Nombre</label>

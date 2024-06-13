@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.carrito.controller;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.carrito.models.Ventas;
 import com.example.LocalGlovo.carrito.service.VentasService;
 import com.example.LocalGlovo.comercios.models.Comercio;
@@ -96,8 +97,12 @@ public class VentasController {
     })
     @GetMapping("administrador/ver/ventas/{localDate}")
     public ResponseEntity<Ventas> verVentas(@PathVariable LocalDate localDate){
-        Ventas ventas = ventasService.obtenerventa(localDate);
-        return ResponseEntity.ok(ventas);
+        try {
+            Ventas ventas = ventasService.obtenerventa(localDate);
+            return ResponseEntity.ok(ventas);
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
 
     }
     @Operation(summary = "Ver comercios con mas likes")

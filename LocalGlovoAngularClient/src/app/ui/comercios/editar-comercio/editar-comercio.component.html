@@ -26,6 +26,7 @@
         formControlName="nameDirection" placeholder="Introduce la nameDirection">
     </div>
     <div class="mb-3">
+      <p>Seleccione la categoria que pertence el comercio</p>
       <select formControlName="categorias" class=" w-50 mx-auto" style="border-radius: 5px;">
         <option *ngFor="let categoria of categorias" [value]="categoria">{{categoria}}</option>
     </select>
@@ -34,7 +35,7 @@
     
     
     </div>
-   <!-- Añadir un campo de entrada de archivos a tu formulario -->
+   
 <div class="mb-3">
   <label for="imagen" class="form-label">Imagen</label>
   <input type="file" class="form-control w-50 mx-auto" id="imagen" #imagen>

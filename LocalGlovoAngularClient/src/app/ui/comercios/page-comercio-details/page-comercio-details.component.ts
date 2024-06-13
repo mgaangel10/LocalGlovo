@@ -65,13 +65,15 @@ verImagenDelProducto(imagen: string) {
       this.router.navigate(['/listado-comercios']);
     })
   }
-
+  editarComercio(idComercio:string){
+    this.router.navigate(['/editar-comercio', idComercio]);
+  }
   
   verIngredientes(producto: Producto) {
     this.router.navigate(['/ingredientes-details', producto.id]);
   }
   addProducto() {
-    this.router.navigate(['/crear-productos',this.id]);
+    this.router.navigate(['/crear-productos',this.comercioId]);
   }
 
   editarproducto(id:string){

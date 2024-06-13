@@ -8,7 +8,9 @@ import 'package:local_glovo/repositories/carrito/carrito_repository.dart';
 import 'package:local_glovo/repositories/comercio/comercio_repository_impl.dart';
 import 'package:local_glovo/repositories/favorito/favorito_repository.dart';
 import 'package:local_glovo/repositories/favorito/favorito_repository_impl.dart';
+import 'package:local_glovo/ui/pages/Email_existente_error.dart';
 import 'package:local_glovo/ui/pages/comercio_details_page.dart';
+import 'package:local_glovo/ui/pages/error-favorito.dart';
 import '../../blocs/favorito/bloc/favorito_bloc.dart';
 
 class VerFavoritoPage extends StatefulWidget {
@@ -66,7 +68,11 @@ class _VerFavoritoPageState extends State<VerFavoritoPage> {
               _initializeImageBlocs(state.verFavoritoResponse);
               return _buildVerFavorito(state.verFavoritoResponse);
             } else if (state is FavoritoError) {
-              return Text(state.error);
+              return Center(
+                  child: ErrorFavorito(
+                carritoRepository: widget.carritoRepository,
+                errorMessage: state.error,
+              ));
             } else if (state is FavoritoLoading) {
               return const Center(
                 child: CircularProgressIndicator(),

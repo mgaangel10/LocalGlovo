@@ -1,5 +1,6 @@
 package com.example.LocalGlovo.carrito.service;
 
+import com.example.LocalGlovo.Exception.GlobalException;
 import com.example.LocalGlovo.carrito.models.Carrito;
 import com.example.LocalGlovo.carrito.models.LineaCarrito;
 import com.example.LocalGlovo.carrito.models.Ventas;
@@ -44,7 +45,7 @@ public class VentasService {
 
 
         if (ventas.isEmpty()){
-            throw new RuntimeException("no hay ventas para ese dia");
+            throw new GlobalException("no hay ventas para ese dia");
         }else{
             ventas.get(0).setTotal(total);
             ventas.get(0).setUsuarios(usuarios);
